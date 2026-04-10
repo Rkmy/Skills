@@ -1,0 +1,1264 @@
+
+=== PAGE 31 ===
+Installing
+To install Anki:
+1. Download Anki from https://apps.ankiweb.net to your Downloads
+folder.
+2. If zstd is not already installed on your system, you’ll need to install it
+(e.g sudo apt install zstd).
+3. Open a terminal and run the following commands, replacing the
+ﬁlename as appropriate.
+On some Linux systems, you may need to use tar xaf --use-compress-
+program=unzstd.
+4. You can then start Anki by typing anki and hitting Enter. If you
+encounter any issues, please see the links on the left.
+Upgrading
+If you were running Anki from a .deb/.rpm/etc in the past, please make
+sure to remove the system version before installing the package provided
+here.
+If you’re upgrading from a previous package, simply repeat the
+installation steps to upgrade to the latest version. Your user data will be
+preserved.
+If you wish to downgrade to a previous version, please make sure you
+downgrade ﬁrst.
+tar xaf Downloads/anki-2XXX-linux-qt6.tar.zst
+cd anki-2XXX-linux-qt6
+sudo ./install.sh
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 31/273
+
+=== PAGE 32 ===
+Add-on Compatibility
+Some add-ons may not always work with the latest Anki release. If you
+upgrade to the latest Anki version and ﬁnd an add-on you cannot live
+without stops working, you can download older Anki versions from the
+releases page.
+System Qt versions
+Anki’s launcher uses the oﬃcial PyQt builds by default. This makes it
+easier to install Anki on distros that don’t have the relevant Python/Qt
+versions, but means that you may not have access certain Qt features
+provided by your Linux distro, such as certain Qt themes, support for the
+FCITX input method, etc.
+If your Linux distro provides up-to-date Anki packages, you may ﬁnd using
+them easiest.
+If it doesn’t, advanced users may wish to combine Anki’s launcher with
+their system’s Qt version. To do this, your system needs to have a Python
+version Anki supports (soon to be 3.11+), and suitable PyQt libraries
+(6.2+).
+WARNING: This is an experimental feature, and your system’s Qt may ﬁx
+some bugs while introducing others.
+1. Install Python and the relevant PyQt packages. On Ubuntu:
+sudo apt install python3-pyqt6.qtwebengine
+2. If you previously used the launcher, rm -rf 
+~/.local/share/AnkiProgramFiles.
+3. Untar the launcher, and cd to its folder.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 32/273
+
+=== PAGE 33 ===
+4. Run touch system_qt to create a system_qt ﬁle in that folder.
+5. Install Anki via ./anki or ./install.sh. In the list of installed packages,
+you should not see any mention of PyQt6.
+Problems
+If you encounter any issues when installing or starting Anki, please see
+the following pages:
+Missing Libraries
+Display Issues
+Blank Main Window
+Linux Distro Packages
+Incorrect GTK Theme
+Wayland
+Input Methods
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 33/273
+
+=== PAGE 34 ===
+Missing Libraries
+If Anki fails to start, please run it from a terminal with anki. If it says a
+library is missing, please install it and try again.
+If it complains about no platform being available, please start Anki with
+the following command line, which should reveal a missing library:
+After installing the library with apt-get or similar, repeat the process. You
+may need to do this a few times before all required libraries are installed.
+QT_DEBUG_PLUGINS=1 anki
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 34/273
+
+=== PAGE 35 ===
+Display Issues on Linux
+Hardware acceleration defaults to on. If you experience blank screens or
+display issues, you can try enabling software rendering.
+Changing the Driver From the Preferences Screen
+In Anki 23.10+, you can change the graphics driver from preferences
+screen by navigating to Tools →  Preferences and then selecting the
+driver from the dropdown menu.
+Changing the Driver From the Terminal
+If you wish to switch back to the default, change software to auto, or
+remove that ﬁle.
+echo software > ~/.local/share/Anki2/gldriver6
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 35/273
+
+=== PAGE 36 ===
+Blank Main Window
+Some Linux distros have recently updated glibc. Recent versions break
+the web toolkit that Anki is built on, causing Anki’s main window to appear
+blank.
+There are two ways to work around this:
+1. Install the latest Qt6 version of Anki, which uses an updated toolkit:
+https://apps.ankiweb.net
+2. Use one of the workarounds posted on the following threads:
+https://forums.ankiweb.net/t/another-blank-main-window-solution-
+for-linux/32835
+https://forums.ankiweb.net/t/please-use-ﬁle-import-popup-on-
+startup/14695
+https://forums.ankiweb.net/t/setting-disable-seccomp-ﬁlter-sandbox-
+by-default-on-linux/13765
+https://forums.ankiweb.net/t/fedora-35-and-anki-2-1-47-updates-
+with-blank-anki-window/13431/11
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 36/273
+
+=== PAGE 37 ===
+Packages Distributed by Linux
+Distributions
+We have seen a lot of issues caused by the customized versions of Anki
+distributed by Linux distributions:
+Anki depends on third-party libraries like Qt, and Linux distributions
+often substitute diﬀerent versions of those libraries, without testing
+the impact of those changes.
+Sometimes the version of Anki they distribute is years old, or is an
+alpha/beta version not intended for stable release. Distributions will
+often disable the built-in update check as well, to prevent you from
+being notiﬁed of newer versions.
+Compiled builds of Anki are available on https://apps.ankiweb.net. Most
+of the necessary libraries are included, and Anki has been tested to work
+with these library versions. If you’re experiencing issues with your distro’s
+version, the ﬁrst thing you should try is switching to the latest packaged
+version we provide.
+You are welcome to continue using your distro’s version of Anki if you
+prefer, but if you run into any issues, you will need to report them to your
+distribution’s package maintainers.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 37/273
+
+=== PAGE 38 ===
+Anki not picking up GTK theme on
+Gnome/Linux
+You can work around this issue by explicitly telling Anki what the GTK
+theme is. Run the following commands in a terminal:
+Then log out and log back into your computer, and Anki should pick up
+the GTK theme.
+theme=$(gsettings get org.gnome.desktop.interface gtk-theme)
+echo "gtk-theme-name=$theme" >> ~/.gtkrc-2.0
+echo "export GTK2_RC_FILES=$HOME/.gtkrc-2.0" >> ~/.profile
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 38/273
+
+=== PAGE 39 ===
+Wayland
+From Anki 2.1.48, you can force Anki to use Wayland by deﬁning
+ANKI_WAYLAND=1 before starting Anki. Wayland may give you better
+rendering across multiple displays, but it is currently oﬀ by default, due to
+the following issues:
+On some distros, windows are rendered without borders.
+Bringing windows to the front is not possible, so for example, clicking
+on Add to reveal an existing Add Cards window will not work.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 39/273
+
+=== PAGE 40 ===
+Input Methods on Linux
+Fcitx
+The standard Anki build includes fcitx support, but it may not work on all
+distributions. If you are unable to use fcitx, you may want to run Anki
+from Python wheels instead.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 40/273
+
+=== PAGE 41 ===
+Getting Started
+Installing & Upgrading
+Videos
+Key Concepts
+Cards
+Card States
+Decks
+Notes & Fields
+Card Types
+Note Types
+Collection
+Shared Decks
+Installing & Upgrading
+The Anki ecosystem is made up of Anki, AnkiMobile, AnkiDroid, and
+AnkiWeb, all of which are linked from our oﬃcial website.
+For instructions on how to install and upgrade Anki for your computer,
+please read the links below:
+Windows
+Mac
+Linux
+Videos
+For a quick way to dive into Anki, have a look at these intro videos. Some
+were made with a previous Anki version, but the concepts are the same.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 41/273
+
+=== PAGE 42 ===
+Shared Decks and Review Basics
+Syncing
+Switching Card Order
+Styling Cards
+Typing in the Answer
+Key Concepts
+Cards
+A question and answer pair is called a card. It’s similar to a paper
+ﬂashcard with a question on the front and answer on the back. However,
+in Anki, a card doesn’t look like a physical card, and when you show the
+answer the question remains visible by default. For example, if you’re
+studying basic chemistry, you might see a question like:
+After deciding the answer is O, you click the Show Answer button, and
+Anki shows you:
+After conﬁrming that you are correct, you tell Anki how well you
+remembered the answer, and Anki will choose when to show you the card
+again. For example, Anki might decide to show you the card again in 3
+days. In this case, we say the card now has a 3 day interval.
+Q: Chemical symbol for oxygen?
+Q: Chemical symbol for oxygen?
+A: O
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 42/273
+
+=== PAGE 43 ===
+Card States
+New: Cards that you have downloaded or created yourself, but have
+never studied before.
+Learning: Cards that were seen for the ﬁrst time recently, and are
+still being learned.
+Review: Cards that you have ﬁnished learning. These cards will be
+shown again after their delay (interval) has elapsed. There are two
+types of review cards:
+Young: A young card is one that has an interval of less than 21
+days.
+Mature: A mature card is one that has an interval of 21 days or
+greater.
+Relearn: Cards that you forgot in the review stage. These cards are
+returned to the relearning state to be learned again.
+Decks
+A deck is a group of cards. You can place cards in diﬀerent decks to study
+parts of your card collection instead of studying everything at once. Each
+deck can have diﬀerent settings, such as how many new cards to show
+each day, or how long to wait until cards are shown again.
+Decks can contain other decks, which allows you to organize decks into a
+tree. Anki uses double colons (“::”) to show diﬀerent levels within the deck
+tree. For example, a deck called “Chinese::Hanzi” refers to a “Hanzi” deck,
+which is part of a “Chinese” deck. If you select “Hanzi”, then only the Hanzi
+cards will be shown; if you select “Chinese”, then all the Chinese cards will
+be shown, including the Hanzi cards.
+To place decks within a tree, you can either name them with double
+colons between each level, or drag and drop them within the deck list.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 43/273
+
+=== PAGE 44 ===
+Decks that have been placed inside another deck are often called
+“subdecks”, and top-level decks are called “parent decks”.
+Anki starts with a deck called “Default”; any cards which have somehow
+become separated from other decks will go here. Anki will hide the
+default deck if it contains no cards and you have added other decks.
+Alternatively, you may rename this deck and use it for other cards.
+Decks in the deck list are sorted alphabetically. This can result in a
+surprising order if your deck names contain numbers. For example, “My
+Deck 10” will come before “My Deck 9”, as 1 comes before 9. If you want
+“My deck 9” to appear earlier, you can rename it to “My deck 09”, which
+appears before “My deck 10”.
+Decks are best used to hold broad categories of cards, rather than
+speciﬁc topics such as “food verbs” or “lesson 1”. For more information
+about this, please see the using decks appropriately section.
+For information on how the order of decks aﬀects the order cards are
+studied in, please see the display order section.
+Notes & Fields
+When making ﬂashcards, it’s often desirable to make more than one card
+that relates to the same information. For example, if you’re learning
+French, and you learn that the word bonjour means hello, you may wish
+to create one card that shows you “bonjour” and asks you to remember
+“hello”, and another card that shows you “hello” and asks you to
+remember “bonjour”. One card is testing your ability to recognize the
+French word, and the other card is testing your ability to produce it.
+When using paper ﬂashcards, your only option in this case is to write out
+the information twice, once for each card. Some ﬂashcard programs
+make life easier by providing a feature to ﬂip the front and back sides.
+This is an improvement over the paper situation, but there are two major
+downsides:
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 44/273
+
+=== PAGE 45 ===
+Because such programs don’t track your performance of recognition
+and production separately, cards will tend not to be shown to you at
+the optimum time, meaning you forget more than you’d like, or you
+study more than is necessary.
+Reversing the question and answer only works when you want
+exactly the same content on each side. This means it’s not possible to
+display extra info on the back of each card for example.
+Anki solves these problems by allowing you to split the content of your
+cards up into separate pieces of information. You can then tell Anki which
+pieces of information you want on each card, and Anki takes care of
+creating the cards for you, and updating them if you make any edits in the
+future.
+Imagine we want to study French vocabulary, and we want to include a
+textbook page number on the back of each card. We want our cards to
+look like this:
+And this:
+In both cards, we have the same three related pieces of information: a
+French word, an English meaning, and a page number. If we put them
+together, they’d look like this:
+Q: Bonjour
+A: Hello
+   Page #12
+Q: Hello
+A: Bonjour
+   Page #12
+French: Bonjour
+English: Hello
+Page: 12
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 45/273
+
+=== PAGE 46 ===
+In Anki, this collection of related information is called a note and each
+piece of information is contained in a ﬁeld. In this example, the note has
+three ﬁelds: “French”, “English”, and “Page”.
+To add and edit ﬁelds, click the Fields… button while adding or editing
+notes. For more information on ﬁelds, please see the Customizing Fields
+section.
+Card Types
+In order for Anki to create cards based on our notes, we need to give it a
+blueprint that says which ﬁelds should be displayed on the front or back
+of each card. This blueprint is called a card type. Each type of note can
+have one or more card types; when you add a note, Anki will create one
+card for each card type.
+All card types have two templates, one for the question and one for the
+answer. In the previous French example, we wanted the back of our
+recognition card to look like this:
+To do this, we can set the answer template to:
+In card templates, ﬁeld names are wrapped in double curly brackets, like
+{{French}} or {{English}}. Anki replaces those with the actual text the
+ﬁelds contain. This is called a “Field replacement”. Text not wrapped in
+double curly brackets appears the same on each card. For example, we
+won’t need to add “Page #” on every note because the template will add it
+Q: Bonjour
+A: Hello
+   Page #12
+Q: {{French}}
+A: {{English}}<br>
+   Page #{{Page}}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 46/273
+
+=== PAGE 47 ===
+automatically to every card. The <br> tag is a special code that tells Anki
+to move to the next line. For details, see the templates section.
+The production card’s templates will also work in a similar way:
+After a card type has been created, every time you add a new note, a card
+will be created based on that card type. Card types make it easy to keep
+the formatting of your cards consistent and can greatly reduce the
+amount of eﬀort involved in adding information. They also mean Anki can
+ensure related cards don’t appear too close to each other, and they allow
+you to ﬁx a typing mistake or factual error once and have all the related
+cards update at once.
+To add and edit card types, click the Cards… button while adding or
+editing notes. For more information on card types, please see the Cards
+and Templates section.
+Note Types
+Anki allows you to create diﬀerent types of notes for diﬀerent material.
+Each type of note has its own set of ﬁelds and card types. It’s a good idea
+to create a separate note type for each broad topic you’re studying. In the
+previous French example, we might create a note type called “French” for
+that. If we wanted to learn capital cities, we could create a note type for
+that as well, with ﬁelds such as “Country” and “Capital City”.
+Anki comes with some standard note types included. These note types
+are provided to make Anki easier for new users, but in the long run it’s
+recommended you create your own note types speciﬁcally for the content
+you are learning. The standard note types are:
+Q: {{English}}
+A: {{French}}<br>
+   Page #{{Page}}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 47/273
+
+=== PAGE 48 ===
+Basic
+Has “Front” and “Back” ﬁelds, and will create one card. Text you enter
+in “Front” will appear on the front of the card, and text you enter in
+“Back” will appear on the back of the card.
+Basic (and reversed card)
+Like “Basic”, but creates two cards for the text you enter: front → back
+and back → front.
+Basic (optional reversed card)
+Like “Basic”, but has a third ﬁeld called “Add Reverse”. If you enter any
+text into that ﬁeld, a reversed card (back → front) will also be created.
+For details, see the Cards and Templates section.
+Basic (type in the answer)
+This is essentially “Basic”, with an extra text box on the front where
+you can type your answer in. When you reveal the back, Anki will
+show you any diﬀerences between your input and the actual answer.
+For details, see the Checking Your Answer section.
+Cloze
+A note type that allows you to select text and turn it into a cloze
+deletion (e.g. “Humans landed on the moon in [… ]” →  “Humans
+landed on the moon in 1969”). For details, see the cloze deletion
+section.
+Image Occlusion
+Like the cloze note type, but it works with images instead of text,
+which is especially useful when studying material that heavily relies
+on images, such as anatomy and geography. For details, please see
+the Image Occlusion section of the manual.
+To add your own note types and modify existing ones, you can use Tools
+> Manage Note Types from the main Anki window.
+Notes and note types are common to your whole collection rather than
+limited to an individual deck. This means you can use diﬀerent note types
+in a single deck, or have cards generated from the same note put into
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 48/273
+
+=== PAGE 49 ===
+diﬀerent decks. When you add notes using the Add window, you can
+select what note type to use and what deck to use, and these choices are
+completely independent of each other. You can also change the note type
+of notes after you’ve already created them.
+Collection
+Your collection is all the material stored in Anki: your cards, notes, decks,
+note types, deck options, and so on.
+Shared Decks
+You can watch a video about Shared Decks and Review Basics on
+YouTube.
+The easiest way to get started with Anki is to download a deck of cards
+someone else has shared:
+1. Click the Get Shared button at the bottom of the deck list.
+2. When you’ve found a deck you’re interested in, click the Download
+button to download a deck package.
+3. Double-click the downloaded package to import it into Anki, or go to
+File > Import.
+Note: It’s not currently possible to add shared decks directly to your
+AnkiWeb account. You need to ﬁrst import them to the desktop app,
+AnkiMobile, or AnkiDroid, then synchronize to upload the decks to
+AnkiWeb.
+Creating your own deck is the most eﬀective way to learn a complex
+subject. Subjects like languages and the sciences can’t be understood
+simply by memorizing facts — you need explanation and context to learn
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 49/273
+
+=== PAGE 50 ===
+them eﬀectively. Furthermore, inputting the information yourself forces
+you to decide what the key points are, leading to a better understanding.
+If you are a language learner, you may be tempted to download a long list
+of words and their translations, but this won’t teach you a language any
+more than memorizing scientiﬁc equations will teach you astrophysics. To
+learn properly, you might need textbooks, teachers, or exposure to real-
+world sentences.
+Most shared decks are created by people who are learning material
+outside Anki, such as from textbooks, classes, TV, etc. They select the
+interesting points from what they learn and put them into Anki. They
+might not make any eﬀort to add background information or
+explanations to the cards, because they already understand the material.
+So when someone else downloads their deck and tries to use it, they
+might ﬁnd it very diﬃcult as the background information and
+explanations are missing.
+That is not to say shared decks are useless. If you’re studying textbook
+ABC and someone has shared a deck of ideas from ABC, that’s a great
+way to save some time. And for simple subjects that are basically a list of
+facts, such as capital city names or country ﬂags, you probably don’t need
+any external material. However, for complex subjects, shared decks
+should be used as a supplement to external material, not as a replacement
+for it.
+Do not learn if you do not understand.
+--SuperMemo
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 50/273
+
+=== PAGE 51 ===
+Getting help
+Asking good questions
+With the exception of AnkiMobile, Anki and its support are provided free
+of charge, by people who generously volunteer their time. Please bear
+this in mind when posting - if you are rude and demanding, or have made
+no eﬀort to solve the problem on your own, people are less likely to want
+to help you.
+Please start by trying to resolve the issue on your own:
+Read the getting started section of the manual, and check out the
+intro videos.
+If you’ve encountered a bug, please follow these steps.
+Use the search button on this page to search frequently asked
+questions.
+Use the search button in the manual.
+Use the search button on the forums.
+Google the issue.
+If you have tried the above and are still stuck, it’s time to ask for help.
+When writing a post, please explain the problem you are having clearly,
+and in detail.
+Please avoid vague questions like:
+“My Anki doesn’t work, what should I do?”
+Instead, please provide as much detail as you can. For example:
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 51/273
+
+=== PAGE 52 ===
+“When I double-click on the Anki icon, an error message pops up. I
+tried searching for the error on Google, but couldn’t ﬁnd anything
+useful. I have copied and pasted the error message to the bottom of
+my post. I followed the steps on the “When problems occur” page,
+but the error message does not go away. What should I do?“
+This is a much better question. It tells us:
+What you have tried.
+What steps you are taking when the problem happens.
+What problems/errors you are getting when things go wrong.
+Knowing these things makes it much easier to answer your question.
+The user forums use a diﬀerent login to AnkiWeb, so please create an
+account there if it’s your ﬁrst time.
+Anki Desktop (the computer version) and
+AnkiWeb
+After reading the above section, please post on the user forums for
+assistance.
+The user forums use a diﬀerent login to AnkiWeb, so please create an
+account there if it’s your ﬁrst time.
+AnkiDroid (Android devices)
+Please see AnkiDroid’s support page.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 52/273
+
+=== PAGE 53 ===
+AnkiMobile (iPhone/iPad)
+Please see AnkiMobile’s support page.
+Private questions
+For security reports and business enquiries, you can post a private ticket
+here. If you have a question about Anki, AnkiWeb or AnkiDroid, please use
+the user forums instead.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 53/273
+
+=== PAGE 54 ===
+Studying
+Decks
+Study Overview
+Questions
+Answer Buttons
+Fuzz Factor
+Editing and More
+Display Order
+Siblings and Burying
+Keyboard Shortcuts
+Falling Behind
+When you have found a deck you like or entered some notes in, it’s time
+to start studying.
+Decks
+Study in Anki is limited to the currently selected deck as well as any
+subdecks it contains.
+On the decks screen, your decks and subdecks will be displayed in a list.
+New, Learn, and Due (To Review) cards for that day will be also displayed
+here.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 54/273
+
+=== PAGE 55 ===
+When you click on a deck, it will become the “current deck”, and Anki will
+change to the study screen. You can return to the deck list at any time by
+clicking on “Decks” at the top of the main window. (You can also use the
+Study Deck action in the menu to select a new deck from the keyboard, or
+you can press the S key to study the currently selected deck.)
+You can click the gears button to the right of a deck to rename or delete
+the deck, change its options, or export it.
+Study Overview
+After clicking on a deck to study, you’ll see a screen that shows you how
+many cards are due today. This is called the “deck overview” screen:
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 55/273
+
+=== PAGE 56 ===
+The cards are split into three types: New, Learning, and To Review. If you
+have Bury siblings activated in your deck options, you may see how many
+cards will be buried in grey:
+To start a study session, click the Study Now button. Anki will proceed to
+show you cards until the cards to be shown for the day have run out.
+While studying, you can return to the overview by pressing the S key on
+your keyboard.
+Questions
+When a card is shown, only the question is shown at ﬁrst. After thinking
+about the answer, either click the Show Answer button, or press the
+Space. The answer will then be shown. It’s okay if it takes you a little
+while to recall the answer, but as a general rule if you can’t answer within
+about 10 seconds, it’s probably better to move on and show the answer
+than keep struggling to remember.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 56/273
+
+=== PAGE 57 ===
+Answer Buttons
+After the answer is shown, compare the answer you thought of with the
+answer that is shown and select any of the following buttons.
+Again: Select this when your answer is incorrect or when you couldn’t
+recall the answer. If your answer is partially correct, you should be
+strict with yourself: if it counts as a fail in a real-life context outside of
+Anki, then it counts as a fail in Anki as well. You’ll typically use this
+button about 5-20% of the time.
+Keyboard Shortcut: 1
+Hard: Select this button when your answer is correct, but you had
+doubts about it or it took a long time to recall.
+Keyboard Shortcut: 2
+Good: Select this when your answer is correct, but it took some
+mental eﬀort to recall it. When Anki is used properly, this should be
+the most commonly used button. You’ll typically use this button
+about 80-95% of the time.
+Keyboard Shortcut: 3, Space, Enter
+Easy: Select this if your answer is correct and it took no mental eﬀort
+to recall it.
+Keyboard Shortcut: 4
+If you ﬁnd it hard to use four answer buttons, you can also use only Again
+and Good buttons. Use Again for incorrect answers and use Good for
+correct answers.
+Each answer button shows the next time a card will be reviewed again if
+you select that button. To learn about the settings that control the next
+review intervals, see the topics Learning Steps, Lapses, FSRS and
+Advanced in the Deck Options section.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 57/273
+
+=== PAGE 58 ===
+Fuzz Factor
+When you select an answer button on a review card, Anki also applies a
+small amount of random “fuzz” to prevent cards that were introduced at
+the same time and given the same ratings from sticking together and
+always coming up for review on the same day.
+Learning cards are also given up to 5 minutes of extra delay so that they
+don’t always appear in the same order, but answer buttons won’t reﬂect
+that. It is not possible to turn this feature oﬀ.
+Editing and More
+You can click the Edit button in the bottom left to edit the current note.
+When you ﬁnish editing, you’ll be returned to study. The editing screen
+works very similarly to the add notes screen.
+At the bottom right of the study screen is a button labeled More. This
+button provides some other operations you can do on the current card or
+note:
+Flag Card: Adds a colored marker to the card, or toggles it oﬀ. Flags
+will appear during study, and you can search for ﬂagged cards in the
+Browse screen. This is useful when you want to take some action on
+the card at a later date, such as looking up a word when you get
+home. If you’re using Anki 2.1.45+, you can also rename ﬂags from
+the browser.
+Bury Card / Note: Hides a card or all of the note’s cards from review
+until the next day. (If you want to unbury cards before then, you can
+click the “unbury” button on the deck overview screen.) This is useful
+if you cannot answer the card at the moment or you want to come
+back to it another time. Burying can also happen automatically for
+cards of the same note.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 58/273
+
+=== PAGE 59 ===
+Reset card: Moves the current card to the end of the new queue.
+The “Restore original position” option allows you to reset the card
+back to its original position when you reset it.
+The “Reset repetition and lapse count” option, if enabled, will set the
+review and failure counters for the card back to zero. It does not
+remove the review history that is shown at the bottom of the card
+info screen.
+Set Due Date: Puts cards in the review queue, and makes them due
+on a certain date.
+Suspend Card / Note: Hides a card or all of the note’s cards from
+review until they are manually unsuspended (by clicking the suspend
+button in the browser). This is useful if you want to avoid reviewing
+the note for some time, but don’t want to delete it.
+Options: Edit the options for the current deck.
+Card Info: Displays statistical information about the card.
+Previous Card Info: Displays statistical information about the
+previous card.
+Mark Note: Adds a “marked” tag to the current note, so it can be
+easily found in the browser. This is similar to ﬂagging individual cards,
+but works with a tag instead, so if the note has multiple cards, all
+cards will appear in a search for the marked tag. Most users will want
+to use ﬂags instead.
+Create Copy: Opens a duplicate of the current note in the editor,
+which can be slightly modiﬁed to easily obtain variations of your
+cards. By default, the duplicate card will be created in the same deck
+as the original.
+Delete Note: Deletes the note and all of its cards.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 59/273
+
+=== PAGE 60 ===
+Replay Audio: If the card has audio on the front or back, play it
+again.
+Pause Audio: Pauses the audio if it is playing.
+Audio -5s / +5s: Jump backwards / forward 5 seconds in the currently
+playing audio.
+Record Own Voice: Record from your microphone for the purposes
+of checking your pronunciation. This recording is temporary and will
+go away when you move to the next card. If you want to add audio to
+a card permanently, you can do that in the edit window.
+Replay Own Voice: Replay the previous recording of your voice
+(presumably after showing the answer).
+Display Order
+Studying will show cards from the selected deck and any decks it
+contains. Thus, if you select your “French” deck, the subdecks
+“French::Vocab” and “French::My Textbook::Lesson 1” will be shown as
+well.
+By default, for new cards, Anki gathers cards from the decks in
+alphabetical order. So in the above example, you would get cards ﬁrst
+from “French”, then “My Textbook”, and ﬁnally “Vocab”. You can use this
+to control the order cards appear in, placing high priority cards in decks
+that appear higher in the list. When computers sort text alphabetically,
+the “-” character comes before alphabetical characters, and “~” comes
+after them. So you could call the deck “-Vocab” to make them appear ﬁrst,
+and you could call the other deck “~My Textbook” to force it to appear
+after everything else.
+New cards and reviews are gathered separately, and Anki won’t wait until
+both queues are empty before moving on to the next deck, so it’s possible
+you’ll be exposed to new cards from one deck while seeing reviews from
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 60/273
+
+=== PAGE 61 ===
+another deck, or vice versa. If you don’t want this, click directly on the
+deck you want to study instead of one of the parent decks.
+Since cards in learning are somewhat time-critical, they are fetched from
+all decks at once and shown in the order they are due.
+To control the order cards appear in, see Display Order. For more ﬁne-
+grained ordering of new cards, you can change the order in the browser.
+Siblings and Burying
+Recall from the basics that Anki can create more than one card for each
+thing you input, such as a front → back card and a back → front card, or two
+diﬀerent cloze deletions from the same text. These related cards are
+called “siblings”.
+When you answer a card that has siblings, Anki can prevent the card’s
+siblings from being shown in the same session by automatically “burying”
+them. Buried cards are hidden from review until the clock rolls over to a
+new day or you manually unbury them using the “Unbury” button that’s
+visible at the bottom of the deck overview screen. Anki will bury siblings
+even if the siblings are not in the same deck (for instance, if you use the
+deck override feature).
+You can enable burying from the deck options screen - there are separate
+settings for new cards and reviews.
+Anki will only bury siblings that are new or review cards. It will not hide
+cards in learning, as time is of the essence for those cards. On the other
+hand, when you study a learning card, any new/review siblings will be
+buried.
+Also note that a card cannot be buried and suspended at the same time.
+Suspending a buried card will unbury it. Suspended cards can’t be buried.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 61/273
+
+=== PAGE 62 ===
+Keyboard Shortcuts
+Most of the common operations in Anki have keyboard shortcuts. Most of
+them are discoverable in the interface: menu items list their shortcuts
+next to them, and hovering the mouse cursor over a button will generally
+show its shortcut in a tooltip.
+When studying, either Space or Enter will show the answer. When the
+answer is shown, you can use Space or Enter to select the Good button.
+You can use the 1- 4 keys to select a speciﬁc ease button. Many people
+ﬁnd it convenient to answer most cards with Space and keep one ﬁnger
+on 1 for when they forget.
+The “Study Deck” item in the Tools menu allows you to quickly switch to a
+deck with the keyboard. You can trigger it with the / key. When opened,
+it will display all of your decks and show a ﬁlter area at the top. As you
+type characters, Anki will display only decks matching the characters you
+type. You can add a space to separate multiple search terms, and Anki will
+show only decks that match all the terms. So “ja 1” or “on1 ja” would both
+match a deck called “Japanese::Lesson1”.
+Falling Behind
+When you fall behind in your reviews, Anki by default prioritizes cards
+that have been waiting the longest. This ordering ensures that no cards
+will be left waiting indeﬁnitely, but it means that if you introduce new
+cards, their reviews won’t appear until you’ve gotten through your
+backlog.
+When you answer cards that have been waiting for a while, Anki factors in
+that delay when determining the next time a card should be shown. This
+means if you are returning to Anki after a long break, you don’t have to
+start anew and can just start back from where you left.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 62/273
+
+=== PAGE 63 ===
+Adding/Editing
+Adding Cards and Notes
+Duplicate Check
+Eﬀective Learning
+Adding a Note Type
+Customizing Fields
+Changing Deck / Note Type
+Organizing Content
+Using Decks Appropriately
+Using Tags
+Using Flags
+The “Marked” Tag
+Using Fields
+Custom Study and Filtered Decks
+Editing Features
+Cloze Deletion
+Image Occlusion
+Adding an image
+Adding IO cards
+Editing IO notes
+Inputting Non-Latin Characters and Accents
+Adding international keyboard layouts
+Adding keyboard layouts for speciﬁc languages
+Right-to-left Languages
+Limitations
+Unicode Normalization
+Adding Cards and Notes
+Recall from the basics that in Anki we add notes rather than cards, and
+Anki creates cards for us. Click Add in the main window, and the Add
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 63/273
+
+=== PAGE 64 ===
+Notes window will appear.
+The top left of the window shows us the current note type. If it does not
+say “Basic,” then you may have added some note types when you
+downloaded a shared deck. The text below assumes that “Basic” is
+selected.
+The top right of the window shows us the deck cards will be added to. If
+you would like to add cards to a new deck, you can click on the deck name
+button and then click Add.
+Below the note type, you’ll see some buttons, and an area labelled “Front”
+and “Back”. Front and Back are called ﬁelds, and you can add, remove,
+and rename them by clicking the “Fields… ” button above.
+Below the ﬁelds is another area labelled “tags”. Tags are labels that you
+can attach to your notes, to make organizing and ﬁnding notes easier.
+You can leave the tags blank if you wish, or add one or more of them.
+Tags are separated by a space. If the tags area says
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 64/273
+
+=== PAGE 65 ===
+… then the note you add would have two tags.
+When you have entered text into the front and back, you can click the
+Add button or press Ctrl+Enter (Command+Enter on a Mac) to add
+the note to your collection. When you do so, a card will be created as well,
+and placed into the deck you chose. If you would like to edit a card you
+added, you can click the history button to search for a recently added
+card in the browser.
+For more information on the buttons between the note type and the
+ﬁelds, please see the editor section.
+Duplicate Check
+Anki checks the ﬁrst ﬁeld for uniqueness, so it will warn you if you enter
+two cards with a Front ﬁeld of “apple” (for example). The uniqueness
+check is limited to the current note type, so if you’re studying multiple
+languages, two cards with the same Front would not be listed as
+duplicates as long as you had a diﬀerent note type for each language.
+Anki does not check for duplicates in other ﬁelds automatically for
+eﬃciency reasons, but the browser has a “Find Duplicates” function,
+which you can run periodically.
+Eﬀective Learning
+Diﬀerent people like to review in diﬀerent ways, but there are some
+general concepts to keep in mind. An excellent introduction is this article
+on the SuperMemo site. In particular:
+Keep it simple: The shorter your cards, the easier they are to review.
+You may be tempted to include lots of information “just in case,” but
+reviews will quickly become painful.
+vocab check_with_tutor
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 65/273
+
+=== PAGE 66 ===
+Don’t memorize without understanding: If you are studying a
+language, try to avoid large lists of words. The best way to learn
+languages is in context, which means seeing those words used in a
+sentence. Likewise, imagine you’re studying a computer course. If you
+attempt to memorize the mountain of acronyms, you’ll ﬁnd it very
+diﬃcult to make progress. But if you take the time to understand the
+concepts behind the acronyms, learning the acronyms will become a
+lot easier.
+Adding a Note Type
+While basic note types are suﬃcient for simple cards with only a word or
+phrase on each side, as soon as you ﬁnd yourself wanting to include more
+than one piece of information on the front or back, it’s better to split that
+information up into more ﬁelds.
+You may ﬁnd yourself thinking “but I only want one card, so why can’t I
+just include the audio, a picture, a hint, and the translation in the Front
+ﬁeld?” If you’d prefer to do that, that’s ﬁne. But the disadvantage of that
+approach is that all the information is stuck together. If you wanted to
+sort your cards by the hint, you wouldn’t be able to do that as it is mixed
+in with the other content. You also wouldn’t be able to do things such as
+moving the audio from the front to the back, except by laboriously
+copying and pasting it for every note. By keeping content in separate
+ﬁelds, you make it much easier to adjust the layout of your cards in the
+future.
+To create a new type of note, choose Tools > Manage Note Types from
+the main Anki window. Then click Add to add a new type of note. You will
+now see another screen that gives you a choice of note types to base the
+new type on. “Add” means to base the newly created type on one that
+comes with Anki. “Clone” means to base the newly created type on one
+that is already in your collection. For instance, if you’d created a French
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 66/273
+
+=== PAGE 67 ===
+vocab type already, you might want to clone that when creating a German
+vocab type.
+After choosing OK, you will be asked to name the new type. The subject
+material that you are studying is a good choice here – things like
+“Japanese”, “Trivia”, and so on. Once you have chosen a name, close the
+Note Types window, and you will return to the adding window.
+Customizing Fields
+To customize ﬁelds, click the Fields… button when adding or editing a
+note, or while the note type is selected in the Manage Note Types
+window.
+You can add, remove, or rename ﬁelds by clicking the appropriate
+buttons.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 67/273
+
+=== PAGE 68 ===
+To change the order in which the ﬁelds appear in this dialog and the add
+notes dialog, you can use the reposition button, which asks for the
+numerical position you want the ﬁeld to have. So if you want to change a
+ﬁeld to be the new ﬁrst ﬁeld, enter “1”.
+Alternatively you can also drag and drop the ﬁeld names to reorder them.
+To do that, use your mouse or ﬁnger to drag the ﬁeld to the desired
+position. An indicator will show you where the ﬁeld will be moved to.
+Do not use “Tags”, “Type”, “Deck”, “Card”, or “FrontSide” as ﬁeld names, as
+they are special ﬁelds and will not work properly.
+The options at the bottom of the screen allow you to edit various
+properties of the ﬁelds to be used when adding and editing the cards.
+This is not where you customize what appears on your cards when
+reviewing; for that, please see templates.
+Editing Font allows you to customize the font and size used when
+editing notes. This is useful if you want to make unimportant
+information smaller, or increase the size of non-Latin characters
+which are hard to read. The changes you make here do not aﬀect
+how cards appear when reviewing: to do that, please see the
+templates section. If you have enabled the “type in the answer”
+function, however, the text you type will use the font size deﬁned
+here. (For information about how to change the actual font face when
+typing the answer, please see the checking your answer section.)
+Sort by this ﬁeld…  tells Anki to show this ﬁeld in the Sort Field
+column of the browser. You can use this to sort cards by that ﬁeld.
+Only one ﬁeld can be the sort ﬁeld at once.
+Reverse text direction is useful if you are studying languages that
+display text from right to left (RTL), such as Arabic or Hebrew. This
+setting currently only controls editing; to make sure the text displays
+correctly during review, you’ll need to adjust your template.
+Use HTML editor by default is useful if you prefer to edit the ﬁelds
+directly in HTML.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 68/273
+
+=== PAGE 69 ===
+Collapse by default. Fields can be collapsed/expanded. The
+animation can be disabled in the preferences.
+Exclude from unqualiﬁed searches (slower) can be used if you
+want the content of a certain ﬁeld not to appear in unqualiﬁed (not
+limited to a speciﬁc ﬁeld) searches.
+After you have added ﬁelds, you will probably want to add them to the
+front or back of your cards. For more information on that, please see the
+templates section.
+Changing Deck / Note Type
+While adding, you can click on the top left button to change note type,
+and the top right button to change deck. The window that opens up will
+not only allow you to select a deck or note type, but also to add new
+decks or manage your note types.
+Organizing Content
+Using Decks Appropriately
+Decks are designed to divide your content up into broad categories that
+you wish to study separately, such as English, Geography, and so on. You
+may be tempted to create lots of little decks to keep your content
+organized, such as “my geography book chapter 1”, or “food verbs”, but
+this is not recommended, for the following reasons:
+Lots of little decks may mean you end up seeing cards in a
+recognizable order. On older scheduler versions, new cards can only
+be introduced in deck order. And if you were planning to click on
+each deck in turn (which is slow), you will end up seeing all the
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 69/273
+
+=== PAGE 70 ===
+“chapter 1” or “food verb” reviews together. This makes it easier to
+answer the cards, as you can guess them from the context, which
+leads to weaker memories. When you need to recall the word or
+phrase outside Anki, you won’t always have the luxury of being
+shown related content ﬁrst!
+While less of a problem than it was in earlier Anki versions, adding
+hundreds of decks may cause slowdowns, and very large deck trees
+with thousands of items can actually break the display of the deck list
+in Anki versions before 2.1.50.
+Using Tags
+Instead of creating lots of little decks, it’s a better idea to use tags and/or
+ﬁelds to classify your content. Tags are a useful way to boost search
+results, ﬁnd speciﬁc content, and keep your collection organized. There
+are many ways of using tags and ﬂags eﬀectively, and thinking in advance
+about how you want to use them will help you decide what will work best
+for you.
+Some people prefer using decks and subdecks to keep their cards
+organized, but using tags oﬀers a big advantage over decks for that: you
+can add several tags to a single note, but a single card can only belong to
+one deck, which makes tags a more powerful and ﬂexible categorization
+system than decks in most cases. You can also organize tags in trees in
+the same way as you can do for decks.
+For example, instead of creating a “food verbs” deck, you could add those
+cards to your main language study deck, and tag the cards with “food”
+and “verb”. Since each card can have multiple tags, you can do things like
+search for all verbs, or all food-related vocabulary, or all verbs that are
+related to food.
+You can add tags from the Edit window and from the Browser, and you
+can also add, delete, rename, or organize tags there. Please note that tags
+work at note level, which means that when you tag a card that has
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 70/273
+
+=== PAGE 71 ===
+siblings, all the siblings will be tagged as well. If you need to tag a single
+card, but not its siblings, you should consider using ﬂags instead.
+Using Flags
+Flags are similar to tags, but they will appear during study in the review
+window, showing a colored ﬂag icon on the upper right area of the
+screen. You can also search for ﬂagged cards in the Browse screen,
+rename ﬂags from the browser and create ﬁltered decks from ﬂagged
+cards, but unlike tags, a single card can have only one ﬂag at a time.
+Another important diﬀerence is that ﬂags work at card level, so ﬂagging a
+card that has siblings won’t have any eﬀect on the card’s siblings.
+You can ﬂag / unﬂag cards directly while in review mode (by pressing
+Ctrl+1-7 on Windows or Cmd+1-7 on Mac) and from the Browser.
+The “Marked” Tag
+Anki treats a tag called “marked” specially. There are options in the review
+screen and browse screen to add and remove the “marked” tag. The
+study screen will show a star when the current card’s note has that tag.
+And cards are shown in a diﬀerent color in the browse screen when their
+note is marked.
+Note: Marking is mainly left around for compatibility with older Anki
+versions; most users will want to use ﬂags instead.
+Using Fields
+For those who like to stay very organized, you can add ﬁelds to your notes
+to classify your content, such as “book”, “page”, and so on. Anki supports
+searching in speciﬁc ﬁelds, which means you can do a search for
+"book:my book" page:63 and immediately ﬁnd what you’re looking for.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 71/273
+
+=== PAGE 72 ===
+Custom Study and Filtered Decks
+Using custom study and ﬁltered deck you can create temporary decks out
+of search terms. This allows you to review your content mixed together in
+a single deck most of the time (for optimum memory), but also create
+temporary decks when you need to focus on particular material, such as
+before a test. The general rule is that if you always want to be able to
+study some content separately, it should be in a normal deck; if you only
+occasionally need to be able to study it separately (for a test, when under
+a backlog, etc.), then ﬁltered decks created from tags, ﬂags, marks or
+ﬁelds are better.
+Editing Features
+The editor is shown when adding notes, editing a note during reviews, or
+browsing.
+On the top left are two buttons, which open the ﬁelds and cards windows.
+On the right are buttons that control formatting. Bold, italic and underline
+work like they do in a word processing program. The next two buttons
+allow you to subscript or superscript text, which is useful for chemical
+compounds like H2O or simple mathematical equations like x2. Then,
+there are two buttons to allow you to change text colour.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 72/273
+
+=== PAGE 73 ===
+The rubber eraser button clears any formatting in the currently selected
+text — including the colour of the text, whether the selected text is bold,
+etc. The next three buttons allow creating lists, text alignment and text
+indent.
+You can use the paper-clip button to select audio, images, and videos
+from your computer’s hard drive and attach them to your notes.
+Alternatively, you can copy the media onto your computer’s clipboard (for
+instance, by right-clicking an image on the web and choosing “Copy
+Image”) and paste it into the ﬁeld that you want to place it in. For more
+information about media, please see the media section.
+The microphone icon allows you to record from your computer’s
+microphone and attach the recording to the note.
+The Fx button shows shortcuts to add MathJax or LaTeX to your notes.
+The [… ] buttons are visible when a cloze note type is selected.
+The </> button allows editing the underlying HTML of a ﬁeld.
+Anki 2.1.45+ supports adjusting sticky ﬁelds directly from the editing
+screen. If you click on the pin icon on the right of a ﬁeld, Anki will not clear
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 73/273
+
+=== PAGE 74 ===
+out the ﬁeld’s content after a note is added. If you ﬁnd yourself entering
+the same content into multiple notes, you may ﬁnd this useful. On
+previous Anki versions, sticky ﬁelds were toggled from the Fields screen.
+Most of the buttons have shortcut keys. You can hover the mouse cursor
+over a button to see its shortcut.
+When pasting text, Anki will keep most formatting by default. If you hold
+down the Shift key while pasting, Anki will strip most of the formatting.
+Under Preferences, you can toggle “Paste without shift key strips
+formatting” to modify the default behaviour.
+Cloze Deletion
+Cloze deletion is the process of hiding one or more words in a sentence.
+For example, if you have the sentence:
+… and you create a cloze deletion on “1913”, then the sentence would
+become:
+Canberra was founded in 1913.
+Canberra was founded in [...].
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 74/273
+
+=== PAGE 75 ===
+Sometimes sections that have been removed in this fashion are said to be
+“occluded”.
+For more information on why you might want to use cloze deletion, see
+Rule 5 here.
+Anki provides a special cloze deletion type of note, to make creating
+clozes easy. To create a cloze deletion note, select the Cloze note type,
+and type some text into the “Text” ﬁeld. Then drag the mouse over the
+text you want to hide to select it, and click the [… ] button. Anki will replace
+the text with:
+The “c1” part means that you have created one cloze deletion in the
+sentence. You can create more than one deletion if you’d like. For
+example, if you select Canberra and click [… ] again, the text will now look
+like:
+When you add the above note, Anki will create two cards. The ﬁrst card
+will show:
+… on the question, with the full sentence on the answer. The other card
+will have the following on the question:
+You can also elide multiple sections on the same card. In the above
+example, if you change c2 to c1, only one card would be created, with
+both Canberra and 1913 hidden. If you hold down Alt (Option on a
+Mac) while creating a cloze, Anki will automatically use the same number
+instead of incrementing it.
+Canberra was founded in {{c1::1913}}.
+{{c2::Canberra}} was founded in {{c1::1913}}.
+Canberra was founded in [...].
+[...] was founded in 1913.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 75/273
+
+=== PAGE 76 ===
+Cloze deletions don’t need to fall on word boundaries, so if you select
+“anberra” rather than “Canberra” in the above example, the question
+would appear as “C[… ] was founded in 1913”, giving you a hint.
+You can also give yourself hints that don’t match the text. If you replace
+the original sentence with:
+… and then press [… ] after selecting “Canberra::city”, Anki will treat the text
+after the two colons as a hint, changing the text into:
+When the card comes up for review, it will appear as:
+For information on testing your ability to type in a cloze deletion correctly,
+please see the section on typing answers.
+From version 2.1.56, nested cloze deletions are supported. For example,
+the following is valid:
+The inner cloze is entirely nested within the outer. There is no support for
+partial overlaps, such as:
+with the word “was” appearing in both deletions.
+The current implementation can only handle a limited amount of nesting.
+In Anki 24.11, it is 3 levels. In other versions, the limit is around 8, but Anki
+may become slow as you approach the limit. It is not possible to extend
+Canberra::city was founded in 1913
+{{c1::Canberra::city}} was founded in 1913
+[city] was founded in 1913.
+{{c1::Canberra was {{c2::founded}}}} in 1913
+[...] founded in 1913 -> Canberra was
+Canberra [...] in 1913 -> was founded
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 76/273
+
+=== PAGE 77 ===
+the limit. If you use this feature, it is recommended you limit yourself to a
+few levels of nesting.
+Prior to version 2.1.56, if you need to create clozes from overlapping text,
+add another Text ﬁeld to your cloze, add it to the template, and then
+when creating notes, paste the text into two separate ﬁelds, like so:
+The default cloze note type has a second ﬁeld called Extra, that is shown
+on the answer side of each card. It can be used for adding some usage
+notes or extra information.
+The cloze note type is treated specially by Anki, and cannot be created
+based on a regular note type. If you wish to customize it, please make
+sure to clone the existing Cloze type instead of another type of note.
+Things like formatting can be customized, but it is not possible to add
+extra card templates to the cloze note type.
+Image Occlusion
+Anki 23.10+ supports Image Occlusion cards natively. An Image Occlusion
+(IO) note is a special case of cloze deletion based on images instead of
+text, and allows you to create cards that hide some parts of an image,
+testing your knowledge of that hidden information.
+Text1 field: {{c1::Canberra was founded}} in 1913
+Text2 field: {{c2::Canberra}} was founded in 1913
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 77/273
+
+=== PAGE 78 ===
+Adding an image
+To add IO cards to your collection, open the Add screen, click on “Type”
+and choose “Image Occlusion” from the list of built-in note types. Then,
+click on Select Image to load an image ﬁle saved on your computer’s
+hard drive, or on Paste image from clipboard if you have an image
+copied to the clipboard.
+Adding IO cards
+After loading an image, the IO editor will open. Click on the icons on the
+left to add as many areas to your image as you want. There are three
+basic shapes to choose from:
+Rectangle
+Ellipse
+Polygon
+You can also choose between two diﬀerent IO modes for each note:
+Hide All, Guess One: All areas are hidden and only one area at a
+time is revealed while learning.
+Hide One, Guess One: Only one area at a time is hidden and will be
+revealed during learning. The other areas will be visible.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 78/273
+
+=== PAGE 79 ===
+The default IO note type also has standard ﬁelds: Header (displayed
+above the image on the front and back of each card), Back Extra
+(displayed below the image on the back of each card), and Comments
+(not displayed on the cards). To access those from the IO editor, click the
+Toggle Mask Editor button. There you can also view and edit the Tags of
+the note.
+Once you’re done, click on the “Add” button, at the bottom of the screen.
+Anki will add a card for each shape or group of shapes you added in the
+previous step, and you can start reviewing them normally.
+Editing IO notes
+You can edit your IO notes by clicking on “Edit” while reviewing, or directly
+from the browser. There are several tools that you can use. Of note:
+Select: It allows you to select one or more shapes to move, resize,
+delete or group them.
+Zoom: You can freely move the image and zoom in or out using the
+mouse wheel.
+Shapes (Rectangle, Ellipse or Polygon): Use them to add new shapes /
+cards.
+Text: It adds text areas to your image. These text areas can be
+moved, resized or deleted, but no card will be created when you use
+this tool.
+Undo / Redo.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 79/273
+
+=== PAGE 80 ===
+Zoom In / Out - Reset zoom.
+Toggle Translucency: Use this tool to temporarily view the hidden
+areas.
+Delete: Use this tool to delete selected shapes and text areas. Please
+note that deleting a shape won’t delete its associated card
+automatically; you will need to use Tools>Empty Cards afterwards,
+the same as with regular cloze deletions.
+Duplicate.
+Group selection: Use this tool to create a cluster of shapes, which will
+allow you to move, resize or delete them simultaneously. Please note
+that two or more single shapes will create only one card once
+grouped.
+Ungroup selection: Select a group and then click this button to make
+each shape independent again.
+Alignment: This tool can be used to align your shapes / text areas as
+desired.
+While reviewing IO Cards a “Toggle Masks” button will appear just below
+the image. This button will temporarily clear all shapes of the note when
+using “Hide All, Guess One” mode.
+Inputting Non-Latin Characters and Accents
+All modern computers have built-in support for typing accents and non-
+Latin characters, and multiple ways to go about it. The method we
+recommend is by using a keyboard layout for the language you want to
+learn.
+Languages with a separate script like Japanese, Chinese, Thai, and so on,
+have their own layouts speciﬁc to that language.
+European languages that use accents may have their own layout, but can
+often be typed on a generic “international keyboard” layout. These work
+by typing the accent, then the character you want accented - e.g. an
+apostrophe (´) then the letter a (a) gives á.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 80/273

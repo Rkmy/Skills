@@ -1,0 +1,1800 @@
+
+=== PAGE 141 ===
+Burying
+When Anki gathers cards, it ﬁrst gathers intraday learning cards, then
+interday learning cards, then review cards, and ﬁnally new cards. This
+aﬀects how burying works:
+If you have all burying options enabled, the sibling that comes
+earliest in that list will be shown. For example, a review card will be
+shown in preference to a new card.
+Siblings later in the list can not bury earlier card types. For example, if
+you disable burying of new cards, and study a new card, it will not
+bury any interday learning or review cards, and you may see both a
+review sibling and new sibling in the same session.
+The options are:
+Bury new siblings: Whether other new cards of the same note (e.g.
+reverse cards, adjacent cloze deletions) will be delayed until the next
+day.
+Bury review siblings: Whether other review cards of the same note
+will be delayed until the next day.
+Bury interday learning siblings: Whether other learning cards of
+the same note that crossed a day boundary will be delayed until the
+next day.
+For more info about burying cards, please see this section of the manual.
+Audio
+Don’t play audio automatically: By default, Anki automatically plays
+any audio you have on cards. If you turn on this option Anki will not
+play audio until you press the replay audio key, R or F5.
+Skip question when replaying answer: Controls whether audio
+from the question side is played when you use replay action on the
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 141/273
+
+=== PAGE 142 ===
+answer side. Note that, Anki does not automatically play audio from
+the {{FrontSide}} ﬁeld. This option does not inﬂuence the
+behaviour of automatic play.
+Timers
+Anki monitors how long it takes you to answer each card, so that it can
+show you how long was spent studying each day. The time taken does not
+inﬂuence scheduling.
+Internal Timer
+Maximum answer seconds: The default limit is 60 seconds. If you take
+longer than that, Anki assumes you have walked away from your
+computer or have been distracted, and caps the recorded time at 60
+seconds, so that you don’t end up with inaccurate statistics.
+This internal timer runs from when the question is shown until you
+press a button to grade your answer. If you consistently spend longer
+than 60 seconds on a card, you may want to consider either raising
+this limit, or even better, making your cards simpler.
+On-screen Timer
+Show on-screen timer: On the Study screen, show a timer that counts
+the time you’re taking to study each card. (This timer will stop when it
+reaches the Maximum answer seconds set for the internal timer.)
+Stop on-screen timer on answer: Whether the on-screen timer should
+continue running from when you show the answer until you press a
+button to grade your answer. This option does not impact the time
+that is recorded for your statistics.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 142/273
+
+=== PAGE 143 ===
+Auto Advance
+Requires Anki 23.12 or later. Auto Advance allows you to automatically
+take some actions after a certain amount of time has passed. To use it,
+you must ﬁrst set a non-zero time in Seconds to show question for
+and/or Seconds to show answer for. Then, in the study screen, use the
+Auto Advance action from the More button to start advancing.
+Easy Days
+If you want to spend less time on Anki on some days of the week, such as
+Sundays, this feature can help you do that. After the interval is calculated,
+it will be adjusted by a small amount to change the due date. Note that
+setting all days to “Reduced” or “Minimum” will result in the same
+workload as setting all days to “Normal”. This feature works with both
+FSRS and the legacy SM-2 algorithm. Changing your Easy Days
+conﬁguration doesn’t retroactively change existing intervals and will only
+aﬀect future intervals. Simply put, you will not see immediate changes in
+the number of due cards.
+FSRS
+The Free Spaced Repetition Scheduler (FSRS) is an alternative to Anki’s
+legacy SuperMemo 2 (SM-2) algorithm. By more accurately determining
+how much information you are likely to forget, it can help you remember
+more material in the same amount of time.
+When you turn on FSRS, some new options become available, and SM-2
+speciﬁc options, such as Graduating interval, Easy bonus, etc. are
+hidden. This option is shared by all presets.
+Before Enabling
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 143/273
+
+=== PAGE 144 ===
+Please ensure all of your Anki clients support FSRS. Anki 23.10,
+AnkiMobile 23.10, and AnkiWeb all support it. AnkiDroid supports it in
+2.17+. If one of your clients doesn’t support it, things will not work
+correctly.
+If you previously used the “custom scheduling” version of FSRS,
+please make sure you clear out the custom scheduling section before
+enabling FSRS.
+A Short Guide
+Enable FSRS under the “FSRS” section, at the bottom of the deck
+options page. FSRS can only be enabled globally; you cannot enable it
+for some presets and disable it for others.
+Ensure that all your learning and re-learning steps are shorter than
+1d and can be completed on the same day. 23h is not recommended
+even though it’s less than one day because you won’t be able to ﬁnish
+this step on the same day as your ﬁrst review. Steps such as 10m or
+30m are good.
+Click the “Optimize” button under the “FSRS parameters” ﬁeld. If you
+see a message that says “The FSRS parameters currently appear to be
+optimal”, that’s ﬁne.
+Choose a value of desired retention: the proportion of cards recalled
+successfully when they are due. This is the most important setting
+in FSRS. Higher retention leads to shorter intervals and more
+reviews per day. The default is 90%, which oﬀers a good balance of
+retention and workload. Above 90% the workload increases very
+quickly, and above 97% the workload can be overwhelming. You can
+use “Compute minimum recommended retention” to help you
+choose the value of desired retention.
+Parameters and desired retention are preset-speciﬁc, so you can create
+multiple presets with diﬀerent settings.
+FSRS can adapt to almost any habit, except for one: pressing “Hard”
+instead of “Again” when you forget the information. When you press
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 144/273
+
+=== PAGE 145 ===
+“Hard”, FSRS assumes you have recalled the information correctly (though
+with hesitation and a lot of mental eﬀort). If you press “Hard” when you
+have failed to recall the information, all intervals will be unreasonably
+high. So, if you have this habit, please change it and use “Again” when you
+forget the information.
+Regarding add-on compatibility, as a general rule of thumb, if an add-on
+aﬀects intervals and scheduling in some way, it shouldn’t be used with
+FSRS.
+Desired Retention
+Desired retention controls how likely you are to remember cards when
+they are scheduled for a review. The default value of 0.90 will schedule
+cards so you have a 90% chance of remembering them when they come
+up for review again. This should normally translate to remembering
+around 90% cards when they are reviewed, and only failing around 10%.
+Here is a graph that shows how adjusting this value will aﬀect your
+workload:
+The exact shape of the graph is diﬀerent for everyone. However, there
+are two patterns that hold true for all:
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 145/273
+
+=== PAGE 146 ===
+As desired retention approaches 1.0, the workload increases
+drastically. Imagine you have a card with a 90% chance of
+remembering it after 100 days. If your desired retention is 0.90,
+you’ll review the card again in 100 days. But if your desired retention
+is 0.95, you’ll need to review it after 46 days instead. This means
+that the intervals of your cards almost halve at 0.95 desired
+retention and you need to review cards twice as frequently compared
+to 0.90 desired retention. At 0.97, the interval will be 27 days (you’ll
+have to review your cards 3.7x as frequently). At 0.99, the interval
+will be only 9 days (you’ll have to review your cards more than 10x
+more frequently than with the defaults).
+As desired retention decreases, you’ll forget a greater percentage of
+your cards, and those cards will need to be reviewed again.
+Eventually, you’ll get to a point where the forgotten cards contribute
+more to your workload than you gain from the longer delays. Also,
+keep in mind that forgetting material frequently is demotivating.
+For these reasons, we suggest you be conservative when adjusting this
+number, and recommend you keep it lower than 0.97 and higher than
+the minimum recommended retention.
+FSRS Parameters
+FSRS parameters aﬀect how cards are scheduled. Do not change the
+parameters manually or copy them from someone else.
+Optimize FSRS Parameters
+The FSRS optimizer uses machine learning to learn your memory patterns
+and ﬁnd parameters that best ﬁt your review history. To do this, the
+optimizer requires several reviews to ﬁne-tune the parameters.
+When you click the Optimize button, FSRS will analyze your review
+history, and generate parameters that are optimal for your memory and
+the content you’re studying. If you have decks that vary wildly in
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 146/273
+
+=== PAGE 147 ===
+subjective diﬃculty, it is recommended to assign them separate presets,
+as their optimal parameters will diﬀer. There is no need to optimize your
+parameters frequently: once every month is suﬃcient.
+By default, parameters are calculated from the review history of all decks
+using the current preset. You can optionally adjust the search before
+optimizing the parameters, if you’d like to change which cards are used
+for optimization.
+You can also optimize the parameters for all of your presets at once by
+clicking on Optimize All Presets.
+Evaluate FSRS Parameters
+You can use the Evaluate button to see metrics that show how well the
+parameters ﬁt your review history. Smaller numbers indicate a better ﬁt
+to your review history.
+Log loss doesn’t have an intuitive interpretation. RMSE (bins) can be
+interpreted as the average diﬀerence between the predicted probability
+of recalling a card (R) and the actual probability measured from your
+review history. For example, RMSE=5% means that, on average, FSRS is oﬀ
+by 5% when predicting R. You don’t need to understand these metrics to
+use FSRS.
+Note that log loss and RMSE (bins) are not perfectly correlated, so two
+decks may have similar RMSE values but very diﬀerent log-loss values, or
+the other way around.
+By default, log loss and RMSE (bins) are calculated from all decks using
+the current preset. You can optionally adjust the search before evaluating
+the parameters, if you’d like to change which cards are used for
+evaluation.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 147/273
+
+=== PAGE 148 ===
+Reschedule Cards on Change
+This option controls whether the due dates of cards will be changed when
+you enable FSRS, change desired retention, or change the parameters.
+The default is not to reschedule cards: future reviews will use the new
+scheduling, but there will be no immediate change to your workload. If
+rescheduling is enabled, the due dates of cards will be changed.
+Depending on your desired retention, it will often result in a large number
+of cards becoming due, so this option is not recommended when ﬁrst
+switching from SM-2.
+Use this option sparingly, as it will add a review entry to each of your
+cards, and increase the size of your collection.
+If you’re ﬁrst switching from SM-2 and still wish to use this option, we
+recommend you ﬁrst create a backup, enable FSRS with rescheduling, and
+then if needed, you can undo or restore from the backup.
+Compute Minimum Recommended Retention
+Compute minimum recommended retention (CMRR) attempts to ﬁnd the
+desired retention value that leads to the most material learned, in the
+least amount of time. The calculated number can serve as a reference
+when deciding what to set your desired retention to. You may wish to
+choose a higher desired retention, if you’re willing to trade more study
+time for a greater retention rate. However, setting your desired retention
+lower than the minimum is not recommended, as you’ll spend more time
+studying than necessary, due to increased forgetting.
+The Simulator
+You can use the simulator to get an estimate of your workload, either in
+reviews per day or in minutes of studying per day.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 148/273
+
+=== PAGE 149 ===
+Days to simulate controls the duration of the simulated study
+history.
+Additional new cards to simulate controls whether the simulator
+should simulate more cards than this preset already has. For
+example, if you currently have 100 cards under this preset, and you
+set Additional new cards to simulate to 50, the simulator will
+simulate a total of 150 cards. This can be useful if you plan to create
+more new cards in the future.
+New cards/day and Maximum reviews/day control how many new
+cards will be learned each day and the maximum number of reviews
+per day.
+Maximum interval controls the maximum interval length (in days).
+To make the simulation as realistic as possible, the simulator takes into
+account the real memory states (diﬃculty, stability, retrievability) of your
+cards. It also uses your FSRS parameters and the value of desired
+retention, therefore changing them will aﬀect the simulation.
+Learning and Relearning Steps
+(Re)learning steps of 1 day or greater are not recommended when using
+FSRS. The main reason they were popular with the legacy SM-2 algorithm
+is because repeatedly failing a card after it has graduated from the
+learning phase could reduce its ease a lot, leading to what some people
+called “ease hell”. This is not a problem that FSRS suﬀers from. By keeping
+your learning steps under a day, you will allow FSRS to schedule cards at
+times it has calculated are optimal for your material and memory.
+Another reason not to use longer learning steps is because FSRS may end
+up scheduling the ﬁrst review for a shorter time than your last learning
+step, leading to the Hard button showing a longer time than Good.
+We also recommend you keep the number of learning steps to a
+minimum. Evidence shows that repeating a card multiple times in a single
+day does not signiﬁcantly contribute to long-term memory, so your time
+is better spent on other cards or a shorter study session.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 149/273
+
+=== PAGE 150 ===
+In the latest version of Anki you can let FSRS control short-term
+scheduling by leaving the (re)learning steps ﬁeld empty. This is an
+experimental feature. Note that just because FSRS-5 can give you intervals
+shorter than one day doesn’t necessarily mean that it will. Your Again
+interval can be one day long, or even longer.
+Add-On Compatibility
+Some add-ons can cause conﬂicts with FSRS. As a general rule of thumb, if
+an add-on aﬀects a card’s intervals, it shouldn’t be used with FSRS. A list
+of commonly used add-ons and their FSRS compatibility can be found in
+Add-on Compatibility.
+More
+Several frequently asked questions about FSRS have been answered in its
+FAQ.
+For more info on FSRS, please check:
+FSRS4Anki Wiki
+FSRS4Anki on Github
+Advanced
+Maximum Interval
+The maximum number of days a review card will wait before it’s shown
+again. When reviews have reached the limit, Hard, Good and Easy will all
+give the same delay. The shorter you set this, the greater your workload
+will be. The default is 100 years; you can decrease this to a smaller
+number if you’re willing to trade extra study time for higher retention.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 150/273
+
+=== PAGE 151 ===
+Historical Retention
+This setting is hidden unless FSRS is turned on.
+When some of your review history is missing, FSRS needs to ﬁll in the
+gaps. By default, it will assume that when you did those old reviews, you
+remembered 90% of the material. If your old retention was appreciably
+higher or lower than 90%, adjusting this option will allow FSRS to better
+approximate the missing reviews.
+Your review history may be incomplete for two reasons:
+Because you’re using the Ignore cards reviewed before option.
+Because you previously deleted review logs to free up space, or
+imported material from a diﬀerent SRS program.
+The latter is quite rare, so unless you’re using the former option, you
+probably don’t need to adjust this setting.
+Ignore Cards Reviewed Before
+If set, cards reviewed before the provided date will be ignored when
+optimizing FSRS parameters. This can be useful if you imported someone
+else’s scheduling data, or have changed the way you use the answer
+buttons.
+Starting Ease
+Controls the ease that cards start out with. It is set when a card graduates
+from learning for the ﬁrst time. It defaults to 2.50, meaning that once you
+have ﬁnished learning a card, answering Good on subsequent reviews will
+increase the delay by approximately 2.5x (e.g. if the last delay was 10
+days, the next delay would be around 25 days). Based upon how you rate
+the card in subsequent reviews, the ease may increase or decrease from
+its starting value.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 151/273
+
+=== PAGE 152 ===
+Easy Bonus
+An extra multiplier applied to the interval when a review card is answered
+Easy. With the default value of 1.30, Easy will give an interval that is 1.3
+times the Good interval (e.g. if the Good interval was 10 days, the Easy
+interval would be around 13 days).
+Interval Modiﬁer
+An extra multiplier that is applied to all reviews. At its default of 1.00 it
+does nothing. If you set it to 0.80, intervals will be generated at 80% of
+their normal size (so a 10 day interval would become 8 days). You can
+thus use the multiplier to to make your reviews less or more frequent.
+For moderately diﬃcult material, the average user should ﬁnd they
+remember approximately 90% of mature cards when they come up for
+review. You can ﬁnd out your own performance by opening the
+graphs/statistics for a deck and looking at the Answer Buttons graph -
+mature retention is the correct% on the right side of the graph. If you
+haven’t been studying for long, you may not have any mature cards yet.
+As performance with new cards and younger cards can vary considerably,
+it’s a good idea to wait until you have a reasonable amount of mature
+reviews before you start drawing conclusions about your retention rate.
+On the SuperMemo website, they suggest that you can ﬁnd an
+appropriate multiplier for a desired retention rate. Their formula boils
+down to:
+Imagine we have a current retention rate of 85% and we want to increase
+it to 90%. We’d calculate the modiﬁer as:
+log(desired retention%) / log(current retention%)
+log(90%) / log(85%) = 0.65
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 152/273
+
+=== PAGE 153 ===
+You can use Google to calculate this.
+If you enter the resulting 65% into the interval modiﬁer, you should ﬁnd
+over time that your retention moves closer to your desired retention.
+One important thing to note however is that the trade-oﬀ between time
+spent studying and retention is not linear: we can see here that to
+increase our retention by 5 percentage points, we would have to study
+35% more frequently. If the material you are learning is very important
+then it may be worth the extra eﬀort – that is, of course, something you
+will need to decide for yourself. If you are simply worried that you are
+forgetting too much, then you may ﬁnd investing more time at the initial
+learning stage, or using mnemonics will give you more gain for less eﬀort.
+One ﬁnal thing to note is that Anki forces a new interval to be at least 1
+day longer than it was previously, so that you do not get stuck reviewing
+with the same interval forever. If your goal is to repeat a card once a day
+for multiple days, you can do that by setting more learning mode steps,
+instead of by adjusting this modiﬁer.
+Hard Interval
+The multiplier applied when you use the Hard button. The percentage is
+relative to the previous interval, e.g. with a default of 1.20, a card with a
+10-day interval will be given 12 days.
+New Interval
+The multiplier applied when you use the Again button on a review card.
+The default 0.00 means that a review card’s delay is reset to zero when
+you forget it (which then becomes 1 day after the minimum interval is
+applied).
+If changed from the default, it is possible for forgotten cards to preserve
+part of their previous delay. For example, if a card had a 100 day interval,
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 153/273
+
+=== PAGE 154 ===
+and you set the New Interval to 0.20, the new interval would be 20 days.
+While preserving part of the interval may seem to make sense,
+SuperMemo has observed that preserving part of the delay can actually
+be counter-productive. For this reason, we recommend you leave it on
+the default setting.
+Custom Scheduling
+You can have more control over Anki’s scheduling of cards by using your
+own JavaScript in the custom scheduling ﬁeld. This is a global option, so
+code entered here applies to every preset.
+Here is an example custom scheduling script. Note that, for Qt5 versions
+of Anki, the code needs to be transpiled.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 154/273
+
+=== PAGE 155 ===
+You can also see FSRS custom scheduling code as an example.
+The various scheduling states of cards are described in SchedulingStates.
+// print the existing states
+console.log(
+  JSON.stringify(states, null, 4)
+);
+// load the debugger if the web inspector is open
+debugger;
+// if the hard button is a learning step, make it
+// a 123 minute delay
+if (states.hard.normal?.learning) {
+  states.hard.normal.learning.scheduledSecs = 123 * 60;
+}
+// apply the same change in a rescheduling filtered deck
+if 
+(states.hard.filtered?.rescheduling?.originalState?.learning) {
+  
+states.hard.filtered.rescheduling.originalState.learning.schedu
+ledSecs =
+    123 * 60;
+}
+// increase ease factor by 0.2 when Easy used on a review
+if (states.good.normal?.review) {
+  states.easy.normal.review.easeFactor =
+    states.good.normal.review.easeFactor + 0.2;
+}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 155/273
+
+=== PAGE 156 ===
+Syncing with AnkiWeb
+Intro Videos
+Setup
+Automatic Syncing
+Button Color
+Media
+Conﬂicts
+Merging Conﬂicts
+AnkiWeb Data Deletion
+What Gets Deleted
+Returning to AnkiWeb
+Avoiding Data Deletion
+Firewalls
+Proxies
+AnkiWeb is a service that allows you to keep your collection synchronized
+across multiple devices, and to study online. Please sign up for a free
+account before following the steps below.
+Intro Videos
+For a quick introduction to syncing, please check out the syncing intro
+videos.
+Setup
+To start syncing your collection across devices, click the sync button (the
+top right one on the main screen, or press Y on your keyboard. You’ll be
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 156/273
+
+=== PAGE 157 ===
+prompted for your AnkiWeb ID and password, which you created in the
+signup process.
+When you synchronize your collection for the ﬁrst time, Anki will ask you
+if you want to upload or download. If you have cards on your computer
+and your AnkiWeb account is empty, choose Upload to send your data to
+AnkiWeb. If you have cards on AnkiWeb from another device, and no
+cards on your computer, choose Download to replace the empty local
+collection with the cards that are on AnkiWeb. If you have diﬀerent cards
+on both devices, more work is required to avoid losing data.
+Once the initial one-way sync is completed, Anki will be able to merge
+changes from multiple locations with a few exceptions.
+If you have multiple people using Anki on one machine and have created
+a proﬁle for each user, each user will need to create their own AnkiWeb
+account to sync with. If you attempt to synchronize multiple proﬁles with
+a single AnkiWeb account, you will lose data.
+Automatic Syncing
+Once syncing is enabled, Anki will automatically sync each time your
+collection is closed or opened. If you would prefer to synchronize
+manually, you can disable automatic syncing in Anki’s preferences.
+Button Color
+The sync button will change to blue when a normal sync is required, and
+red when a full sync is required.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 157/273
+
+=== PAGE 158 ===
+Media
+You can watch a related video on this topic.
+Anki will synchronize any sounds and images used by your notes. It will
+notice when media has been added, removed or replaced in your media
+folder, but will not notice if you have made edits to existing ﬁles. To get
+your edits synced, you need to add, remove or replace a ﬁle as well.
+One-way syncs (where you’re prompted to upload or download) have no
+inﬂuence over how media syncs - media changes are always merged.
+To prevent accidental data loss, deletions will only sync to other devices if
+they are made after media is fully in sync. If you delete ﬁles before your
+device is fully in sync, and the deleted ﬁles are already on AnkiWeb, they
+will be downloaded the next time you sync.
+If you have accidentally deleted media ﬁles, and want to restore them,
+open the preferences and log out. The next time you sync, Anki will
+restore any deleted ﬁles, if they are available on AnkiWeb still.
+If you’re running Anki oﬀ a USB ﬂash drive, you should use an NTFS ﬁle
+system, as Anki may not be able to detect media changes on a FAT32
+ﬁlesystem.
+Conﬂicts
+You can watch a related video on this topic.
+Under normal circumstances, reviews and note edits can be merged, so if
+you review or edit on two diﬀerent devices before syncing, Anki will
+preserve your changes from both locations. If the same card has been
+reviewed in two diﬀerent locations, both reviews will be marked in the
+revision history, and the card will be kept in the state it was when it was
+most recently answered.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 158/273
+
+=== PAGE 159 ===
+There are certain changes that Anki is unable to merge. These mainly
+relate to the format of notes: things like adding a new ﬁeld, or removing a
+card template. When you perform an operation that can’t be merged,
+Anki will warn you, and give you the option of aborting the operation. If
+you choose to continue, you’ll be asked to choose whether to keep the
+local copy or the copy on AnkiWeb when your collection is next
+synchronized.
+If certain problems are detected while syncing, Anki forces a
+one-way sync. If you ﬁnd this consistently happening, please post on our
+support site.
+When a one-way sync is required, you need to choose whether you wish
+to keep the collection on your local device, or the collection on AnkiWeb.
+If changes have been made on both ends, only changes on one end can
+be preserved.
+If you choose Upload, the content on your local device will be sent to
+AnkiWeb. You then need to sync your other devices, and choose
+Download to have them grab a copy of that content.
+If you choose Download, it will replace any local changes you’ve made
+with the data that is on AnkiWeb.
+Once all devices are in sync, future syncs will return to the normal
+behaviour of merging changes from both ends.
+If you wish to force a full upload or download (for example, because you
+accidentally deleted a deck on one side and want to restore the deck
+rather than having its deletion synchronized), you can check the “On next
+sync, force changes in one direction” box in Tools > Preferences >
+Network, then sync as usual. (You’ll be given the option to choose which
+side you want to use.)
+Forcing a one way sync only aﬀects card syncing - media is synced as
+normal. If you have ﬁles that you want to remove from AnkiWeb, please
+ensure your client is fully in sync ﬁrst. After syncing is up to date, any ﬁles
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 159/273
+
+=== PAGE 160 ===
+you remove (e.g. via the Check Media function) will be removed from
+AnkiWeb on the following sync.
+Merging Conﬂicts
+Because the ﬁrst sync can only sync changes in one direction, if you have
+added diﬀerent content to diﬀerent devices or proﬁles before setting
+syncing up, content on one device will be lost if you overwrite it with the
+content from the other device. With some work, it is possible to manually
+merge data into a single collection.
+Start by taking a backup on each device/proﬁle, in case something goes
+wrong. With the computer version you can use File > Export to export “all
+decks” with scheduling information and media ﬁles included, and save the
+ﬁle somewhere safe. In AnkiMobile, the Add/Export button on the decks
+list screen will let you export all decks with media.
+Next, if one of your devices is a mobile device, synchronize it ﬁrst. If
+there’s a conﬂict, choose Upload to overwrite any existing data on
+AnkiWeb with the data from your mobile device. If both devices/proﬁles
+are on your computer, synchronize the device/proﬁle with the most
+number of decks ﬁrst.
+Now return to the other device/proﬁle. If automatic syncing is enabled, a
+message may pop up asking if you want to upload or download. Click the
+cancel button - we don’t want to sync yet.
+Once you’re looking at the deck list, click the cog icon next to the ﬁrst
+deck, and choose Export. Export the content with scheduling information
+and media included, and save the .apkg ﬁle somewhere. Now you’ll need
+to repeat this for each top-level deck.
+Once all top-level decks have been exported, click the sync button at the
+top right, and choose Download, which will overwrite the local content
+with the content you synced from your other device.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 160/273
+
+=== PAGE 161 ===
+You can now use File > Import to import the .apkg ﬁles you exported
+earlier, which will merge the exported content with the existing content,
+so everything will be in one place.
+AnkiWeb Data Deletion
+As AnkiWeb is a free service, we need to periodically delete unused
+account data to keep costs down. If you haven’t accessed your account or
+synced in the last 6 months, the data on your account might get deleted.
+What Gets Deleted
+Only your data stored on AnkiWeb is deleted. Your account itself will
+remain and can be used again.
+Any cards you have stored on your computer, phone or tablet will remain
+on those devices. Items shared from your account, including decks and
+add-ons will also remain on AnkiWeb.
+Returning to AnkiWeb
+Once your deck data has expired, it is not possible for us to recover your
+data from AnkiWeb, but you may be able to recover it if you have a local
+copy or a backup.
+Avoiding Data Deletion
+Each time you visit ankiweb.net, or use the synchronization feature in
+Anki, AnkiMobile or AnkiDroid, your account will automatically be marked
+as active.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 161/273
+
+=== PAGE 162 ===
+If your account has been inactive for 6 months or more, and you used the
+service for a week or longer, we will send you an email notifying you that
+deletion is pending. If you’d like to keep your account active, please log in
+to ankiweb.net and study a card, or sync one of your devices within 30
+days.
+Firewalls
+Anki needs to be able to make outbound HTTPS connections to sync. It
+must be able to connect to ankiweb.net, sync.ankiweb.net,
+sync2.ankiweb.net, and so on. These domains may change over time, and
+the IP addresses they point to may also change, so we recommend you
+allow wildcard access to *.ankiweb.net to reduce the chance of the
+ﬁrewall rules needing to be updated in the future.
+If you have a ﬁrewall on your machine, you should add an exception for
+Anki. If you are on a work or school network, please contact your network
+administrator for assistance - it is not something we can help you with.
+Proxies
+If you need a proxy to access the internet, Anki should automatically pick
+up your system proxy settings if you’re on Windows or macOS, and will
+honour the HTTP_PROXY environment variable if you’re on another
+platform.
+Anki will only be able to pick up your system settings if a proxy is
+manually conﬁgured, and does not require a password. If your system
+uses automatic proxy setup, or uses a proxy that requires a username
+and password, you will need to manually tell Anki the proxy conﬁguration.
+To tell Anki your proxy settings, deﬁne a HTTPS_PROXY environment
+variable that points to the proxy server. It will look like:
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 162/273
+
+=== PAGE 163 ===
+If your username or password contains an @ (e.g user@workdomain.com),
+you need to change it to %40, like so:
+Anki 2.0 expects to ﬁnd HTTP_PROXY instead of HTTPS_PROXY.
+To set environment variables on Windows, please see
+https://www.google.com/search?q=windows+set+environmental+variable
+If you’re on a Mac, please see
+http://stackoverﬂow.com/questions/135688/setting-environment-
+variables-in-os-x
+Heavily locked down networks that intercept secure connections and
+present their own certiﬁcates may cause Anki to throw up SSL errors. In
+such environments, you may be able to work around the errors using this
+add-on.
+An alternative solution is to install a local proxy server, and point that
+proxy server at your normal proxy server. You can then tell Anki to use
+the local proxy, which will redirect requests to the proxy you normally
+use.
+http://user:pass@proxy.company.com:8080
+http://user%40workdomain.com:pass@proxy.company.com:8080
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 163/273
+
+=== PAGE 164 ===
+Proﬁles
+If more than one person wants to use Anki on your computer, you can set
+up a separate proﬁle for each user. Each user proﬁle has their own
+collection, and own program settings. Add-ons are shared across proﬁles.
+Proﬁles are conﬁgured by going to the File menu and choosing “Switch
+Proﬁle”.
+Only a single proﬁle can be synced to an AnkiWeb account. If you
+have diﬀerent users on your computer, each user will need to set up a
+separate AnkiWeb account for their proﬁle. If you attempt to link two or
+more proﬁles to the same AnkiWeb account, you will overwrite the data
+from one proﬁle with the data from the other.
+Proﬁles are primarily intended to be used by diﬀerent people, and are not
+recommended for splitting up your own content. If you have created
+multiple proﬁles for yourself, the best option is to merge them into a
+single proﬁle. You can do so by exporting one deck from proﬁle A, and
+then importing it into proﬁle B, repeating for any other decks in proﬁle A,
+until everything is in proﬁle B.
+AnkiDroid does not support proﬁles.
+Proﬁles window
+From the Proﬁles window (accessible via File>Switch Proﬁle from the main
+window), you can:
+Open / Add / Rename / Delete user proﬁles.
+Quit the program.
+Restore an automatic backup.
+Downgrade your collection, which is necessary if you want to open it
+with an earlier Anki release. If you skip this step, you may get an error
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 164/273
+
+=== PAGE 165 ===
+message when opening your collection in an older Anki version, and
+you will need to return to this version, downgrade, then try again.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 165/273
+
+=== PAGE 166 ===
+Browsing
+Table Modes
+Sidebar
+Search Tool
+Selection Tool
+Saved Searches
+Editing Items
+Finding Items
+Search Box
+Card/Note Table
+Rows
+Columns
+Editing Area
+Menus and Actions
+Edit
+Notes
+Cards
+Go
+Find and Replace
+Finding Duplicates
+The Browse window allows you to search through your cards and notes,
+and edit them. It is opened by clicking Browse in the main window, or by
+pressing B. It is comprised of three sections: the sidebar on the left, the
+card/note table on the top right, and the editing area on the bottom right.
+By positioning the mouse between two sections, it is possible to click and
+drag to expand one section and shrink the other.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 166/273
+
+=== PAGE 167 ===
+Table Modes
+Anki 2.1.45+ oﬀers two modes: either cards or notes are shown in the
+data table. You can change the current mode by clicking the switch at the
+top, to the left of the search area, or pressing Ctrl+Alt+T or Cmd+
+Opt+T. The switch also indicates if Cards or Notes are currently shown.
+Note: For the sake of simplicity, this manual generally assumes the Cards
+mode to be the active one. Whenever selecting/ﬁnding/etc. “cards” is
+mentioned, the reader may substitute it for “cards or notes depending on
+the active mode”.
+The sidebar on the left allows quick access to common search terms. On
+Anki 2.1.45+, it also provides a searchbar, facilities to edit tags and decks,
+and a choice of two diﬀerent tools, which are discussed in the following
+sections. You can switch tools using the toolbar at the top of the sidebar
+or the shortcuts Alt+1/ 2.
+Search Tool
+With this tool, the sidebar behaves as in previous versions: Clicking on an
+item will search for it.
+You can hold down Ctrl (Command on Mac) while clicking in order to
+append the clicked item to the current search with an AND condition,
+instead of starting a new search. If you wanted to show learning cards that
+were also in the German deck for instance, you could click on “Learning”,
+then Ctrl-click on “German”.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 167/273
+
+=== PAGE 168 ===
+You can hold down Shift to create an OR search instead of an AND. For
+example, you could click one deck, then Shift-click another to show
+cards from either of the decks in the same view.
+You can hold down Alt (Option on Mac) in order to reverse the search
+(prepend a -): for example, to show all cards in a current deck that do
+not have a certain tag. Alt/ Option can be combined with either Ctrl
+or Shift (e.g. clicking with Ctrl+Alt will result in adding a new search
+term that is negated).
+On Anki 2.1.39+, you can also hold down both Ctrl and Shift together
+when clicking a search term to replace all occurrences of the same kind of
+search with the new one. Let’s say you had previously typed in a
+complicated search expression like deck:Swahili (is:due or 
+tag:important) and now want to perform the same search for your Urdu
+deck. You can hold down Ctrl+Shift while clicking the Urdu deck in
+the sidebar to obtain the following search expression: deck:Urdu (is:due 
+or tag:important).
+Selection Tool
+The Selection tool allows for selecting multiple items at the same time by
+holding down Ctrl or Shift while clicking. It also enables drag-and-
+drop to reorder decks and tags.
+Here is an example: Say you have the tags Math, Calculus, and
+Algebra. Click on the Calculus tag, then Ctrl-click on the Algebra tag.
+Now both tags are selected, click and drag any of the two onto the Math
+tag to make them both children of this tag. Behind the scenes, Anki has
+renamed the two tags to Math::Calculus and Math::Algebra
+respectively and updated your notes accordingly.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 168/273
+
+=== PAGE 169 ===
+Another use case for selecting multiple items is searching: If you right-
+click on a selection of items, you can choose Search > All/Any Selected.
+This can be combined with keyboard modiﬁers as described in Search
+Tool to append the resulting search to the current search.
+Saved Searches
+If you regularly search for the same thing, you can save the current
+search by right-clicking the topmost item in the sidebar, choosing Save
+Current Search and typing in a name. You can also drag and drop any
+sidebar item onto this area to add an equivalent saved search, eﬀectively
+pinning it at the top.
+Editing Items
+You can delete or rename tags, decks, and saved searches directly from
+the sidebar, from the right-click menu, or by using a shortcut key (Del
+and F2 on Windows). Deletion even works for multiple items at once (see
+Selection Tool).
+Finding Items
+To ﬁnd a certain item in the sidebar tree, type part of its name into the
+searchbar at the top.
+Search Box
+Above the card list is a search box. You can type in various things there to
+search for cards. For information on the search syntax, see Searching.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 169/273
+
+=== PAGE 170 ===
+Card/Note Table
+The table’s rows represent cards or notes that match the current search.
+When you click on a row, the corresponding note will be shown in the
+bottom section.
+Rows
+If you drag the mouse or hold Ctrl or Command to select multiple rows,
+the editor will be temporarily hidden. Various operations (such as
+changing the deck) can operate on multiple cards or notes at once,
+independent of the active mode. Therefore in Cards mode, a note is
+considered to be selected if any of its cards is selected, and in Notes
+mode, a card is considered to be selected if its note is selected.
+Other operations (like showing card information) only operate on a single
+card or note. This is called the current card or note, which is usually the
+one that was last selected or clicked. In Cards Mode, again, the current
+note is the note of the current card and in Notes mode, the current card
+is the ﬁrst card of the current note.
+The background colour will change depending on the card and note. In
+Cards mode, the ﬁrst match will be used:
+1. if the card is ﬂagged, use the ﬂag colour,
+2. if the card is suspended, yellow,
+3. if the card’s note is marked, purple.
+In Notes mode, colour is only applied to marked notes.
+For more information about marked notes and suspended cards, see
+Editing and More.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 170/273
+
+=== PAGE 171 ===
+Columns
+The columns are conﬁgurable: right click on one (or Ctrl-click on a Mac)
+to choose which columns you’d like to see. You can drag columns to
+reorder them. Clicking on a column will sort by that column; click again to
+reverse the sort order. Note that you cannot sort by the Question and
+Answer columns.
+All columns are available for both Cards and Notes mode but sometimes
+with slightly diﬀerent names and data. The following table lists the
+behaviours for both modes.
+Column Cards mode Notes mode
+Answer
+The back side of the card
+in one line with the
+question stripped. You can
+also choose a custom
+format in the card type
+editor instead.
+The same as in Cards
+mode, only for the ﬁrst
+card of the note.
+Card(s) The name of the card’s
+template.
+The number of cards
+the note has.
+Card
+Modiﬁed
+The last time changes
+were made to the card
+(e.g. when you reviewed
+the card and the review
+history and interval were
+updated).
+The last time changes
+were made to one of
+the note’s cards.
+Created The same as in Notes
+mode for the card’s note.
+The date the note was
+created.
+Deck The name of the deck the
+card is in.
+The number of diﬀerent
+decks the note’s cards
+are in, or the deck
+name if all cards are in
+the same deck.
+Due The due date for cards in
+review or (re)learning, and
+The due date for the
+note’s next due review
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 171/273
+
+=== PAGE 172 ===
+Column Cards mode Notes mode
+the position in the new
+card queue for new cards.
+The line is wrapped in
+brackets if the card is
+suspended or buried.
+Sorting is done by type
+and only then by date or
+position.
+or (re)learning card that
+is not suspended,
+buried or in a ﬁltered
+deck.
+(Avg.)
+Ease
+The card’s ease if it is not
+new.
+The average ease for
+the note’s cards that
+are not new.
+(Avg.)
+Interval
+The card’s interval if the
+card is in review or
+relearning.
+The average interval for
+the note’s cards that
+are in review or
+relearning.
+Lapses How often the card was
+rated “Again”.
+The total lapses for all
+cards of the note.
+Note The same as in Notes
+mode for the card’s note.
+The name of the note’s
+note type.
+Note
+Modiﬁed
+The same as in Notes
+mode for the card’s note.
+The last time the note
+(e.g. the content of a
+ﬁeld) was edited.
+Question
+The front side of the card
+in one line. You can also
+choose a custom format in
+the card type editor
+instead.
+The same as in Cards
+mode, only for the ﬁrst
+card of the note.
+Reviews How often the card has
+been reviewed.
+The total review count
+for all cards of the note.
+Sort Field The same as in Notes
+mode for the card’s note.
+The content of the
+note’s ﬁeld that is
+deﬁned as the note
+type’s sort ﬁeld. Only
+this one ﬁeld can be
+displayed and sorted
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 172/273
+
+=== PAGE 173 ===
+Column Cards mode Notes mode
+by. You can change the
+sort ﬁeld by clicking
+Fields… in the editing
+area.
+Tags The same as in Notes
+mode for the card’s note.The note’s tags.
+Editing Area
+The bottom right area displays the note of the currently selected row. For
+more information about cards and notes, see Getting Started. For more
+information on formatting buttons, see Editing.
+You can see a preview of what the currently selected card would look like
+when reviewing by clicking the Preview button at the top of the editing
+area. Note that this will not display any type-the-answer ﬁelds on your
+cards, which makes it easier to preview the cards quickly. In Notes mode,
+the preview is shown for the ﬁrst card of the selected note.
+Menus and Actions
+At the top of the browser window, you ﬁnd a toolbar with various menus
+which in turn oﬀer various actions that can be performed in the browser.
+Edit
+Name Action
+Undo Revert the most recently performed operation.
+Select All Select all rows displayed.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 173/273
+
+=== PAGE 174 ===
+Name Action
+Select Notes Show only the currently selected notes and select
+all rows.
+Invert
+Selection
+Select those rows not selected, and deselect the
+currently selected rows.
+Create
+Filtered Deck
+Show the ﬁltered deck dialog and set the current
+browser search as a ﬁlter. Use Alt / Option to set
+the second ﬁlter instead.
+Notes
+Most of the following actions operate on the selected notes. They are also
+available through a context menu when a selected row is right-clicked in
+Notes mode. In Cards mode, they can be found in a submenu of the
+context menu.
+Name Action
+Add Notes Open the Add dialog.
+Create
+Copy
+Open a duplicate of the current note in the editor,
+which can be slightly modiﬁed to easily obtain
+variations of your cards. By default, the duplicate
+card will be created in the same deck as the original.
+Export
+Notes Open the Export dialog.
+Add Tags Add provided tags to all selected notes.
+Remove
+Tags Enter tags and remove them from all selected notes.
+Clear
+Unused
+Tags
+Remove all tags from the sidebar that are not used
+by any notes.
+Toggle
+Mark
+If the current note is marked (i.e., has the Marked
+tag), unmark all selected notes. If the current is not
+marked, mark all selected notes.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 174/273
+
+=== PAGE 175 ===
+Name Action
+Change
+Note Type
+Convert the selected notes from one type to another.
+For example, imagine you have a Russian note type
+and a Computer note type, and you accidentally
+added some computer-related text into a Russian
+note. You can use this option to ﬁx that mistake. The
+scheduling of cards is not aﬀected. Changing the
+type of a note requires a one-way sync.
+Find
+Duplicates Open the Duplicates dialog.
+Find and
+Replace Open the Find and Replace dialog.
+Manage
+Note Types Open the Note Types dialog.
+Delete
+Delete all selected notes and their cards. It is not
+possible to remove individual cards, as individual
+cards are controlled by the templates.
+Cards
+The following actions operate on the currently selected cards. They are
+also available through a context menu when a selected row is rightclicked
+in Cards mode. In Notes mode, they can be found in a submenu of the
+context menu.
+Name Action
+Change
+Deck Move currently selected cards to a diﬀerent deck.
+Set Due
+Date
+Turns cards into review cards if they are new, and
+makes them due on a certain date. This can be useful
+for moving cards forward or back a few days when
+your study schedule is interrupted. Entering a range
+like 60-90 will make the selected cards due between
+60 and 90 days from now. New cards will have their
+interval set to the same delay, but review cards will be
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 175/273
+
+=== PAGE 176 ===
+Name Action
+rescheduled without changing their current interval,
+unless an exclamation mark (!) is included at the end
+of the range. Note that the answer time is not
+recorded when manually scheduling cards, since the
+action can be performed even outside of review, and
+Anki isn’t aware of which card may or may not be
+shown at the time.
+Reset
+Move currently selected cards to the end of the new
+queue. The existing review history is preserved. In
+2.1.50+, there are options to restore the original card
+position, and to reset the card’s lapse and repetition
+counters.
+Reposition
+Change the order new cards will appear in. You can
+ﬁnd out the existing positions by enabling the due
+column, as described in the table section above. If you
+run the reposition command when multiple cards are
+selected, it will apply increasing numbers to each card
+in turn. By default the number increases by one for
+each card, but this can be adjusted by changing the
+“step” setting. The Shift position of existing cards
+option allows you to insert cards between currently
+existing ones, pushing the currently existing ones
+apart. For instance, if you have ﬁve cards and you
+want to move 3, 4, and 5 between 1 and 2, selecting
+this setting would cause the cards to end up in the
+order 1, 3, 4, 5, 2. By contrast, if you turn this option
+oﬀ, 1 and 2 will get the same position number (and it
+will thus be unpredictable which of the cards with the
+same number comes up ﬁrst). Please note that when
+enabled, any card with a higher position will be
+modiﬁed, and all of those changed cards will need to
+be sent the next time you sync.
+Toggle
+Suspend
+Suspend or unsuspend all selected cards, depending
+on whether the current card is suspended or not.
+Flag Toggle the ﬂags of all selected cards. Whether a ﬂag is
+added or removed depends on whether the current
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 176/273
+
+=== PAGE 177 ===
+Name Action
+card has the chosen ﬂag.
+Info
+Show various information about the current card,
+including its review history. For more information, see
+Card Info.
+Go
+This menu exists to provide keyboard shortcuts to jump to various parts
+of the browser, and to go up and down the card list.
+Find and Replace
+This dialog allows for replacing text on notes. As described above, it is
+available from the toolbar and the table’s context menu.
+The ﬁrst input ﬁeld is for the text that is going to be replaced, the second
+one for the replacement. Next, there is a dropdown menu that allows you
+to specify where Anki should look for text to replace: in a note’s tags
+(requires Anki 2.1.45+), in all ﬁelds, or just in a speciﬁc ﬁeld (only ﬁelds
+belonging to a selected note will be listed).
+By default, only selected notes will be aﬀected. If you want to lift that
+restriction, you can untick the “selected notes only” checkbox (requires
+Anki 2.1.45+).
+The regular expression option allows you to perform complex
+replacements. For example, assume there is the following text in a ﬁeld:
+We use these settings:
+<img src="pic.jpg" />
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 177/273
+
+=== PAGE 178 ===
+(Note that on Anki versions prior to 2.1.28, you would need to replace
+${1} with \1.)
+Then the assumed ﬁeld content will change to:
+A full discussion on regular expressions is outside the scope of this
+document. There are a number of syntax guides available on the web:
+For Anki 2.1.28+, see
+https://docs.rs/regex/latest/regex/index.html#syntax.
+For older Anki versions, see http://docs.python.org/library/re.html.
+Finding Duplicates
+You can use the Notes > Find Duplicates option to search for notes that
+have the same content. When you open the window, Anki will look at all
+of your note types and present a list of all possible ﬁelds. If you want to
+look for duplicates in the Back ﬁeld, you’d select it from the list and then
+click Search.
+By default, it will search in all note types that have the ﬁeld you provided.
+This diﬀers from the duplicate check when you add cards manually, which
+is limited to a single note type.
+pic.jpg
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 178/273
+
+=== PAGE 179 ===
+The Optional ﬁlter text box allows you to narrow down where Anki will
+look for duplicates. If you only want to search for duplicates in the
+“French Vocab” and “French Verbs” note types, you would enter:
+Or you might want to look only for duplicates in a particular deck, so you
+could use:
+The search syntax is the same as used when searching in the browser. For
+more information, see Searching.
+You can click one of the links in the search results list to display the
+duplicate notes in that set. If the search brings up a large number of
+duplicates, you may wish to instead click the Tag Duplicates button,
+which will tag all matching notes with duplicate. You can then search for
+this tag in the browser and handle them all from the same screen.
+"note:french vocab" or "note:french verbs"
+"deck:myDeck"
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 179/273
+
+=== PAGE 180 ===
+Filtered Decks & Cramming
+Custom Study
+Home Decks
+Creating Manually
+Order
+Steps & Returning
+Due Reviews
+Reviewing Ahead
+Rescheduling
+Catching Up
+When you study a regular deck in Anki, only a limited number of cards are
+shown: the cards Anki thinks you are about to forget, and a daily limit of
+new cards. This is generally useful, as it ensures you don’t spend more
+time studying than necessary. But sometimes it can be useful to step
+outside of these normal limits, such as when you need to review for a
+test, focus on particular material, and so on. To make this possible, Anki
+provides a diﬀerent type of deck called a “ﬁltered deck”.
+Filtered decks oﬀer a lot of possibilities. They can be used for previewing
+cards, cramming cards before a test, studying particular tags, catching up
+on a backlog with a particular sort order, reviewing ahead of schedule,
+going over the day’s failed cards, and more.
+Custom Study
+The easiest way to create a ﬁltered deck is with the Custom Study button,
+which appears at the bottom of the screen when you click on a deck. It
+oﬀers some convenient preset ﬁlters for common tasks like reviewing the
+cards that you have failed that day. It will create a ﬁltered deck called
+“Custom Study Session” and automatically open it for you.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 180/273
+
+=== PAGE 181 ===
+If an existing “Custom Study Session” deck exists, it will be emptied before
+a new one is created. If you wish to keep a custom study deck, you can
+rename it from the deck list.
+Here is a summary of each of the options:
+Increase today’s new card limit
+Add more new cards to the deck you are currently studying. Note that
+unlike other options, this does “not” create a new ﬁltered deck, it modiﬁes
+the existing deck.
+Increase today’s review card limit
+If not all reviews due today were shown because of the daily review limit,
+this option allows you to show more of them. As with the new cards
+option, this modiﬁes the existing deck.
+Review forgotten cards
+Show all the cards, for which you’ve answered Again (1) within the
+number of days you specify.
+Review ahead
+Show cards that will be due in the near future (the number of days you
+specify). This is useful for working through some of your older cards
+before a vacation, but it will not help with cards you have learned
+recently. Please see the reviewing ahead section below for more info.
+Preview new cards
+Show cards that you have recently added, without converting them to
+review cards as they are answered.
+Study by card state or tag
+Select a certain number of cards from the current deck to study. You can
+choose to select new cards only, due cards only, or all cards; after you
+click “Choose Tags”, you can also limit the selected cards by tags. If you
+wish to see all the cards in the deck (for instance, to study before a big
+test), you can set the number of cards to more than the number of cards
+in the deck.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 181/273
+
+=== PAGE 182 ===
+Home Decks
+When a card is moved to a ﬁltered deck, it retains a link to the deck, from
+which it came. That previous deck is said to be the card’s “home deck”.
+Cards automatically return to their home deck after they are studied in
+the ﬁltered deck. This can be after a single review, or after multiple
+reviews, depending on your settings.
+It is also possible to move all cards back to their home decks at once:
+The “Empty” button in the study overview moves all cards in the
+ﬁltered deck back to their home deck, but does not delete the empty
+ﬁltered deck. This can be useful if you want to ﬁll it again later (using
+the Rebuild button).
+Deleting a ﬁltered deck does the same thing as “Empty” does, but also
+removes the emptied deck from the deck list. No cards are deleted
+when you delete a ﬁltered deck.
+Creating Manually
+Advanced users can create ﬁltered decks with arbitrary search strings (or
+“ﬁlters”), instead of relying on the preset ﬁlters. To create a ﬁltered deck
+manually, choose Create Filtered Deck from the Tools menu.
+When you click the Build button, Anki ﬁnds cards that match the settings
+you speciﬁed, and temporarily moves them from their existing decks into
+your new ﬁltered deck for study.
+If you wish to fetch cards again using the same ﬁlter options (for instance,
+if you want to study all cards with a particular tag every day), you can use
+the Rebuild button at the bottom of the deck’s overview screen.
+The search area controls what cards Anki will gather. All of the searches
+possible in the browser are also possible for ﬁltered decks, such as
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 182/273
+
+=== PAGE 183 ===
+limiting to tags, ﬁnding cards forgotten a certain number of times, and so
+on. Please see the searching section of the manual for more information
+on the diﬀerent possibilities.
+Filtered decks cannot pull in cards that are suspended, buried, or already
+in a diﬀerent ﬁltered deck. For this reason, a search in the browser may
+reveal cards that do not end up in the ﬁltered deck.
+The limit option controls how many cards will be gathered into the deck.
+The order you select controls both the order cards are gathered in, and
+the order they will be reviewed in. If you select “most lapses” and a limit
+of 20 for example, then Anki will show you only the 20 most lapsed cards.
+The enable second ﬁlter option allows you to create a ﬁltered deck
+comprised of two diﬀerent searches, so that you can, for example, include
+due cards with one order, and a smaller amount of new cards with a
+diﬀerent order.
+Order
+The “cards selected by” option controls the order that cards will appear in.
+If the maximum number of cards you select is lower than the number of
+cards that match the ﬁlter criteria, Anki will exclude the cards at the end
+of this sorted list ﬁrst.
+Oldest seen ﬁrst
+Display those cards ﬁrst, that you haven’t seen in reviews for the longest
+time.
+Random
+Randomize the order of all cards that match the ﬁlter criteria (use no set
+order).
+Increasing intervals
+Display cards that have the smallest interval ﬁrst.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 183/273
+
+=== PAGE 184 ===
+Decreasing intervals
+Display cards that have the largest interval ﬁrst.
+Most lapses
+Display those cards ﬁrst, that you have failed the most times.
+Order added
+Display cards that you added ﬁrst (i.e. those cards that have the earliest
+creation date).
+Order due
+Display cards with the earliest due date ﬁrst.
+Latest added ﬁrst
+Display cards that you have most recently added to the deck ﬁrst. (This is
+the opposite of “Order added”.)
+Relative overdueness
+Display cards that you’re most likely to have forgotten ﬁrst. This is useful
+if you have a large backlog that may take some time to get through, and
+you want to reduce the chances of forgetting more cards.
+When using the SM-2 algorithm, overdueness is determined by
+comparing how overdue cards are, and how long their interval is. For
+example, a card with a current interval of 5 days that is overdue by 2
+days, will display before a card with a current interval of 10 days that is
+overdue by 3 days.
+When using FSRS, overdueness is calculated based on on each card’s
+retrievability, and the desired retention in the deck preset.
+Steps & Returning
+By default, Anki will use the steps of a card’s home deck. If a new card
+would normally be reviewed twice when being learned, the same thing
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 184/273
+
+=== PAGE 185 ===
+will happen when you study it in a ﬁltered deck. To learn about how
+(re)learning steps work, see Deck Options section.
+Cards return to their home deck when (re)learning is complete. Thus if
+you have 3 learning steps, a new card will return to its home deck upon
+three presses of “Good” or a single press of “Easy”.
+Filtered decks with rescheduling disabled show 4 buttons. The Again,
+Hard, and Good buttons have conﬁgurable delays. The Easy button
+removes cards from the ﬁltered deck.
+Due Reviews
+If the ﬁltered deck includes cards that were due for review, they will be
+shown like they would have been in their original deck: they appear in the
+review card count at the bottom of the screen, and there are four choices
+for how well you remembered. Upon a correct answer, the card will be
+moved back to its home deck, and its next delay adjusted using the home
+deck’s settings. If you forget the card, it will be shown according to the
+relearning steps deﬁned in the home deck.
+Reviewing Ahead
+If your search included cards that are not due, Anki will show the reviews
+ahead of time.
+Anki uses a special algorithm for these reviews that takes into account
+how early you are reviewing. If the cards were almost due to be shown,
+they will be given a new delay similar to what they would have received if
+you had reviewed them on time. If the cards are reviewed soon after they
+were scheduled however, their new delay will be similar to their previous
+delay. This calculation works on a sliding scale.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 185/273
+
+=== PAGE 186 ===
+Because reviewing a card shortly after it is scheduled has little impact on
+scheduling (e.g. a card due tomorrow with a one day interval will remain
+due tomorrow if reviewed early), the “review ahead” custom study
+setting is not appropriate for repeated use. If used to go through a
+week’s worth of cards before a trip, the mature cards will be rescheduled
+into the future and the new cards will remain at small intervals, because
+you don’t know them well enough for them to be rescheduled further. If
+you review ahead again the next day, all you’ll end up doing is going
+through those same new cards again, to little beneﬁt.
+Rescheduling
+By default, Anki will return cards to their home decks with altered
+scheduling, based on your performance in the ﬁltered deck.
+To change this behaviour, turn oﬀ Reschedule cards based on my
+answers. When this is turned oﬀ, cards are shown in a simple “preview
+mode”, and when they are returned to their original deck, they are
+returned exactly as they started.
+Catching Up
+Filtered decks can be useful for catching up when you’ve fallen behind in
+your reviews. One Anki user describes the way they use the ﬁltered decks
+to catch up as follows:
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 186/273
+
+=== PAGE 187 ===
+I did this for a backlog of 800 cards with filtered subdecks. 
+Worked
+very well for me.
+Just Due filter with: "is:due prop:due>-7"
+Over Due filter with: "is:due prop:due<=-7"
+The Just Due deck will then contain cards that became due in 
+the past
+week. That's the deck you should study every day as it gets the 
+cards
+that become due regularly. With this you can study as if there 
+weren't
+any backlog.
+The Over Due deck will contain your backlog — cards which you 
+didn't
+study in time. You can study them the same way you would study 
+new
+cards. They go back into the regular cards, so the number of 
+overdue
+will never grow as long as you keep your Just Due deck in 
+check.
+How long it takes depends on how many overdue cards you study 
+each day
+in addition to the ones that become due regularly. You can 
+still motor
+through them when you feel like it - or you can do a specific 
+number per
+day like you would for new cards. Up to you.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 187/273
+
+=== PAGE 188 ===
+Searching
+Simple searches
+Limiting to a ﬁeld
+Tags, decks, cards and notes
+Ignoring accents/combining characters
+Regular expressions
+Card state
+Flags
+Card properties
+Recent Events
+Added
+Edited
+Answered
+First Answered
+Matching special characters
+Raw input
+Object IDs
+Custom Data
+Other Searches
+Anki’s Browse screen and the Filtered Deck feature use a common
+method of searching for speciﬁc cards/notes. This method can also be
+used to adjust the scope of FSRS optimization.
+Simple searches
+When you type some text into the search box, Anki ﬁnds matching notes
+and displays their cards. Anki searches in all ﬁelds of the notes, but does
+not search for tags (see later in this section to search for tags). Some
+examples:
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 188/273
+
+=== PAGE 189 ===
+dog
+searches for “dog” - will match words like “doggy” and “underdog” too.
+dog cat
+ﬁnds notes that have both “dog” and “cat” on them, such as “raining cats
+and dogs”.
+dog or cat
+ﬁnds notes with either “dog” or “cat”.
+dog (cat or mouse)
+ﬁnds notes with “dog” and “cat”, or “dog” and “mouse”.
+-cat
+ﬁnds notes without “cat”.
+-cat -mouse
+ﬁnds notes with neither “cat” nor “mouse”.
+-(cat or mouse)
+same as the above.
+"a dog"
+ﬁnds notes with the exact sequence of characters “a dog” in them, such as
+“atta dog”, but not “dog a” or “adog”.
+-"a dog"
+ﬁnds notes without the exact sequence of characters “a dog” in them.
+d_g
+ﬁnds notes with d, <one character>, g, like dog, dig, dug, and so on.
+d*g
+ﬁnds notes with d, <zero or more characters>, g, like dg, dog, dung, etc.
+w:dog
+searches for the word “dog” as opposed to a sequence of characters - will
+match “dog”, but not “doggy” or “underdog”. Requires Anki 2.1.24+,
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 189/273
+
+=== PAGE 190 ===
+AnkiMobile 2.1.61+, or AnkiDroid 2.17+. Note that formatting changes
+may be interpreted as word boundaries, e.g. searching for w:exam will
+match example, as the “exam” part of example is in bold format.
+w:dog*
+will match “dog” and “doggy”, but not “underdog”.
+w:*dog
+will match “dog” and “underdog”, but not “doggy”.
+Things to note from the above:
+Search terms are separated by spaces.
+When multiple search terms are provided, Anki looks for notes that
+match all of the terms - an implicit and is inserted between each
+term. On Anki 2.1.24+, AnkiMobile 2.0.60+, and AnkiDroid 2.17+ you
+can be explicit if you like (dog and cat is the same as dog cat), but
+older Anki versions will treat and as just another word to search for.
+You can use or if you only need one of the terms to match.
+You can prepend a minus sign (-) to a term to ﬁnd notes that don’t
+match the term.
+You can group search terms by placing them in parentheses, as in the
+dog (cat or mouse) example. This becomes important when
+combining OR and AND searches — in the example, with the
+parentheses, it matches either “dog cat” or “dog mouse”, whereas
+without them it would match either “dog and cat” or “mouse”.
+Anki is only able to search within formatting in the sort ﬁeld you’ve
+conﬁgured. For example, if you add “example” to one of your ﬁelds,
+with the “exa” part in bold, this will not be matched when searching
+for example unless that ﬁeld is the sort ﬁeld. If a word is not
+formatted, or the formatting does not change in the middle of the
+word, then Anki will be able to ﬁnd it in any ﬁeld.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 190/273
+
+=== PAGE 191 ===
+Standard searches are case insensitive for Latin characters - a-z will
+match A-Z, and vice versa. Other characters such as Cyrillic are case
+sensitive in a standard search, but can be made case insensitive by
+searching on a word boundary or regular expression (w:, re:).
+Limiting to a ﬁeld
+You can also ask Anki to match only if a particular ﬁeld contains some
+text. Unlike the previous search examples, searching in ﬁelds requires an
+exact match by default.
+front:dog
+ﬁnds notes with a Front ﬁeld of exactly “dog”. A ﬁeld that says “a dog” will
+not match.
+"animal front:a dog"
+ﬁnds notes where the “Animal Front” ﬁeld is exactly “a dog”. The double
+quotes are mandatory: see later in this section.
+front:*dog*
+ﬁnds notes where the Front ﬁeld contains dog somewhere.
+front:
+ﬁnds notes that have an empty Front ﬁeld.
+front:_*
+ﬁnds notes that have a non-empty Front ﬁeld.
+front:*
+ﬁnds notes that have a Front ﬁeld, empty or not.
+fr*:text
+ﬁnds notes in a ﬁeld starting with “fr”. Requires Anki 2.1.24+, AnkiMobile
+2.1.60+, or AnkiDroid 2.17+.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 191/273
+
+=== PAGE 192 ===
+Tags, decks, cards and notes
+tag:animal
+ﬁnds notes with the tag “animal”, or subtags like “animal::mammal”.
+tag:none
+ﬁnds notes with no tags.
+tag:ani*
+ﬁnds notes with tags starting with “ani”.
+deck:french
+ﬁnd cards in a top-level deck called “French”, or its subdecks like
+“French::Words”. It will not match subdecks with that name, such as
+“Languages::French”.
+deck:french::words
+ﬁnd cards in the “French::Words” subdeck.
+deck:french -deck:french::*
+ﬁnds cards in “French”, but not its subdecks.
+deck:"french words"
+searching when the deck name has a space.
+"deck:french words"
+same as earlier.
+deck:filtered
+ﬁltered decks only.
+-deck:filtered
+normal decks only.
+preset:"Default"
+cards in all decks that use the “Default” deck options preset. Requires Anki
+23.10+, AnkiMobile 23.10+ or AnkiDroid 2.17+.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 192/273
+
+=== PAGE 193 ===
+card:forward
+ﬁnds cards created by a card type named “Forward”.
+card:1
+searches for cards by card type number, e.g. to ﬁnd the second cloze
+deletion for a note, you’d use card:2
+note:basic
+searches for cards created with a note type named “Basic”.
+Ignoring accents/combining characters
+Requires Anki 2.1.24+, AnkiMobile 2.0.60+ or AnkiDroid 2.17+.
+You can use nc: (nc stands for “no combining”) to make Anki ignore
+combining characters. For example:
+nc:uber
+matches notes with “uber”, “über”, “Über” and so on.
+nc: は
+matches “ は ”, “ ば ”, and “ ぱ ”.
+Searches that ignore combining characters are slower than regular
+searches.
+Regular expressions
+Anki 2.1.24+, AnkiMobile 2.0.60+ and AnkiDroid 2.17+ support searching
+in notes with “regular expressions”, a standard and powerful way of
+searching in text.
+Start a search with re: to search using regular expressions. To make
+things easier, Anki will treat the following as raw input, so bear in mind
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 193/273
+
+=== PAGE 194 ===
+the rules listed there.
+Some examples:
+"re:(some|another).*thing"
+ﬁnds notes that have “some” or “another” on them, followed by 0 or more
+characters, and then “thing”.
+re:\d{3}
+ﬁnds notes that have 3 digits in a row.
+Regular expressions can also be limited to a speciﬁc ﬁeld. Please note that
+unlike the normal searches in a speciﬁc ﬁeld, regular expressions in ﬁelds
+don’t require an exact match:
+front:re:[a-c]1
+matches uppercase or lowercase a1, B1 or c1 that occurs anywhere in the
+“Front” ﬁeld.
+front:re:^[a-c]1$
+same as the previous example, but will not match if any other text falls
+before or after a1/b1/c1.
+Anki 2.1.50+ supports regular expressions for tags:
+tag:re:^parent$
+ﬁnds notes with the exact tag “parent”, disregarding any child tags like
+“parent::child”.
+"tag:re:lesson-(1[7-9]|2[0-5])"
+ﬁnds notes with tags “lesson-17” through “lesson-25”.
+For more information on regular expressions, see this website.
+Some things to be aware of:
+The search is case-insensitive by default; use (?-i) at the start to
+turn on case sensitivity.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 194/273
+
+=== PAGE 195 ===
+Some text like spaces and newlines may be represented diﬀerently in
+HTML - you can use the HTML editor in the editing screen to see the
+underlying HTML contents.
+For the speciﬁcs of Anki’s regex support, see the regex crate
+documentation.
+Card state
+is:due
+review cards and learning cards waiting to be studied.
+is:new
+new cards.
+is:learn
+cards in learning.
+is:review
+reviews (both due and not due) and lapsed cards.
+is:suspended
+cards that have been automatically or manually suspended.
+is:buried
+cards that have been either automatically or manually buried.
+is:buried-sibling
+cards that have been buried automatically.
+is:buried-manually
+cards that have been manually buried.
+Cards that have lapsed fall into several of the previous categories, so it
+may be useful to combine diﬀerent search terms to get more precise
+results:
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 195/273
+
+=== PAGE 196 ===
+is:learn is:review
+cards that have lapsed and are awaiting relearning.
+-is:learn is:review
+review cards, not including lapsed cards.
+is:learn -is:review
+cards that are in learning for the ﬁrst time.
+Flags
+flag:0
+cards without a ﬂag.
+flag:1
+cards with a red ﬂag.
+flag:2
+cards with an orange ﬂag.
+flag:3
+cards with a green ﬂag.
+flag:4
+cards with a blue ﬂag.
+flag:5
+cards with a pink ﬂag.
+flag:6
+cards with a turquoise ﬂag.
+flag:7
+cards with a purple ﬂag.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 196/273
+
+=== PAGE 197 ===
+Card properties
+prop:ivl>=10
+cards with interval of 10 days or more.
+prop:due=1
+cards due tomorrow.
+prop:due=-1
+cards due yesterday that haven’t been answered yet.
+prop:due>=1
+all cards due in the future, including tomorrow.
+prop:due<=-1
+all overdue cards.
+prop:due>=-1 prop:due<=1
+cards due yesterday, today and tomorrow.
+prop:reps<10
+cards that have been answered less than 10 times.
+prop:lapses>3
+cards that have lapsed more than 3 times.
+prop:ease!=2.5
+cards easier or harder than default ease.
+prop:pos<=100
+new cards with a position in the queue less than or equal to 100.
+The following searches require Anki 23.10+ and FSRS enabled:
+prop:s>21
+cards with stability greater than 21 days.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 197/273
+
+=== PAGE 198 ===
+prop:d>0.3
+cards with diﬃculty greater than 0.3.
+prop:r<0.9
+cards with retrievability less than 0.9.
+Recent Events
+Added
+added:1
+cards added today.
+added:7
+cards added in the last 7 days.
+The check is made against card creation time rather than note creation
+time, so cards that were generated within the time frame will be included
+even if their notes were added a long time ago.
+Edited
+edited:n
+cards where the note text was added/edited in the last n days.
+This requires Anki 2.1.28+ or AnkiMobile 2.0.64+.
+Answered
+rated:1
+cards answered today.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 198/273
+
+=== PAGE 199 ===
+rated:1:2
+cards answered Hard (2) today.
+rated:7:1
+cards answered Again (1) in the last 7 days.
+rated:31:4
+cards answered Easy (4) in the last 31 days.
+Anki 2.1.39+ supports rating searches over 31 days.
+Note that, to search for cards answered at a particular day, rated:n -
+rated:(n-1) might not work every time. Use the following instead:
+prop:rated=0
+cards answered today.
+prop:rated=-1
+cards answered one day ago.
+prop:rated=-7
+cards answered 7 days ago.
+First Answered
+Requires Anki 2.1.45+.
+introduced:1
+cards answered for the ﬁrst time today.
+introduced:365
+cards answered for the ﬁrst time within the last 365 days.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 199/273
+
+=== PAGE 200 ===
+Matching special characters
+If you’re using a version earlier than Anki 2.1.36 the following searches
+may not work.
+As shown in the previous section, some characters like *, _ and " have
+a special meaning in search. If you need to locate those characters in a
+search, you need to tell Anki not to treat them specially. This is called
+“escaping a character” and is primarily done by using double quotes and
+backslashes.
+Space
+To match something that includes spaces, enclose the "entire 
+term" in double quotes. If it is a colon search, you also have the
+option to only quote the part:"after the colon".
+And/ Or
+To search for these words, wrap them with double quotes. For
+example, dog "and" cat searches for “dog”, “cat” and the word
+“and”. If you wrap the entire search term with quotes like in the
+previous example, you do not need to escape and or or.
+", * and _
+Add a backslash before these characters to treat them literally. For
+example, _ will match any single character, but \_ matches only an
+actual underscore.
+\
+Because a backslash is used to remove the special meaning from
+other characters, it too is treated specially. If you need to search for
+an actual backslash, use \\ instead of \.
+( and )
+You can search for parentheses by enclosing the entire term in
+quotes, by using a backslash, or both at the same time. For example,
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 200/273

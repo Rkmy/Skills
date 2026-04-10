@@ -1,0 +1,1857 @@
+
+=== PAGE 201 ===
+"(text)", \(text\) and "\(text\)" are all equivalent searches,
+and search for (text).
+-
+Starting a search term with - usually inverts it: -dog matches
+everything except dog for example. If you instead wish to include an
+actual hyphen, you can either use a backslash, or include the text in
+quotes. For example, \-free or "-free" will match “guilt-free” and
+“cruelty-free”.
+:
+Colons have to be escaped using backslashes unless they are
+preceded by another, unescaped colon. For example, w:3:30
+searches for “3:30” on word boundary and doesn’t require you to use
+a backslash. However, if you don’t use a colon search, the colons
+need to be escaped like this: 3\:30.
+&, <, and >
+&, <, and > are treated as HTML when searching in Anki, and as
+such, searches containing them don’t work as expected. However,
+you can search for them by using their corresponding HTML entity
+names (&amp; for &, &lt; for <, and &gt; for >). For example,
+searching &amp;text searches for a note with &text in a ﬁeld.
+Raw input
+Text preceded by certain keywords (like re:) will be treated as raw input.
+That is, the characters listed above largely lose their special meaning. In
+such a context, only a minimum of escaping is required to prevent
+ambiguity:
+Double quotes (") must be escaped.
+Spaces and unescaped parentheses require the search term to be
+quoted.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 201/273
+
+=== PAGE 202 ===
+The search term must not end in an odd number of backslashes.
+Object IDs
+nid:123
+the note with note id 123.
+cid:123,456,789
+all cards with card ids 123, 456, or 789.
+Note and card IDs can be found in the card info dialog in the browser.
+These searches may also be helpful when doing add-on development or
+otherwise working closely with the database.
+Custom Data
+Anki allows small amounts of custom data to be stored on cards, enabling
+advanced use cases such as custom schedulers. One of the notable
+applications of this feature was in earlier implementations of FSRS. In
+Anki 23.10+, there are some ways to search it:
+has-cd:v
+cards having the property v in custom data.
+prop:cdn:d>5
+cards with the value of d in custom data (usually refers to diﬃculty in
+FSRS) greater than 5.
+prop:cds:v=reschedule
+cards with the string v in custom data equal to reschedule.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 202/273
+
+=== PAGE 203 ===
+Other Searches
+prop:due=1 is:learn
+interday learning cards due for tomorrow.
+prop:due=0 is:learn -introduced:1
+interday learning cards due today.
+prop:resched=0
+cards rescheduled today, either using Set due date or Reschedule cards
+on change.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 203/273
+
+=== PAGE 204 ===
+Importing
+Anki can import text ﬁles, packaged Anki decks created by the export
+feature, Mnemosyne 2.0 .db ﬁles, and SuperMemo .xml ﬁles. To import a
+ﬁle, click the File menu and then “Import”.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 204/273
+
+=== PAGE 205 ===
+Text Files
+Spreadsheets and UTF-8
+HTML
+Importing Media
+Bulk Media
+Duplicates and Updating
+File Headers
+Notetype Column
+Deck Column
+GUID Column
+Any plain text ﬁle that contains ﬁelds separated by commas, semicolons
+or tabs can be imported into Anki, provided some conditions are met.
+The ﬁles must be plain text (myﬁle.txt). Other formats like myﬁle.xls,
+myﬁle.rtf, myﬁle.doc must be saved as a plain text ﬁle ﬁrst.
+The ﬁles must be in UTF-8 format (see below).
+Anki determines the number of ﬁelds in the ﬁle by looking at the ﬁrst
+(non-commented) line. If some of the later records in the ﬁle contain
+fewer ﬁelds, Anki will treat the missing ﬁelds as if they were blank. If
+some of your records contain extra ﬁelds, the extra content will not
+be imported.
+Anki tries to guess which ﬁeld separator (commas, tabs, etc.) your ﬁle
+uses. If it guesses wrongly, you can change it in the import options
+window and preview the results. Or you can add ﬁle headers to force
+a speciﬁc ﬁeld separator.
+Fields in your text ﬁle can be mapped to any ﬁeld in your notes, including
+the tags ﬁeld. You can choose which ﬁeld in the text ﬁle corresponds to
+which ﬁeld in the note when you import.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 205/273
+
+=== PAGE 206 ===
+When you import a text ﬁle, you can choose what deck to put the cards in.
+Keep in mind that if you have the deck override option set for one or
+more of your templates, the cards will go to that deck rather than the one
+you’ve selected.
+This is an example of a valid ﬁle with three ﬁelds:
+There are two ways to include newlines or the ﬁeld separator in ﬁelds.
+Escape the characters by placing the contents of the ﬁeld in
+quotation marks:
+Because quotes are used to mark where a ﬁeld begins and ends, if you
+wish to include them inside your ﬁeld, you need to replace a single
+doublequote with two doublequotes to “escape” them from the regular
+handling, like so:
+When you use a spreadsheet program like Libreoﬃce to create the CSV
+ﬁle for you, it will automatically take care of escaping double quotes.
+Use HTML new lines:
+You need to turn on the Allow HTML in ﬁelds in the import dialog for
+HTML newlines to work.
+apple;banana;grape
+first field;second field;third field
+hello;"this is
+a two line answer"
+two;this is a one line field
+"this includes a ; (semicolon)";another field
+field one;"field two with ""escaped quotes"" inside it"
+hello; this is<br>a two line answer
+two; this is a one line one
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 206/273
+
+=== PAGE 207 ===
+Escaped multi-lines will not work correctly if you are using cloze deletions
+that span multiple lines. In this case, please use HTML newlines instead.
+You can also include tags in another ﬁeld and select it as a tags ﬁeld in the
+import dialog:
+This is an example of a valid ﬁle where the ﬁrst line is ignored (#):
+Spreadsheets and UTF-8
+If you have non-Latin characters in your ﬁle (such as accents, Japanese
+and so on), Anki expects ﬁles to be saved in a “UTF-8 encoding”. The
+easiest way to do this is to use the free LibreOﬃce spreadsheet program
+instead of Excel to edit your ﬁle, as it supports UTF-8 easily, and also
+exports multi-line content properly, unlike Excel. If you wish to keep using
+Excel, please see this doc for more information.
+To save your spreadsheet to a ﬁle Anki can read with LibreOﬃce, go to
+File > Save As, and then select CSV for the type of ﬁle. After accepting the
+default options, LibreOﬃce will save the ﬁle and you can then import the
+saved ﬁle into Anki.
+HTML
+Anki can treat text imported from text ﬁles as HTML (the language used
+for web pages). This means that text with bold, italics and other
+formatting can be exported to a text ﬁle and imported again. If you want
+first field;second field;tags
+# this is a comment and is ignored
+foo bar;bar baz;baz quux
+field1;field2;field3
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 207/273
+
+=== PAGE 208 ===
+to include HTML formatting, you can check the “allow HTML in ﬁelds”
+checkbox when importing. You may wish to turn this oﬀ if you’re trying to
+import cards whose content contains angle brackets or other HTML
+syntax.
+If you wish to use HTML for formatting your ﬁle but also wish to include
+angle brackets or ampersands, you may use the following replacements:
+Character Replacement
+< &lt;
+> &gt;
+& &amp;
+Importing Media
+If you want to include audio and pictures from a text ﬁle import, copy the
+ﬁles into the collection.media folder. Do not put subdirectories in the
+media folder, or some features will not work.
+After you’ve copied the ﬁles, change one of the ﬁelds in your text ﬁle as
+follows.
+or
+Alternatively, you can use the ﬁnd and replace feature in the browse
+screen to update all the ﬁelds at once. If each ﬁeld contains text like
+“myaudio”, and you wish to make it play a sound, you’d search for (.*) and
+replace it with “[sound:\1.mp3]”, with the regular expressions option
+enabled.
+<img src="myimage.jpg">
+[sound:myaudio.mp3]
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 208/273
+
+=== PAGE 209 ===
+When importing a text ﬁle with these references, you must make sure to
+enable the “Allow HTML” option.
+You might be tempted to do this in a template, like:
+Anki doesn’t support this for two reasons: searching for used media is
+expensive, as each card has to be rendered, and such functionality isn’t
+obvious to shared deck users. Please use the ﬁnd & replace technique
+instead.
+Bulk Media
+Another option for importing large amounts of media at once is to use
+the media import add-on. This add-on will automatically create notes for
+all ﬁles in a folder you select, with the ﬁlenames on the front (minus the
+ﬁle extension, so if you have a ﬁle named apple.jpg, the front would say
+“apple”) and the images or audio on the back. If you would like a diﬀerent
+arrangement of media and ﬁlenames, you can change the note type of
+the created cards afterwards.
+Duplicates and Updating
+When importing text ﬁles, Anki uses the ﬁrst ﬁeld to determine if a note is
+unique. By default, if the ﬁle you are importing has a ﬁrst ﬁeld that
+matches one of the existing notes in your collection and that existing note
+is the same type as the type you’re importing, the existing note’s other
+ﬁelds will be updated based on content of the imported ﬁle. A drop-down
+box in the import screen allows you to change this behaviour, to either
+ignore duplicates completely, or import them as new notes instead of
+updating existing ones.
+<img src="{{field name}}">
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 209/273
+
+=== PAGE 210 ===
+The match scope setting controls how duplicates are identiﬁed. When
+note type is selected, Anki will identify a duplicate if another note with
+the same note type has the same ﬁrst ﬁeld. When set to note type and
+deck, a duplicate will only be ﬂagged if the existing note also happens to
+be in the deck you are importing into.
+If you have updating turned on and older versions of the notes you’re
+importing are already in your collection, they will be updated in place (in
+their current decks) rather than being moved to the deck you have set in
+the import dialog. If notes are updated in place, the existing scheduling
+information on all their cards will be preserved.
+For info on how duplicates are handled in .apkg ﬁles, please see the Deck
+Packages section.
+File Headers
+Anki 2.1.54+ supports certain headers that can be included in the text ﬁle
+to make importing more powerful or convenient. They consist of
+#key:value pairs and must be listed in separate lines at the top of the
+ﬁle.
+Key Allowed Values Behaviour
+separator
+Comma, Semicolon,
+Tab, Space, Pipe,
+Colon, or the
+corresponding literal
+characters
+Determines the ﬁeld
+separator.
+html true, false
+Determines whether
+the ﬁle is treated as
+HTML.
+tags List of tags, separated
+by spaces
+Adds the listed tags to
+every imported note.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 210/273
+
+=== PAGE 211 ===
+Key Allowed Values Behaviour
+columns
+List of names, separated
+by the previously set
+separator
+Determines the
+number of columns
+and shows their given
+names when
+importing.
+notetype Note type name or id Presets the note type, if
+it exists.
+deck Deck name or id Presets the deck, if it
+exists.
+notetype 
+column 1, 2, 3, …
+Determines which
+column contains the
+note type name or id of
+each note, see
+Notetype Column.
+deck 
+column 1, 2, 3, …
+Determines which
+column contains the
+deck name or id of
+each note, see Deck
+Column.
+tags 
+column 1, 2, 3, …
+Determines which
+column contains the
+tags of each note.
+guid 
+column 1, 2, 3, …
+Determines which
+column contains the
+GUID of each note, see
+GUID Column.
+Some headers have further implications.
+Notetype Column
+Usually, all notes from a ﬁle will be mapped to a single note type. That
+changes, if there is a column with note type names or ids.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 211/273
+
+=== PAGE 212 ===
+This allows you to import notes with diﬀerent note types, and their ﬁelds
+will be mapped implicitly: The ﬁrst regular column is used for the ﬁrst
+ﬁeld of any note regardless of its note type, the second regular column
+for the second ﬁeld, and so on. A regular column here being a column that
+does not contain special information like decks, tags, note types or GUIDs.
+Deck Column
+Usually, any new cards created as a result of importing a text ﬁle will be
+placed in a single deck of your choice. If the ﬁle contains a deck column,
+however, new cards of a note will be placed in its speciﬁed deck instead. If
+the deck does not exist, a deck with the given name will be created.
+GUID Column
+GUID stands for Globally Unique Identiﬁer. When you create notes in Anki,
+Anki assigns each note a unique ID, which can be used for duplicate
+checking. If you export your notes with the GUID included, you can make
+changes to the notes, and as long as you do not modify the GUID ﬁeld,
+you’ll be able to import the notes back in to update the existing notes.
+Please note that the GUID is intended to be created by Anki. If you are
+creating your own IDs, such as MYNOTE0001, then it’s recommended that
+you place the IDs in the ﬁrst ﬁeld, instead of assigning them to Anki’s
+internal GUID. When importing, Anki is able to use either the ﬁrst ﬁeld or
+the GUID for duplicate checking, so you do not need to make IDs a GUID
+in order to be able to update your notes.
+One other thing to note is that the duplicate option will not work for rows
+that have a non-empty GUID. If a GUID is provided, and already exists in
+the collection, a duplicate will not be created.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 212/273
+
+=== PAGE 213 ===
+Packaged Decks
+Scheduling
+Updating
+Anki 23.10 and Later
+Note to Deck Authors
+Anki packages (.apkg ﬁles) enable you to import decks, notes, note types,
+and cards from other users. They are commonly shared on AnkiWeb.
+Scheduling
+Anki packages may also contain scheduling information, which is useful if
+you want to transfer decks between devices or proﬁles. However, when
+importing a deck shared by someone else, you typically do not want to
+adopt their card intervals or review history.
+If you encounter imported cards with unexpectedly large intervals, the
+deck author may accidentally have included their scheduling information.
+You can use the Set Due Date feature to reset the imported cards. On
+Anki 23.10 and later, you can remove any scheduling information during
+the import process by leaving the “Import any learning progress” option
+unselected. This will also remove any “leech” or “marked” tags from the
+imported cards.
+Updating
+When you import an .apkg ﬁle, Anki will identify any notes in it that are
+already in your collection due to a previous import. If the notes in the ﬁle
+are newer than your local copy, the notes will be updated with the
+contents of the ﬁle by default.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 213/273
+
+=== PAGE 214 ===
+This updating process is generally not possible if the note type is changed
+(e.g. if either you or the deck author do things like add an extra ﬁeld to
+the note type). You will still be able to import any missing notes from the
+ﬁle, but notes you have imported previously will not be updated if the
+deck author has made changes.
+Anki 23.10 and Later
+Anki 23.10 introduced more ﬂexibility: You can choose to unconditionally
+update notes and note types, always overwriting your modiﬁcations, or,
+on the other hand, never update existing objects.
+Also, if both you and the deck author modiﬁed the same note type, you
+can now decide to merge the two versions. This will preserve all templates
+and ﬁelds contained in either one, but will require a full sync, and may
+mark other existing notes as modiﬁed.
+Note to Deck Authors
+Merging relies on template and ﬁeld ids, which were introduced in Anki
+2.1.67. If a template or ﬁeld lacks an id, because it has been created with
+an earlier release, Anki attempts to ﬁnd an equivalent by comparing
+names.
+See this this add-on for why it is advantageous to share note types with
+ﬁeld and template ids, and how to add them to existing ones.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 214/273
+
+=== PAGE 215 ===
+Exporting
+Text Files
+Packaged Decks
+Collection (.colpkg)
+Deck (.apkg)
+Exporting allows you to save part of your collection as a text ﬁle or
+packaged Anki deck. To export, click the File menu and choose Export.
+Text Files
+If you choose “Notes in Plain Text”, Anki will write the contents of the
+notes into a text ﬁle. Each ﬁeld is separated by a tab. If you edit the
+resulting ﬁle and don’t modify the ﬁrst ﬁeld, you can later import that ﬁle
+back into Anki and Anki will update your notes based on your edits,
+provided you import back into the same note type.
+If you ﬁnd yourself needing to edit the ﬁrst ﬁeld as well, you’ll need to
+change the format of your note type so that the ﬁrst ﬁeld is an ID number
+rather than actual text. (You can install the Add note id add-on to make
+this easier.)
+In order for formatting to be preserved when you import text back in, the
+text is exported with all the HTML formatting embedded in it.
+Packaged Decks
+A “packaged deck” consists of cards, notes, note types, and any sounds or
+images bundled up into a ﬁle ending with .apkg or .colpkg. You can use
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 215/273
+
+=== PAGE 216 ===
+packaged decks to transfer cards between people, or for backing up parts
+of your collection.
+There are two diﬀerent kinds of packaged decks.
+Collection (.colpkg)
+When you export all decks with scheduling included, this is called a
+“collection package”. Anki will copy your entire collection into a ﬁle ending
+in .colpkg, and place it on your desktop. A collection package is used to
+back up your collection, or copy it to another device.
+Collection packages created with previous versions of Anki were called
+collection.apkg.
+When this ﬁle is later imported, Anki will delete all the current cards in the
+collection, and replace the collection with the items in the ﬁle. This is
+useful for copying your collection back and forth between devices.
+Existing media in your collection is not deleted when you import a
+collection package. To delete unused media, use Tools>Check Media.
+If you choose Anki 2.1.50+ Collection Package format, imports and
+exports will be faster, and media ﬁles will be compressed, but the
+resulting .colpkg ﬁle will not be readable by older Anki clients.
+Deck (.apkg)
+Deck packages contain a single deck (and any child decks it may have).
+They have a ﬁlename ending with .apkg, but a ﬁlename other than
+collection.apkg. When you import a deck package, Anki will add the
+contents into your collection, rather than overwriting your collection.
+If some notes in the deck package have previously been imported, Anki
+will keep the version with the most recent modiﬁcation time. So if you
+download an updated deck, the edits that have been made in the
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 216/273
+
+=== PAGE 217 ===
+updated version will be made in your collection as well, but if you re-
+import an unchanged deck after making edits in your collection, the
+changes in your collection will be kept.
+If you choose not to include scheduling information, Anki will assume that
+you are sharing the deck with other people, and will remove marked and
+leech tags so that they will have a clean copy of it.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 217/273
+
+=== PAGE 218 ===
+Backups
+Automatic backups
+Restoring
+Creating
+Manual colpkg backups
+Restoring
+Creating
+AnkiWeb
+Deletion log
+Automatic backups
+Anki will create automatic backups of your card data. These include the
+text on your cards and your scheduling information, but do not include
+sounds or image ﬁles.
+Automatic backups can be useful to recover from mistakes, but you
+should not rely solely on them. Because they are stored on your local
+device, they will not protect you if your device breaks or is stolen. We
+recommend you combine them with manual backups.
+Restoring
+To restore from an automatic backup:
+Open Anki, and choose Switch Proﬁle from the File menu.
+Click on the “Open Backup” button.
+Select the backup you wish to restore from.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 218/273
+
+=== PAGE 219 ===
+When restoring from a backup, any changes made since the backup
+was created will be lost.
+Anki disables automatic syncing and backups when you restore from a
+backup. Once you’re happy that you’ve restored the correct backup, close
+and re-open Anki to return to normal.
+Creating
+Backups are created periodically. You can conﬁgure the time between
+backups in the preferences screen. The default is 30 minutes.
+Certain operations will trigger a backup, even if the conﬁgured time has
+not elapsed yet:
+A one-way sync download
+Importing a .colpkg ﬁle using File>Import
+Tools>Check Database
+After backups are two days old, Anki will start removing some of the older
+ones. You can control how many daily, weekly and monthly backups you’d
+like to keep.
+Backups created with 2.1.50 will not be importable into older Anki
+versions.
+Warning
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 219/273
+
+=== PAGE 220 ===
+Manual colpkg backups
+Restoring
+You can restore from a manual backup by using File>Import.
+Creating
+In Anki 2.1.50+, you can use File>Create Backup to trigger an immediate
+backup. This functions like regular automatic backups, and does not
+include media ﬁles.
+To create a backup that includes your sounds and images:
+Select Export from the File menu.
+Ensure “Anki collection package (.colpkg)” is selected.
+Enable the “include media” option.
+This will create a .colpkg ﬁle that contains all of your cards and any
+sounds/images they use. We recommend you store the ﬁle somewhere
+safe, like a diﬀerent device, or a cloud-based ﬁle storage service like
+Dropbox or Google Drive.
+AnkiWeb
+Synchronising your collection with AnkiWeb provides some level of
+protection against your device being lost or stolen. If you need to restore
+your collection from AnkiWeb, you can force a one-way sync in the
+preferences screen, or sync from a new device, and then choose
+“Download”.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 220/273
+
+=== PAGE 221 ===
+Deletion log
+Anki logs deleted notes to a text ﬁle called deleted.txt in your proﬁle
+folder. These notes are in a text format that can be read by File>Import,
+though please note the import feature only supports a single note type at
+one time, so if you have deleted notes from diﬀerent note types, you’ll
+need to split the ﬁle into separate ﬁles for each note type ﬁrst.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 221/273
+
+=== PAGE 222 ===
+Managing Files and Your
+Collection
+Checking Your Collection
+User Data
+Program Files
+Startup Options
+DropBox and File Syncing
+Network Filesystems
+Running from a Flash Drive
+Backups
+Inaccessible Harddisk
+Permissions of Temp Folder
+Corrupt Collections
+Linux/macOS
+Windows
+Final Step
+Checking Your Collection
+It is a good idea to occasionally check your collection ﬁle for problems.
+You can do this via the Tools>Check Database menu item. Checking the
+database ensures the ﬁle has not been corrupted, rebuilds some internal
+structures, and optimizes the ﬁle.
+When you check the database, your tag list is also rebuilt. When you
+delete individual decks or cards, Anki does not update the list of used
+tags, as it’s ineﬃcient to do so. If you want to clear old tags out from the
+list that are no longer in use, checking your database is the way to do it.
+Please note that Anki will automatically optimize your collection once
+every 2 weeks. This optimization ensures the collection performs well, but
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 222/273
+
+=== PAGE 223 ===
+it does not check for errors or rebuild the tag list when automatically
+optimizing.
+User Data
+On Windows, the latest Anki versions store your collection ﬁles in your
+appdata folder. You can access it by opening the ﬁle manager, and typing
+%APPDATA%\Anki2 in the location ﬁeld. Older versions of Anki stored your
+Anki ﬁles in a folder called Anki in your Documents folder.
+On Mac computers, recent Anki versions store all user data in the
+~/Library/Application Support/Anki2 folder. The Library folder is
+hidden by default, but can be revealed in Finder by holding down the
+option key while clicking on the Go menu. If you’re on an older Anki
+version, your Anki ﬁles will be in your Documents/Anki folder.
+On Linux, recent Anki versions store your user data in
+~/.local/share/Anki2, or $XDG_DATA_HOME/Anki2 if you have set a
+custom data path. If you are using a third-party Flatpak build, your ﬁles
+will be in ~/.var/app/net.ankiweb.Anki/data/Anki2/. Older versions of
+Anki stored your ﬁles in ~/Documents/Anki or ~/Anki.
+Within the Anki folder, the program-level and proﬁle-level preferences are
+stored in a ﬁle called prefs.db.
+There is also a separate folder for each proﬁle. The folder contains:
+Your notes, decks, cards and so on in a ﬁle called collection.anki2
+Your audio and images in a collection.media folder
+A backups folder
+Some system ﬁles
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 223/273
+
+=== PAGE 224 ===
+You should never copy or move your collection while Anki is open. Doing
+so could cause your collection to become corrupt. Please do not move or
+modify the other ﬁles in the folder either.
+Program Files
+Anki’s launcher is installed in the following locations by default:
+Windows: %LOCALAPPDATA%\Programs\Anki
+macOS: /Applications/Anki.app
+Linux: /usr/local/share/anki
+When you install/update Anki with the launcher, it downloads support
+ﬁles and places them in the following locations:
+Windows: %LOCALAPPDATA%\AnkiProgramFiles
+macOS: ~/Library/Application Support/AnkiProgramFiles
+Linux: ~/.local/share/AnkiProgramFiles
+Removing that folder will cause the launcher to behave like a fresh install.
+The AnkiProgramFiles contains all the ﬁles needed to run Anki aside
+from the launcher. You can copy it to a diﬀerent folder or system, and
+start Anki from the new location by opening
+AnkiProgramFiles/.venv/bin/anki (or
+AnkiProgramFiles\.venv\scripts\anki on Windows). If placed in the
+standard location on a new computer, the launcher will also be able to re-
+use the existing ﬁles, provided the ﬁles were copied with modiﬁcation
+times preserved.
+See the ﬂash drive section below for more.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 224/273
+
+=== PAGE 225 ===
+Startup Options
+If you have made a destructive change on one computer and have an
+undamaged copy on another computer, you may wish to start Anki
+without syncing in order to use the full sync option without ﬁrst
+downloading the changes. Similarly, if you are experiencing problems
+with Anki, you might need to (or might be instructed to) disable add-ons
+temporarily to see if one might be causing the problem. To do both of
+these things at the same time, you can open Anki in safe mode by holding
+down the Shift key while starting Anki. Keep holding Shift down until
+the on-screen message informs you that Anki has started in safe mode. If
+you’re on Linux and that didn’t work, run ‘anki –safemode’.
+It is possible to specify a custom folder location during startup. This is an
+advanced feature that is primarily intended to be used with portable
+installations, and we recommend you use the default location in most
+circumstances.
+The syntax to specify an alternate folder is as follows:
+If you have multiple proﬁles, you can pass -p <name> to load a
+speciﬁc proﬁle.
+If you pass -p some-fake-name, Anki will show the proﬁle screen on
+startup. If no proﬁle is provided, the last-used proﬁle is loaded.
+To change the interface language, use -l <iso 639-1 language code>,
+such as “-l ja” for Japanese.
+If you always want to use a custom folder location, you can modify your
+shortcut to Anki. On Windows, right-click on the shortcut, choose
+Properties, select the Shortcut tab, and add “-b \path\to\data\folder” after
+the path to the program, which should leave you with something like
+anki -b /path/to/anki/folder
+"C:\Program Files\Anki\anki.exe" -b "C:\AnkiDataFolder"
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 225/273
+
+=== PAGE 226 ===
+You can also use this technique with the -l option to easily use Anki in
+diﬀerent languages.
+On Windows, you should use a backslash (\) not a forward slash (/).
+On a Mac there is no easy way to alter the behaviour when clicking on the
+Anki icon, but it is possible to start Anki with a custom base folder from a
+terminal:
+Alternatively, you can deﬁne the environment variable “ANKI_BASE”. On
+Windows, you can deﬁne the environment variable with:
+On Linux and macOS, you can use:
+DropBox and File Syncing
+We do not recommend you sync your Anki folder directly with a third-
+party synchronization service, as it can lead to database corruption when
+ﬁles are synced while in use.
+If you just want to synchronize your media, you can link external folders
+into services like DropBox. Please see DropboxWiki: Sync Folders Outside
+Dropbox (archive.org) for more info.
+If you wish to keep your collection in sync as well, it is strongly
+recommended that you create a script that copies your ﬁles from your
+synced folder to a local folder, launches Anki, and then copies the ﬁles
+back when Anki is closed. This will ensure that the ﬁles are never
+synchronized while they are open.
+open /Applications/Anki.app --args -b ~/myankifolder
+set "ANKI_BASE=C:/path/to/AnkiDataFolder"
+export ANKI_BASE="/path/to/AnkiDataFolder"
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 226/273
+
+=== PAGE 227 ===
+Network Filesystems
+We strongly recommend you have Anki store your ﬁles on a local hard
+disk, as network ﬁlesystems can lead to database corruption. If a network
+ﬁlesystem is your only option, regular use of Tools>Check Database to
+detect corruption is recommended.
+Running from a Flash Drive
+On Windows, Anki can be installed on a USB / ﬂash drive and run as a
+portable application. The following example assumes your USB drive is
+drive E; adjust as necessary.
+WARNING: The drive letter must be the same on all devices. If you set this
+up for drive E, it won’t work for a ﬂash drive mapped to drive D for
+example.
+WARNING: Media syncing with AnkiWeb may not work if your ﬂash drive
+is formatted as FAT32. Please format the drive as NTFS to ensure media
+syncs correctly.
+1. Download the latest Anki launcher, and install it in a custom location:
+E:\Anki\Launcher. Not E:\Anki\Launcher\Anki.
+2. When the launcher appears, close it without installing.
+3. Put the following in a ﬁle E:\Anki\Anki.bat:
+4. Double-click on the .bat ﬁle you created, and install Anki as normal.
+@echo off
+echo Starting Anki...
+set USB_ROOT=%~dp0
+set ANKI_LAUNCHER_VENV_ROOT=%USB_ROOT%\AnkiProgramFiles
+set ANKI_LAUNCHER=%USB_ROOT%\Launcher\anki
+set ANKI_BASE=%USB_ROOT%\AnkiData
+start /b %ANKI_LAUNCHER%
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 227/273
+
+=== PAGE 228 ===
+5. You can now double-click on the .bat ﬁle to run Anki from other
+machines.
+Tools>Upgrade/Downgrade will continue to function, but only when your
+machine has access to the internet.
+Backups
+Please see this section.
+Inaccessible Harddisk
+If Anki can’t write to ﬁles in the Anki folder, a message will be displayed on
+startup saying that Anki can’t write to the harddisk, and Anki will close. If
+you’re unsure how to ﬁx the permissions, please contact someone near
+you who is knowledgeable about computers and can help you out.
+Permissions of Temp Folder
+Anki uses the system’s temporary folder to store temporary data. If the
+permissions of this folder have been changed from the default settings by
+a rogue app or buggy antivirus app, Anki will not function properly.
+If you’re on a Windows 7 machine, the general steps to ﬁx the problem
+are listed below. As this is somewhat complicated, please ask someone
+knowledgeable about Windows if you are not sure.
+1. Click on the start bar, and type in %temp% (including the percents),
+then hit Enter.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 228/273
+
+=== PAGE 229 ===
+2. Go up one folder, and locate the temp folder. Right click on it, and
+choose Properties.
+3. In the security tab, click on Advanced.
+4. Click on the Owner tab. If you’re not listed as the owner, click the
+button to take ownership.
+5. On the permissions tab, ensure that you have full control. On a
+default W7 install the control will actually be inherited from
+c:\users\your-username.
+Corrupt Collections
+Anki uses a ﬁle format that is robust against program and computer
+crashes, but it’s still possible for your collection to become corrupt if the
+ﬁles are modiﬁed while Anki is open, stored on a network drive, or
+corrupted by a bug.
+When you run Tools>Check Database, you will receive a message if Anki
+detects the ﬁle has been corrupted. The best way to recover from this
+is to restore from the most recent automatic backup, but if your
+backup is too old, then you can attempt to repair the corruption instead.
+On Linux, make sure sqlite3 is installed. On a Mac, it should be installed
+already. On Windows, download http://www.sqlite.org/sqlite-3_6_23.zip.
+Next, create a backup of your collection.anki2 ﬁle, in case something goes
+wrong with the steps below.
+Linux/macOS
+Open a terminal, change to the folder your collection is located in, and
+type:
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 229/273
+
+=== PAGE 230 ===
+Open the resulting dump.txt ﬁle in a text editor, and look at the ﬁnal line.
+If it reads “rollback;”, change it to “commit;”
+Then run the following in a terminal:
+Make sure you use temp.ﬁle - do not put collection.anki2 on the right, or
+you will blank out the ﬁle. When you’re done, proceed to the ﬁnal step.
+Windows
+Copy the sqlite3.exe program and your deck to your desktop. Then go
+to Start>Run and type in cmd.exe.
+If you’re on a recent Windows, the command prompt may not start on
+your desktop. If you don’t see desktop displayed in the command prompt,
+type something like the following, replacing “administrator” with your
+login name.
+Then type:
+Open the resulting dump.txt ﬁle in a text editor, and look at the ﬁnal line.
+If it reads “rollback;”, change it to “commit;”
+Then run the following in a terminal:
+sqlite3 collection.anki2 .dump > dump.txt
+cat dump.txt | sqlite3 temp.file
+cd C:\Users\Administrator\Desktop
+sqlite3 collection.anki2 .dump > dump.txt
+type dump.txt | sqlite3 temp.file
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 230/273
+
+=== PAGE 231 ===
+Make sure you use temp.ﬁle - do not put collection.anki2 on the right, or
+you will blank out the ﬁle. When you’re done, proceed to the ﬁnal step.
+Final Step
+Check that you didn’t get an error message, and that temp.ﬁle is not
+empty. The procedure optimizes the collection in the process, so it’s
+normal for the new ﬁle to be somewhat smaller than the old one.
+When you’ve conﬁrmed the ﬁle is not empty:
+rename the original collection.anki2 ﬁle to something else
+rename temp.ﬁle to collection.anki2
+move collection.anki2 back into your collection folder, overwriting the
+old version
+start Anki and go to Tools>Check Database to make sure the
+collection has been successfully restored.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 231/273
+
+=== PAGE 232 ===
+Card Info, Graphs and Statistics
+Card Info
+Statistics
+Selecting Decks / Collection
+Deck
+Collection
+History
+More
+Today
+Again Count
+Learn, Review, Relearn, Filtered
+The Graphs
+Future Due
+Calendar
+Reviews
+Card Counts
+Review Time
+Review Intervals
+Card Ease
+Card Stability
+Card Diﬃculty
+Card Retrievability
+Hourly Breakdown
+Answer Buttons
+True Retention Table
+Manual Analysis
+Card Info
+You can display information about a card by using the Cards>Info menu
+item, by right-clicking on the card and then selecting Info, or by pressing
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 232/273
+
+=== PAGE 233 ===
+I on the study screen.
+A few notes:
+Position
+It shows the order the card will appear in relative to other new cards. The
+position can be changed in the browser. Once a card has been studied,
+the position is not used, unless the card is manually reset to new again.
+Interval
+The delay from one review to the next. Times are abbreviated; “0s, 1m,
+3h, 4d, 5mo, 6y” refers to seconds, minutes, hours, days, months and
+years respectively.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 233/273
+
+=== PAGE 234 ===
+Ease
+The approximate amount the interval will grow when you answer a review
+card with the “Good” button.
+The bottom section shows the review history for the card. Rating denotes
+the button (1 = Again, 4 = Easy). When cards are manually rescheduled
+using the “reset” or “set due date” actions, the type will be listed as
+Manual and the rating as 0.
+Statistics
+The statistics window is accessed by clicking on Stats button at the top of
+the main window, or by pressing T.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 234/273
+
+=== PAGE 235 ===
+Selecting Decks / Collection
+Deck
+By default, the statistics window will show statistics from the currently
+selected deck and any subdecks it may contain, but you can select any
+deck from your collection by typing its name in the text box at the top of
+the screen or (from Anki 2.1.61), by using the deck selector at the bottom.
+Collection
+If you select this checkbox, statistics will be shown for your entire
+collection. You can also display graphs for arbitrary searches by adding
+ﬁlters in the search box at the top (2.1.28+).
+History
+By default, Anki shows you statistics for the last 12 months. You can
+change this to all history scope or deck life scope at the top. (The “today”
+section at the top remains of course unaﬀected by this selection.)
+More
+Clicking on “Save PDF” at the bottom will save a PDF document of the
+statistics to a ﬁle on your desktop to make it easy to share your
+statistics with others.
+When you delete notes, their review history is maintained in Anki. It
+will not be included when looking at statistics for a speciﬁc deck (as
+Anki has no way of knowing which deck the deleted cards belonged
+to), but will be included when you look at statistics for the whole
+collection.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 235/273
+
+=== PAGE 236 ===
+Anki 2.1.28+ introduced redesigned graphs. The old graphs are still
+accessible with a Shift-click on the Stats button.
+Today
+At the top of the statistics window is a brief list of textual statistics about
+the reviews that you have completed today. A “review” in this context is
+“one answering of a card”, so a card might count as multiple reviews if it
+needed to be seen multiple times, and a learning card answered also
+counts as a “review.” A couple of the stats whose meaning may not be
+immediately obvious:
+Again Count
+This is the number of reviews that you have failed (i.e., pressed Again on).
+The correct percentage listed afterwards is the number of cards you did
+“not” fail divided by the total number of cards you studied.
+Learn, Review, Relearn, Filtered
+The number of reviews that were learning cards, review cards, relearning
+cards, or studied in a ﬁltered deck when not due.
+The stats for the current day are not a good overall indicator of your
+learning progress; everyone has bad days and good days, and seeing that
+you got a lower percentage correct on a particular day should not be
+cause for concern. The remainder of the stats, which take longer periods
+of time into account, will give more useful information if you wish to try to
+change your study habits or scheduling settings based on your
+performance.
+The “today” statistics are unaﬀected by the time period selected at the
+bottom of the window.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 236/273
+
+=== PAGE 237 ===
+The Graphs
+Future Due
+This graph shows an estimated number of reviews that will be due on a
+given day in the future if you learn no new cards and fail no cards. The
+bars and the left axis show the number of cards due on each day if you
+study all cards each day, while the gray shaded region and the right axis
+show the number of cards due on that day if you don’t study at all until
+then. Note that the forecast graph does not count reviews that are
+currently overdue, so if you have a large backlog, the overdue cards will
+not be displayed.
+Daily load is an estimate of the average number of cards to be reviewed
+daily. If you don’t have a backlog, daily load should be approximately
+equal to your number of due cards.
+It is calculated as follows:
+Here,  is the interval of the n-th card. If the interval is less than one day,
+the summation term is 1. This prevents cards with short intervals from
+unrealistically skewing the value of daily load.
+Example: you have a card with an interval of 10 days and a card with an
+interval of 50 days. Daily load = , meaning that, on
+average, you will have 0.12 due cards per day.
+Calendar
+This graph shows past card review activity. Hovering the mouse over a
+speciﬁc item allows you to view the number of revisions made that day.
+Click on a day of the week to make that the starting day.
++ + + ⋯ +1
+I1
+1
+I2
+1
+I3
+1
+In
+In
++ = 0.121
+10
+1
+50
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 237/273
+
+=== PAGE 238 ===
+Reviews
+This graph counts the number of card reviews you have done. The bars
+may correspond to days, weeks, or months, depending on the time
+period you’ve selected at the bottom of the screen. The diﬀerently
+colored blocks show how many of the cards you answered on each day
+were mature, young, relearning, or learning cards. There is also a
+separate group for cards answered in a ﬁltered/cram deck while they
+were not due. The gray shaded region and the right axis show the
+cumulative total for each type of review as time progresses across the
+graph (so at 0 days, it would display the number for the entire time period
+displayed on the graph).
+Card Counts
+This pie chart shows what percentage of your deck or collection consists
+of mature, unseen, young/learn, and suspended cards. If you wish to
+calculate a more precise percentage, the key shows the exact number of
+cards in each section, and the total number of cards is displayed to the
+side.
+Review Time
+This graph works exactly like Review Count, except that it deals with the
+amount of time you spent on each card rather than the number of cards
+answered.
+Review Intervals
+This graph displays the number of cards that have a given interval (the
+delay between two reviews). The gray shaded region and the right axis tell
+you what percentage of your cards have an interval of less than or equal
+to the time below that point. The time scope has a diﬀerent eﬀect on this
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 238/273
+
+=== PAGE 239 ===
+graph than other graphs: rather than changing which cards or period of
+studying is included, it limits how far out the intervals are displayed to (so
+14-month intervals are not displayed at all on a 1-year graph).
+Card Ease
+This graph shows the number of cards that have a speciﬁc ease factor.
+Average ease of the selected deck / collection is also displayed here.
+Card Stability
+Only shown if FSRS is enabled. Stability is deﬁned as the amount of time
+required for the probability of recall to decrease from 100% to 90%.
+Card Diﬃculty
+Only shown if FSRS is enabled. Diﬃculty determines how quickly a card’s
+interval grows after each review.
+Card Retrievability
+Only shown if FSRS is enabled. “Retrievability” is synonymous with
+“probability of recall”.
+Estimated total knowledge is the total number of cards you are likely to
+currently remember, calculated by multiplying average retrievability by
+the number of cards that have been reviewed at least once.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 239/273
+
+=== PAGE 240 ===
+Hourly Breakdown
+This graph shows the percentage of total reviews you have passed during
+given hours.
+1. x-axis (bottom): Time of day (at given hour).
+2. y-axis (right): Amount of cards studied.
+3. secondary y-axis (left): Success rate in percent.
+The blue bars thus show you the number of reviews you’ve made at that
+hour (so that you know how signiﬁcant the results are). The gray shaded
+region shows the percentage of the total reviews you have passed (i.e.,
+not pressed Again on) at that hour.
+Answer Buttons
+This graph shows how many times you’ve chosen the Again, Hard, Good,
+or Easy button while studying learning/new, young, and mature cards.
+Anki also displays the percentage of correct reviews for each type of card.
+True Retention Table
+This table shows your retention across diﬀerent cards and diﬀerent time
+frames. A card is deﬁned as “mature” if its interval is ≥21 days. Only one
+review per day - the ﬁrst one - counts. Again counts as “Fail”; Hard, Good,
+and Easy count as “Pass”. This table can be used to check how well Anki’s
+spaced repetition algorithm is working for you.
+If you are using FSRS, your true retention is expected to be close to your
+desired retention. Please keep in mind that data for a single day is noisy,
+so it’s better to look at monthly data. If your true retention doesn’t match
+your desired retention very well, here are some general
+recommendations:
+1. Optimize your FSRS parameters.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 240/273
+
+=== PAGE 241 ===
+2. Use diﬀerent presets with their own parameters for diﬀerent
+material.
+3. Suspend/reformulate leeches.
+4. Make sure you are using the answer buttons as intended.
+Manual Analysis
+If you’re interested in getting information from your statistics other than
+what Anki provides, it is possible to access the data directly. Because of
+the complexity involved, this is not something we can provide any support
+for.
+One option is to write an add-on that adds another graph or more details
+to the statistics window. There are several add-ons of this sort on
+AnkiWeb already, which you can look at to get an idea of how it works.
+A more powerful and more complex option is to extract the review log
+information directly from Anki’s database and analyze it in an external
+program. Anki uses a database format called SQLite. There are many
+tools available for working with SQLite databases; one of the easiest to
+start with is called SQLite Browser, which will allow you to look around the
+database as well as export a CSV version of tables for import into another
+program.
+The most important table for statistics is the “revlog” table, which stores
+an entry for each review that you conduct. The columns are as follows:
+id
+The time at which the review was conducted, as the number of
+milliseconds that had passed since midnight UTC on January 1, 1970. (This
+is sometimes known as “Unix epoch time”, especially when in straight
+seconds instead of milliseconds.)
+cid
+The ID of the card that was reviewed. You can look up this value in the id
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 241/273
+
+=== PAGE 242 ===
+ﬁeld of the “cards” table to get more information about the card, although
+note that the card could have changed between when the revlog entry
+was recorded and when you are looking it up. It is also the millisecond
+timestamp of the card’s creation time.
+usn
+This column is used to keep track of the sync state of reviews and
+provides no useful information for analysis.
+ease
+Which button you pressed at the end of the review (1 for Again, 4 for
+Easy).
+ivl
+The new interval that the card was pushed to after the review. Positive
+values are in days; negative values are in seconds (for learning cards).
+lastIvl
+The interval the card had before the review. Cards introduced for the ﬁrst
+time have a last interval equal to the Again delay.
+factor
+The new ease factor of the card in permille (parts per thousand). If the
+ease factor is 2500, the card’s interval will be multiplied by 2.5 the next
+time you press Good.
+time
+The amount of time (in milliseconds) you spent on the question and
+answer sides of the card before selecting an ease button.
+type
+This is 0 for learning cards, 1 for review cards, 2 for relearning cards, and
+3 for early “cram” cards (cards being studied in a ﬁltered deck when they
+are not due).
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 242/273
+
+=== PAGE 243 ===
+Media
+Anki stores the sounds and images used in your notes in a folder next to
+the collection. For more on the folder location, please see the ﬁle
+locations section. When you add media within Anki, either by using the
+paperclip icon in the editor or by pasting it into a ﬁeld, Anki will copy it
+from its original location into the media folder. This makes it easy to back
+up your collection’s media or move it to another computer.
+If your media ﬁlenames contain spaces or other special characters such
+as percentage signs, the way the ﬁlenames appear in the HTML editor will
+diﬀer from the way the ﬁlenames appear on disk. For example, a ﬁle
+called hello 100%.jpg will appear as hello%20100%25.jpg in the HTML
+editor. Internally, Anki still uses the original ﬁlenames, so if you would like
+to search for the ﬁle or modify the ﬁlename with Find&Replace, you will
+need to use the name as it appears on disk, not as it appears in the HTML
+editor. Exporting to a text ﬁle is another way to see the underlying
+representation.
+Checking Media
+You can use the Tools>Check Media menu option to scan your notes and
+media folder. It will generate a report of ﬁles in the media folder that are
+not used by any notes, and media referenced in notes but missing from
+your media folder. It also allows you:
+To delete unused media ﬁles.
+To tag notes that refer to missing media ﬁles.
+To empty your trash folder.
+To restore the deleted ﬁles back to your media folder.
+This tool does not scan question or answer templates, which is why you
+can’t place media references to ﬁelds in the template. If you need a static
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 243/273
+
+=== PAGE 244 ===
+image or sound on every card, name it with a leading _ (e.g., _dog.jpg) to
+tell Anki to ignore it when checking for media. If you delete media using
+the unused media check, Anki will move it into your operating system’s
+trash folder, so you can recover if you accidentally delete media that
+shouldn’t have been deleted.
+Manually Adding Media
+When you add media via Anki’s interface, Anki takes care of ensuring the
+ﬁlenames are encoded in a way that should work across diﬀerent devices,
+removing characters that won’t work on certain operating systems, and
+truncating very long ﬁlenames.
+If you manually add ﬁles to your media folder, you should use
+Tools>Check Media afterwards, to ensure the ﬁlenames are encoded
+correctly. If you skip this step, any ﬁlenames that are not compatible will
+be skipped when syncing.
+Anki doesn’t follow symbolic links in the media folder when syncing. If you
+rely on symlinks for including fonts, stylesheets, or other resources, these
+ﬁles may appear to work on desktop but fail on mobile. To ensure ﬁles
+sync properly, copy the actual ﬁles into the collection.media folder
+instead of using symlinks.
+Supported Formats
+Anki uses a program called mpv (and mplayer as a fallback) in order to
+support sounds and videos. A wide variety of ﬁle formats are supported,
+but not all of these formats will work on AnkiWeb and the mobile clients.
+MP3 audio and MP4 video seems to be the most universally supported.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 244/273
+
+=== PAGE 245 ===
+Math and Symbols
+MathJax
+Customize MathJax
+LaTeX
+Security Warning
+Assumed Knowledge
+Web/Mobile
+Example
+Packages
+Template Conﬂicts
+Cloze Conﬂicts
+Unsafe Commands
+MathJax
+MathJax is a modern, browser-based typesetting system, useful for
+mathematical and chemical equations. It does not require the installation
+of any extra software, so it is easy to use, and it is recommended for most
+users.
+MathJax is supported out of the box on Anki 2.1+, AnkiMobile, and
+AnkiDroid 2.9+.
+To try it out:
+1. Type the following in a ﬁeld:
+2. Select the text you just typed.
+\sqrt{x}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 245/273
+
+=== PAGE 246 ===
+3. Click the rightmost button in the editor, and choose “MathJax inline”
+from the menu. Anki will change the text so it reads:
+4. Click the Cards… button. You’ll see a preview of how the equation will
+appear when the card is reviewed.
+Anki’s MathJax support expects content in TeX format. If you’re not
+familiar with TeX formatting, please see this cheatsheet. Please note
+that point 1 does not apply in Anki - Anki uses \( and \) for inline
+equations, and \[ and \] for display equations.
+If you want to use newlines in a MathJax expression, please use Shift+
+Enter instead of just Enter, as a normal newline will prevent MathJax
+from working correctly.
+Anki includes built in support for mhchem for rendering chemical
+equations. Please see the “chemical equations” section and the following
+sections for more information: https://mhchem.github.io/MathJax-
+mhchem/
+Customize MathJax
+Anki’s bundled MathJax support is loaded before card content, so if you
+wish to customise MathJax you’ll have to do so in a speciﬁc way. An
+example is provided here.
+\(\sqrt{x}\)
+x−−√
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 246/273
+
+=== PAGE 247 ===
+Note that Anki has special logic for cloze deletions that might not work if
+you change the standard delimiters for MathJax equations.
+LaTeX
+LaTeX is a powerful typesetting system, useful for entering mathematical
+formulas, chemical formulas, musical notation and so on. Anki provides
+some support for LaTeX, allowing you to enter LaTeX code in your notes.
+When you review a card, Anki will call LaTeX and display the generated
+image instead.
+LaTeX is more work to set up, and images can only be generated with the
+computer version of Anki - though once generated, the images can be
+displayed by mobile clients. Because of the extra complexity LaTeX brings,
+it is only recommended for users that need more features than MathJax
+provides.
+Security Warning
+LaTeX code can contain malicious commands that can read or write non-
+Anki data on your computer. For this reason, recent Anki versions will
+refuse to generate LaTeX images by default.
+If you wish to use LaTeX on your own cards, you will need to enable the
+Generate LaTeX images option in the preferences screen.
+<script>
+MathJax.config.tex['macros'] = {
+    R: '{\\mathbb {R}}',
+};
+if (typeof is_already_run == 'undefined') {
+  is_already_run = true
+  MathJax.startup.getComponents();
+}
+</script>
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 247/273
+
+=== PAGE 248 ===
+We strongly recommend you do not enable this option if you use
+shared decks, or think you will import shared decks in the future, as
+you are potentially giving any shared deck author access to your
+computer.
+You do not need to enable this option for shared decks. If a shared deck
+author has correctly generated all the images prior to them sharing the
+deck, the images should already be available.
+Assumed Knowledge
+Anki’s LaTeX support is not turn-key: it is assumed that you know how to
+use LaTeX already, and that you have it installed. If you have no
+experience with LaTeX, please consult one of the many guides available
+on the internet. If you are having trouble with markup, please ask on a
+LaTeX forum.
+To install LaTeX, on Windows use MiKTeX; on macOS use MacTeX, and on
+Linux use your distro’s package manager. Dvipng must also be installed.
+On Windows, go to Settings in MikTeX’s maintenance window, and make
+sure “Install missing packages on the ﬂy” is set to “Always”, not to “Ask me
+ﬁrst”. If you continue to have diﬃculties, one user reported that running
+Anki as an administrator until all the packages were fetched helped.
+On macOS, LaTeX has only been tested with MacTeX and BasicTeX. If you
+use BasicTeX, you need to install dvipng separately, with the following
+command:
+The command may not be on the path, so you may need to provide the
+full path, e.g /usr/local/texlive/2014basic/bin/x86_64-darwin/tlmgr.
+If you are not using the above LaTeX packages, you will need to use the
+edit LaTeX add-on to specify the full path to latex and dvipng.
+sudo tlmgr update --self; sudo tlmgr install dvipng
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 248/273
+
+=== PAGE 249 ===
+Web/Mobile
+When you review a card with LaTeX on it, Anki will generate an image for
+that LaTeX and place the image in your collection’s media folder for future
+use. The web & mobile clients will display these images if they already
+exist, but can not generate the images on their own.
+To avoid having to review all your cards at least once before you can
+study on the other clients, Anki can generate the images in bulk for you.
+To generate all the images, please go to Tools>Check Media. After that,
+syncing should upload the generated media to AnkiWeb and the other
+clients.
+Example
+The most general way to input LaTeX content is to surround it with [latex]
+[/latex] tags. There’s a shortcut button for this documented in the editor
+section.
+[latex] tags must be used inside a ﬁeld - placing them in the card template
+will cause problems.
+For example, entering the following on the front of an Anki ﬂashcard:
+will produce this when the ﬂashcard is viewed:
+The formula in the example above is called a “text formula”, because it is
+displayed right within the non-mathematical text. In contrast, the
+following example shows a “displayed formula”:
+Does [latex]\begin{math}\sum_{k = 1}^{\infty}\frac{1}
+{k}\end{math}[/latex] converge?
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 249/273
+
+=== PAGE 250 ===
+“Text formulas” and “display formulas” are the most common type of
+LaTeX expressions, so Anki provides abbreviated versions of them.
+Expressions of the form:
+can be shortened to
+and expressions of the form
+can be shortened to
+For example, the two LaTeX snippets shown before are equivalent to
+and
+Does the sum below converge?
+[latex]\begin{displaymath}\sum_{k = 1}^{\infty}\frac{1}
+{k}\end{displaymath}[/latex]
+[latex]\begin{math}...\end{math}[/latex]
+[$]...[/$]
+[latex]\begin{displaymath}...\end{displaymath}[/latex]
+[$$]...[/$$]
+Does [$]\sum_{k = 1}^{\infty}\frac{1}{k}[/$] converge?
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 250/273
+
+=== PAGE 251 ===
+respectively.
+Packages
+Anki allows you to customize the LaTeX preamble so you can import
+custom packages for chemistry, music and so on. For example, imagine
+you ﬁnd an example ﬁle for chemtex on the internet:
+Firstly, follow the documentation of the package and MiKTeX/MacTeX in
+order to install the package. To check the package is working, you’ll want
+to put code like the above into a .latex ﬁle and test if you can compile it
+from the command line. Once you’ve conﬁrmed that the package is
+available and working, we can integrate it with Anki.
+To use the package with Anki, click “Add” in the main window, then click
+the note type selection button. Click the “Manage” button, then select the
+Does the sum below converge?
+[$$]\sum_{k = 1}^{\infty}\frac{1}{k}[/$$]
+\documentclass[a4paper,12pt]{report}
+\usepackage{chemtex}
+\begin{document}
+\initial
+\begin{figure}[h]\centering
+\parbox{.3\textwidth}{\ethene{H}{H$_3$C}{CH$_3$}{Br}}
+\hfil
+\parbox{.3\textwidth}{\cbranch{H}{S}{H}{S}{C}{S}{}{S}{H}
+  \xi=-200 \cright{}{Q}{C}{D}{O}{S}{OH}}
+\hfil
+\parbox{.3\textwidth}{\hetisix{Q}{Q}{Q}{Q}{Q}{Q}{O}{Q}{O}
+  \xi=-171 \fuseup{Q}{Q}{Q}{Q}{D}{Q}{D}{Q}{D}}
+\caption{Chemie mit {\tt CHEMTEX}\label{a1}}
+\end{figure}
+\end{document}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 251/273
+
+=== PAGE 252 ===
+note type you plan to use and click “Options”. The LaTeX header and
+footer are shown. The header will look something like:
+To use chemtex, you’d add the usepackage line in the earlier example, so
+it looks like:
+After that, you should be able to include lines like the following in your
+Anki cards:
+Template Conﬂicts
+As of Anki 2.1.20 / AnkiMobile 2.0.56 / AnkiDroid 2.13, this workaround is
+no longer required, as {{field}} text inside ﬁelds no longer causes
+problems. If you need to support older versions and want to keep using
+this syntax, please make sure you place the {{=<% %>=}} string at the
+very top of your front and back template, as recent Anki versions will not
+recognize it anywhere but the start.
+For older versions:
+\documentclass[12pt]{article}
+\special{papersize=3in,5in}
+\usepackage{amssymb,amsmath}
+\pagestyle{empty}
+\setlength{\parindent}{0in}
+\begin{document}
+\documentclass[12pt]{article}
+\special{papersize=3in,5in}
+\usepackage{amssymb,amsmath}
+\usepackage{chemtex}
+\pagestyle{empty}
+\setlength{\parindent}{0in}
+\begin{document}
+[latex]\ethene{H}{H$_3$C}{CH$_3$}{Br}[/latex]
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 252/273
+
+=== PAGE 253 ===
+It’s not uncommon for {{ and }} to pop up in LaTeX code when writing
+mathematical equations. To ensure that your LaTeX equations don’t
+conﬂict with Anki’s ﬁeld replacements, it’s possible to change the
+separator to something else.
+For example, if you have a template:
+Changing it to the following will make it unlikely that the LaTeX will
+conﬂict:
+Cloze Conﬂicts
+Cloze deletions are terminated with }}, which can conﬂict with a }}
+appearing in your LaTeX. To prevent LaTeX from being interpreted as a
+closing cloze marker, you can put a space between any double closing
+braces that do not indicate the end of the cloze, so
+will not work, but
+will (and LaTeX ignores spaces in math mode, so your equation will
+render the same). If you want to avoid adding the extra space into the
+rendered text (for example, when you are making Cloze cards for learning
+programming languages), another option is to use a HTML comment
+when editing the card in HTML mode:
+{{latex field}}
+{{=<% %>=}}
+<%latex field%>
+{{c1::[$]\frac{foo}{\frac{bar}{baz}}[/$] blah blah blah.}}
+{{c1::[$]\frac{foo}{\frac{bar}{baz} }[/$] blah blah blah.}}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 253/273
+
+=== PAGE 254 ===
+You may use either workaround if you need to use the :: character
+sequence within the Cloze-deleted text. The ﬁrst card generated for the
+following note text will read [type] in C++ is a type-safe union:
+Unsafe Commands
+Anki prohibits certain commands like \input or \def from being used on
+cards or in templates, because allowing them could allow malicious
+shared decks to damage your system. (To be on the safe side, these
+commands are prohibited even in comments, so if you’re getting this
+error but don’t think you’ve used one, please double-check any comments
+you have in your headers, templates, and cards.) If you need to use these
+commands, please add them to a system package and import that
+package as described in the previous section.
+{{c1::[$]\frac{foo}{\frac{bar}{baz}<!-- -->}[/$] blah blah 
+blah.}}
+{{c1::std:<!-- -->:variant::~type~}} in C++ is a {{c2::type-
+safe union}}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 254/273
+
+=== PAGE 255 ===
+Leeches
+Editing
+Deleting
+Waiting
+Leeches are cards that you keep forgetting. Because they require so many
+reviews, they take up a lot more of your time, compared to other cards.
+Anki can help you identify leeches. Each time a review card “lapses” (is
+failed while it is in review mode), a counter increases. When this counter
+reaches 8, Anki tags the note as a leech and suspends the card. The
+threshold, and whether to suspend or not, can be adjusted in the deck
+options.
+If you keep failing that card, Anki will continue to alert you about the leech
+periodically. These warnings occur at half the initial leech threshold. For
+example, if you set the warning at 8 lapses, future warnings will happen
+every 4 lapses (at 12, 16, and so on).
+Once a leech is found, there are several ways to handle it.
+Editing
+The most eﬃcient method to deal with leeches is to change how the
+information is presented. Maybe your cards have too much information,
+or you’re trying to memorize something without fully understanding it.
+Often, it helps to follow the 20 rules of formulating knowledge, proposed
+by Dr Piotr Wozniak, the creator of SuperMemo. Some cards can beneﬁt
+from a mnemonic. Even some well-written cards may need a boost in
+coherence, e.g. by adding cards for related concepts. However, it takes a
+lot of experience to know how to formulate the material properly, break it
+down into smallest possible components, and use mnemonic techniques.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 255/273
+
+=== PAGE 256 ===
+Deleting
+If the material you’re struggling with isn’t important enough to justify the
+time spent, you can simply delete the card. By selectively deleting diﬃcult
+and obscure items, you can spend more time learning other material,
+making studying more enjoyable. If you think the card might be useful for
+future reference, you can leave it suspended.
+Waiting
+Some leeches are caused by “interference”. For example, an English
+learner may have recently learned the words “disappoint” and
+“disappear”. As they look similar, the learner may ﬁnd themselves
+confusing the two when trying to answer. In such situations, it’s often
+helpful to concentrate on one idea at a time. Once that idea is ﬁrmly
+ingrained in your mind, you can then start learning the other idea. So, in
+these situations, you might want to leave one of the words suspended
+until you have learned the other one well, and then unsuspend it.
+For a more detailed discussion, you can refer to the article “Dealing with
+Leeches”, written by Soren Bjornstad.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 256/273
+
+=== PAGE 257 ===
+Add-ons
+Anki’s capabilities can be extended with add-ons. Add-ons can provide
+features like extra support for speciﬁc languages, extra control over
+scheduling, and so on.
+To browse the list of available add-ons, select Tools > Add-ons, then click
+on Get Add-ons. Alternatively, open ankiweb.net/shared/addons in a web
+browser.
+If you have downloaded an add-on that is not working properly, or if you
+accidentally made a mistake when editing an add-on, you can use the
+Delete option in the menu to remove it.
+Add-ons use and modify arbitrary parts of Anki’s codebase, so in some
+cases, updating Anki can break the compatibility with older add-ons. If
+one of your add-ons stops working after updating Anki, please consider
+reporting the issue to the add-on author. If you rely on this add-on, you
+will need to keep using an older Anki version until the add-on gets an
+update.
+There is a Contact Author button on most add-ons pages on AnkiWeb,
+and many authors include their email address in the add-on, so if you
+need to get in touch with the author, editing the add-on and looking at
+the top of the ﬁle may help.
+To learn how to write your own add-ons, please see the add-on writing
+guide.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 257/273
+
+=== PAGE 258 ===
+Troubleshooting
+If you encounter a problem with Anki, please try the following steps in
+order:
+1. Restart Anki
+Please close Anki, then start it again.
+If you are unable to close Anki because of an error message, you can
+either terminate Anki using your task manager, or restart your computer.
+Anki saves periodically, so you should not lose more than a few minutes
+of work in most circumstances.
+If the problem does not occur again, you can skip the following steps.
+2. Check add-ons
+Please close Anki, then open it in safe mode by holding down the Shift
+key while starting Anki. Keep holding Shift down until the on-screen
+message informs you that Anki has started in safe mode. If you’re on
+Linux and that didn’t work, run ‘anki –safemode’.
+If the problem goes away, that indicates an add-on is causing the
+problem. Remove any add-ons you don’t need, and disable half of the
+others. If the problem continues, try the other half. Repeat the process
+until you’ve ﬁgured out which add-on is causing the problem. Then please
+report the issue to the add-on author, using the Copy Debug Info button,
+and pasting that into the report.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 258/273
+
+=== PAGE 259 ===
+3. Check your Anki version
+You can ﬁnd the version you’re using in the Help →  About or Anki →
+About menu. If the version you’re using is not the latest version
+published on https://apps.ankiweb.net, please close Anki, install the latest
+version, and then start Anki again to see if the problem has gone away.
+If you’re using Linux, please make sure you can reproduce the error using
+the packaged version on the Anki website, as distros often distribute
+broken versions.
+4. Check your database
+After restarting Anki, please try the Tools →  Check Database menu item
+to make sure your collection doesn’t have any problems.
+5. Restart your computer
+Sometimes restarting your computer may help.
+6. Change the Video Driver
+Crashes and display issues can be caused by the video driver. Changing to
+a diﬀerent video driver may help. Make sure you try all the driver options
+and restart Anki after each change.
+If you’re using Anki version 23.10 or above, the easiest way is to open
+Tools →  Preferences (or Anki →  Preferences if you’re on a Mac) and
+change the driver from the dropdown menu.
+If you are on an older Anki version or if you cannot access the preferences
+for some reason, you can use the command-line instructions instead and
+manually change the gldriver ﬁle:
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 259/273
+
+=== PAGE 260 ===
+Windows
+Mac
+Linux
+7. Reset window sizes
+Sometimes pressing reset window sizes button in the preferences
+screen immediately after starting Anki will help.
+8. If the problem remains
+If you’ve conﬁrmed you are using the latest Anki version, and are still
+receiving errors even with add-ons disabled, please report the problem,
+including the next error you receive in your post.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 260/273
+
+=== PAGE 261 ===
+Self-Hosted Sync Server
+Advanced users who cannot or do not wish to use AnkiWeb can use a self-
+hosted sync server instead.
+Things to be aware of:
+This is an advanced feature, targeted at users who are comfortable
+with networking and the command line. If you use this, the
+expectation is you can resolve any setup/network/ﬁrewall issues you
+run into yourself, and use of this is entirely at your own risk.
+Newer clients may depend on changes to the sync protocol, so
+syncing may stop working if you update your Anki clients without also
+updating the server.
+Third-party sync servers also exist. No testing is done against them,
+and they tend to take time to catch up when the sync protocol
+changes, so they are not recommended.
+The messages inside Anki will use the term “AnkiWeb” even if a
+custom server has been conﬁgured, (e.g. “Cannot connect to
+AnkiWeb” when your server is down).
+Installing/Running
+There are various ways you can install and run the server. You can use
+either:
+the sync server bundled with the desktop version of Anki
+a separate minimal sync server that doesn’t include Anki’s GUI
+dependencies. Python and Rust implementations are available.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 261/273
+
+=== PAGE 262 ===
+From a Packaged Build
+This uses the sync server built into the desktop version of Anki as of
+version 2.1.57+.
+On Windows in a cmd.exe session:
+Or MacOS, in Terminal.app:
+Replace ‘launcher’ with ‘anki’ for old packaged builds prior to 25.07.
+Or Linux:
+With Pip
+To avoid downloading desktop Anki’s GUI dependencies, you can run a
+standalone Anki sync server using a Python package downloaded from
+PyPI instead. Make sure you have Python 3.9+ installed.
+With Cargo
+From Anki 2.1.66+, you can alternatively build a Rust implementation of
+the standalone sync server using the below command. Make sure you
+set SYNC_USER1=user:pass
+"\Program Files\anki\anki-console" --syncserver
+SYNC_USER1=user:pass 
+/Applications/Anki.app/Contents/MacOS/launcher --syncserver
+SYNC_USER1=user:pass anki --syncserver
+python3 -m venv ~/syncserver
+~/syncserver/bin/pip install anki
+SYNC_USER1=user:pass ~/syncserver/bin/python -m anki.syncserver
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 262/273
+
+=== PAGE 263 ===
+have Rustup installed.
+Replace 25.02.5 with whatever the latest Anki version is.
+Protobuf (protoc) will need to be installed.
+After building, you can run it with:
+From a source checkout
+If you’ve cloned the Anki repo from GitHub, you can install from there:
+With Docker
+You can ﬁnd a user-contributed Dockerﬁle and some instructions here.
+Multiple Users
+SYNC_USER1 declares the ﬁrst user and password, and must be set. You
+can optionally declare SYNC_USER2, SYNC_USER3 and so on, if you wish to
+set up multiple accounts.
+cargo install --locked --git 
+https://github.com/ankitects/anki.git --tag 25.02.5 anki-sync-
+server
+SYNC_USER1=user:pass anki-sync-server
+./ninja extract:protoc ftl_repo
+cargo install --path rslib/sync
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 263/273
+
+=== PAGE 264 ===
+Hashed Passwords
+Advanced users may wish to use hashed passwords instead of plain text
+passwords. If you wish to do this, you’ll need to use a separate tool (such
+as this one) to generate a password hash. You can then tell the server to
+expect hashed passwords by setting the env var PASSWORDS_HASHED to
+1 (or any other value).
+When hashed passwords are used, SYNC_USER variables are expected to
+be in username:password_hash format, where password_hash is a hash
+of the password in the PHC Format.
+Storage Location
+The server needs to store a copy of your collection and media in a folder.
+By default it is ~/.syncserver; you can change this by deﬁning a
+SYNC_BASE environment variable.
+This must not be the same location as your normal Anki data folder,
+as the server and client must store separate copies.
+You must sync your data to the server, not manually copy ﬁles into
+the server folder.
+Public Access
+The server listens on an unencrypted HTTP connection, so it’s not a good
+idea to expose it directly to the internet. You’ll want to either restrict
+usage to your local network, or place some form of encryption in front of
+the server, such as a VPN (Tailscale is apparently easy), or a HTTPS
+reverse proxy.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 264/273
+
+=== PAGE 265 ===
+You can deﬁne SYNC_HOST and SYNC_PORT to change the host and port
+that the server binds to.
+Client Setup
+You’ll need to determine your computer’s network IP address, and then
+point each of your Anki clients to the address, e.g something like
+http://192.168.1.200:8080/. The URL can be conﬁgured in the
+preferences.
+If you’re using AnkiMobile and are unable to connect to a server on your
+local network, please go into the iOS settings, locate Anki near the
+bottom, and toggle “Allow Anki to access local network” oﬀ and then on
+again.
+Older desktop clients required you to deﬁne SYNC_ENDPOINT and
+SYNC_ENDPOINT_MEDIA. If using an older client, you’d put it as e.g.
+http://192.168.1.200:8080/sync/ and
+http://192.168.1.200:8080/msync/ respectively. AnkiDroid clients
+before 2.16 require separate conﬁguration for the two endpoints.
+Reverse Proxies
+If using a reverse proxy to provide HTTPS access (e.g. nginx), and binding
+to a subpath (e.g. http://example.com/custom/ ->
+http://localhost:8080/), you must make sure to include a trailing slash
+when conﬁguring Anki. If you put http://example.com/custom instead, it
+will not work.
+On iOS, TLS 1.3 is not supported, so your reverse proxy will need to have
+TLS 1.2 enabled, or you’ll get an “error code -9836”.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 265/273
+
+=== PAGE 266 ===
+Large Requests
+The standard AnkiWeb limit on uploads is applied by default. You can
+optionally set MAX_SYNC_PAYLOAD_MEGS to something greater than 100 if
+you wish to increase the limit. Bear in mind that if you’re using a reverse
+proxy, you may need to adjust the limit there as well.
+Contributing Changes
+Because this server is bundled with Anki, simplicity is a design goal - it is
+targeted at individual/family use, and PRs that add things like a REST API
+or external databases are unlikely to be accepted at this time. If in doubt,
+please reach out before starting work on a PR.
+If you’re looking for an existing API solution, the AnkiConnect add-on may
+meet your needs.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 266/273
+
+=== PAGE 267 ===
+Miscellanea
+Menu Shortcuts
+Debug Console
+Menu Shortcuts
+On Windows/Linux you can hold down the Alt key and press a
+highlighted letter to activate a particular menu.
+Although macOS doesn’t support this feature, it does allow you instead to
+assign shortcuts to speciﬁc menu items. Please see
+https://support.apple.com/en-au/guide/mac-help/mchlp2271/mac for
+more information.
+Debug Console
+Sometimes you may be asked to use the debug console to change a
+setting or check something. Unless asked to enter text in the “debug
+console”, you will probably not need this. Advanced users may like to read
+more about it in the add-on writing guide.
+When asked to enter text into the “debug console”, please start Anki, and
+in the main window, press
+Ctrl+Shift+;
+(the control key, shift key, and semi-colon key at the same time)
+On a Mac, press
+Command+Shift+;
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 267/273
+
+=== PAGE 268 ===
+(the command key, shift key, and semi-colon key at the same time)
+On some non-English keyboards, you may need to press : or + instead
+of ;.
+In the window that has popped up, please paste the text you were asked
+to paste in the top section. When you’ve done so, please press Ctrl+
+Return (On Mac, Command+Return), and some text should appear in the
+bottom section. If you’ve been asked to paste the resulting output, please
+copy it from the bottom area, and paste it back to the support person.
+If you press Ctrl+Shift+Return instead of just Ctrl+Return, Anki
+will try to print the result rather than doing what you asked it to. If you
+are getting unexpected errors, please make sure you’re not holding down
+the Shift key.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 268/273
+
+=== PAGE 269 ===
+Contributing
+Sharing Decks Publicly
+Sharing Decks Privately
+Sharing Add-ons
+Translating Anki
+Contributing Code
+Sharing Decks Publicly
+To share decks with the general public, synchronize them with AnkiWeb,
+then log into AnkiWeb and click on “Share” from the menu next to the
+deck you wish to share.
+If you shared a deck previously (including with previous versions of Anki),
+you can update it by clicking “Share” as above. Updating a shared deck
+will not reset the download counts or ratings. You can delete a shared
+deck that you have uploaded using the Delete button on the shared
+deck’s page.
+When updating a deck, AnkiWeb expects the deck to be at the same
+location as before. If you shared a deck when it was called “Korean Verbs”
+for example, and then renamed it to “Korean::Korean Verbs”, resharing
+will not be able to update the existing copy. If you have forgotten the
+original name, you can guess it by downloading the deck on AnkiWeb and
+importing it (File > Import) in a new proﬁle (File > Switch proﬁle > Add).
+Then you can copy the exact name of the deck when it was ﬁrst shared. If
+this doesn’t work, please contact support.
+When you update a shared deck, users who downloaded the deck
+previously will not automatically receive updates. If they download the
+deck again and re-import it, newly added material will be imported
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 269/273
+
+=== PAGE 270 ===
+without altering their existing study progress, provided neither you nor
+the user has altered the note type since the ﬁrst import.
+Sharing Decks Privately
+If you’d like to share decks with a limited group of people (such as a study
+group or class) rather than the general public, you can do so by sharing
+them outside of AnkiWeb.
+To share a deck privately, go to the File menu and choose Export. Select a
+single deck (not “All Decks”), and turn oﬀ “include scheduling information”.
+This will produce an .apkg ﬁle which you can share with others.
+You can share the .apkg ﬁle by emailing it to people, placing it on a
+website or shared folder, or using a free ﬁle sharing service like Dropbox
+or Google Drive and sending people a link.
+Both the computer version and mobile clients make it easy to import
+from an apkg ﬁle simply by clicking or tapping on it. AnkiWeb does not
+have the ability to import apkg ﬁles however, so the recipients of your
+deck will need to have the computer version or Anki on their mobile
+device.
+When a user imports an .apkg ﬁle, cards that already exist in their
+collection will be ignored and any new cards will be added. As long as
+they use the same note type, modiﬁed cards will also be updated. To
+prevent data loss, cards that have been deleted in the new apkg ﬁle will
+not be deleted in the user’s collection, so if you need to delete cards from
+users’ decks for whatever reason, you will need to contact them about it.
+Sharing Add-ons
+Please see https://addon-docs.ankiweb.net/sharing.html
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 270/273
+
+=== PAGE 271 ===
+Translating Anki
+Please see https://translating.ankiweb.net
+Contributing Code
+Anki’s source code is available at https://github.com/ankitects/anki
+Before contributing, please see contributing.md.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 271/273
+
+=== PAGE 272 ===
+Frequently Asked Questions
+Please see https://faqs.ankiweb.net
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 272/273
+
+=== PAGE 273 ===
+Resources
+You can ﬁnd guides, templates, custom schedulers and other resources in
+this resource list.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 273/273

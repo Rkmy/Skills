@@ -1,0 +1,1694 @@
+
+=== PAGE 81 ===
+Adding international keyboard layouts
+Instructions on how to use international keyboards vary depending on
+the operating system and desktop environment that you are using. To get
+started, please see the links below.
+Windows:
+https://thegeekpage.com/how-to-add-us-international-keyboard-in-
+windows-10/
+Mac:
+http://www.macworld.com/article/1147039/os-x/accentinput.html
+Linux:
+Gnome: https://help.gnome.org/users/gnome-help/stable/tips-
+specialchars.html.en
+KDE Plasma: https://userbase.kde.org/Tutorials/ComposeKey
+Adding keyboard layouts for speciﬁc languages
+Keyboards for speciﬁc languages are added in a similar way, but we can
+not cover them all here. For more information, please try searching on
+the internet for “input Japanese on a mac”, “type Chinese on Windows 10”,
+and so on.
+For Linux it’s best to look at the wiki pages of your distro, e.g. Arch Linux
+and Debian Linux. As an example, apt install ibus-anthy on Debian
+allows you to type hiragana characters.
+Right-to-left Languages
+If you are learning a right-to-left language, there are lots of other things to
+consider. Please see this page for more information.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 81/273
+
+=== PAGE 82 ===
+Limitations
+The toolkit on which Anki is built has trouble dealing with a few input
+methods, such as holding down keys to select accented characters on
+macOS, and typing characters by holding down the Alt key and typing a
+numeric code on Windows.
+Unicode Normalization
+Text like á can be represented in multiple ways on a computer, such as
+using a speciﬁc code for that symbol, or by using a standard a and then
+another code for the accent on top. This causes problems when mixing
+input from diﬀerent sources, or using diﬀerent computers - if your
+computer handles keyboard input in one form, but the content is stored
+in a diﬀerent form, it will not match when searching, even though the end
+result appears identical.
+To ensure content can easily be found in searches, Anki normalizes the
+text to a standard form. For most users this process is transparent, but if
+you are studying certain material like archaic Japanese symbols, the
+normalization process can end up converting them to a more modern
+equivalent.
+If you want character variants preserved, the following in the debug
+console will turn oﬀ normalization:
+Any content added after that will remain untouched. The trade-oﬀ is that
+you may ﬁnd it diﬃcult to search for the content if you’re switching
+between operating systems, or pasting content from mixed sources.
+mw.col.conf["normalize_note_text"] = False
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 82/273
+
+=== PAGE 83 ===
+Card Templates
+Card templates tell Anki which ﬁelds should appear on the front and back
+of your card, and control which cards will be generated when certain
+ﬁelds have text in them. By adjusting your card templates, you can alter
+the design and styling of many of your cards at once.
+Card templates are covered in some of the intro videos:
+Switching Card Order
+Styling Cards
+Typing in the Answer
+The Templates Screen
+You can modify card templates by clicking the Cards… button inside the
+editing screen.
+You can switch between Front template, Back template and Styling
+with Ctrl+1, Ctrl+2, and Ctrl+3.
+In Anki, templates are written in HTML, which is the language that web
+pages are written in. The styling section is CSS, which is the language used
+for styling web pages.
+On the right is a preview of the front and back of the currently selected
+card. If you opened the window while adding notes, the preview will be
+based on the text you had typed into the Add Notes window. If you
+opened the window while editing a note, the preview will be based on the
+content of that note. If you opened the window from Tools →  Manage
+Note Types, Anki will display each ﬁeld’s name in parentheses in place of
+content.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 83/273
+
+=== PAGE 84 ===
+At the top right of the window is an Options button that gives you options
+to rename or reorder the cards, as well as the following two options:
+The Deck Override option allows you to change the deck that cards
+generated from the current card type will be placed into. By default,
+cards are placed into the deck you provide in the Add Notes window.
+If you set a deck here, that card type will be placed into the deck you
+speciﬁed, instead of the deck listed in the Add Notes window. This
+can be useful if you want to separate cards into diﬀerent decks (for
+instance, when studying a language, to put production cards in one
+deck and recognition cards in another). You can check which deck the
+cards are currently going to by choosing Deck Override again.
+The Browser Appearance option allows you to set diﬀerent (perhaps
+simpliﬁed) templates for display in the Question and Answer columns
+of the browser; see browser appearance for more information.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 84/273
+
+=== PAGE 85 ===
+Field Replacements
+Basic Replacements
+Newlines
+Text to Speech for individual ﬁelds
+Text to Speech for multiple ﬁelds and static text
+Special Fields
+Hint Fields
+Dictionary Links
+HTML Stripping
+Right To Left Text
+Ruby Characters
+Additional Ruby Character Filters
+Media & LaTeX
+Static Sounds/Images
+Field References
+Checking Your Answer
+Ignoring Diacritics
+Basic Replacements
+The most basic template looks something like this:
+When you place text within curly brackets, Anki looks for a ﬁeld by that
+name, and replaces the text with the actual content of the ﬁeld.
+Field names are case sensitive. If you have a ﬁeld named Front, writing
+{{front}} will not work properly.
+Your templates are not limited to a list of ﬁelds. You can also include
+arbitrary text on your templates. For example, if you’re studying capital
+{{Front}}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 85/273
+
+=== PAGE 86 ===
+cities, and you’ve created a note type with a “Country” ﬁeld, you might
+create a front template like this:
+The default back template will look something like this:
+This means “show me the text that’s on the front side, then a divider line,
+and then the Back ﬁeld”.
+The “id=answer” part tells Anki where the divider is between the question
+and the answer. This allows Anki to automatically scroll to the spot where
+the answer starts when you press show answer on a long card (especially
+useful on mobile devices with small screens). If you don’t want a
+horizontal line at the beginning of the answer, you can use another HTML
+element such as a paragraph or div instead.
+Newlines
+Card templates are like web pages, which means a special command is
+required to create a new line. For example, if you wrote the following in
+the template:
+In the preview, you’d actually see:
+What's the capital city of {{Country}}?
+{{FrontSide}}
+<hr id=answer>
+{{Back}}
+one
+two
+one two
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 86/273
+
+=== PAGE 87 ===
+To add a new line, you need to add a <br> code to the end of a line, like
+so:
+The br code stands for “(line) br(eak)”.
+The same applies for ﬁelds. If you want to display two ﬁelds, one on each
+line, you would use
+Text to Speech for individual ﬁelds
+This feature requires Anki 2.1.20, AnkiMobile 2.0.56 or AnkiDroid 2.17.
+To have Anki read the Front ﬁeld in a US English voice, you can place the
+following in your card template:
+On Windows, macOS, and iOS, Anki will use the OS’s built-in voices. On
+Linux, no voices are built in, but voices can be provided by add-ons, such
+as this one.
+To see a list of all available languages/voices, place the following on your
+card template:
+If there are multiple voices that support your chosen language, you can
+specify desired voices in a list, and Anki will choose the ﬁrst available
+voice. For example:
+one<br>
+two
+{{Field 1}}<br>
+{{Field 2}}
+{{tts en_US:Front}}
+{{tts-voices:}}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 87/273
+
+=== PAGE 88 ===
+This would use Otoya when on an Apple device, and Haruka when on a
+Windows PC.
+Specifying a diﬀerent speed is possible in some TTS implementations:
+Both speed and voices are optional, but the language must be included.
+On a Mac, you can customize the available voices:
+Open the System Preferences screen.
+Click on Accessibility.
+Click on Speech.
+Click on the system voice dropdown, and choose Customize.
+Some voices sound better than others, so experiment to choose the one
+you prefer. Please note that the Siri voice can only be used by Apple apps.
+Once you’ve installed new voices, you’ll need to restart Anki for the new
+voices to become available.
+On Windows, some voices like Cortana can not be selected, as Microsoft
+does not make those voices available to other applications.
+On a cloze note type, you can make Anki read only the elided sections
+using the cloze-only ﬁlter, like so:
+The cloze-only ﬁlter is supported in Anki 2.1.29+, AnkiMobile 2.0.65+, and
+AnkiDroid 2.17+.
+{{tts ja_JP voices=Apple_Otoya,Microsoft_Haruka:Field}}
+{{tts fr_FR speed=0.8:SomeField}}
+{{tts en_US:cloze-only:Text}}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 88/273
+
+=== PAGE 89 ===
+Text to Speech for multiple ﬁelds and static
+text
+This feature requires Anki 2.1.50+, AnkiMobile 2.0.84+, or AnkiDroid
+2.17+.
+If you want TTS to read multiple ﬁelds or static text included in the
+template, you can use the following:
+Special Fields
+There are some special ﬁelds you can include in your templates:
+FrontSide will not automatically play any audio that was on the front side
+of the card. If you wish to have the same audio play automatically on both
+[anki:tts lang=en_US] This text should be read. Here is 
+{{Field1}} and {{Field2}}[/anki:tts]
+This is other text on the template. It is outside of the tags 
+so it should not be read.
+The note's tags: {{Tags}}
+The type of note: {{Type}}
+The card's deck: {{Deck}}
+The card's subdeck: {{Subdeck}}
+The card's flag: {{CardFlag}}
+The type of card ("Forward", etc): {{Card}}
+The content of the front template
+(only valid in back template): {{FrontSide}}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 89/273
+
+=== PAGE 90 ===
+the front and back of the card, you’ll need to manually include the audio
+ﬁelds on the back as well.
+As with other ﬁelds, special ﬁeld names are case sensitive - you must use
+{{Tags}} rather than {{tags}} for example.
+Hint Fields
+It’s possible to add a ﬁeld to the front or back of a card, but make it
+hidden until you explicitly show it. We call this a hint ﬁeld. Before adding a
+hint, please bear in mind that the easier you make it to answer a question
+in Anki, the less likely you are to remember that question when you
+encounter it in real life. Please have a read about the “minimum
+information principle” on https://super-memory.com/articles/20rules.htm
+before proceeding.
+First, you’ll need to add a ﬁeld to store the hint in if you have not already.
+Please see the ﬁelds section if you’re not sure how to do this.
+Assuming you’ve created a ﬁeld called MyField, you can tell Anki to include
+it on the card but hide it by default by adding the following to your
+template:
+This will show a link labeled “show hint”; when you click it, the content of
+the ﬁeld will be displayed on the card. (If MyField is empty, nothing will be
+shown.)
+If you show the hint on the question and then reveal the answer, the hint
+will be hidden again. If you want to have the hint always revealed when
+the answer is shown, you will need to remove {{FrontSide}} from your
+back template and manually add the ﬁelds you wish to appear.
+{{hint:MyField}}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 90/273
+
+=== PAGE 91 ===
+It is not currently possible to use a hint ﬁeld for audio — the audio will
+play regardless of whether you’ve clicked on the hint link.
+If you want to customize the appearance or behaviour, you’ll need to
+implement the hint ﬁeld yourself. We can not provide any support for
+doing so, but the following code should get you started:
+Dictionary Links
+You can also use ﬁeld replacement to create dictionary links. Imagine
+you’re studying a language and your favourite online dictionary allows
+you to search for text using a web URL like:
+You could add an automatic link by doing the following in your template:
+The template above would allow you to search for each note’s expression
+by clicking on the link while reviewing. There is a caveat however, so
+please see the next section.
+{{#Back}}
+<a class=hint href="#"
+onclick="this.style.display='none';document.getElementById('hin
+t4753594160').style.display='inline-block';return false;">
+Show Back</a><div id="hint4753594160" class=hint 
+style="display: none">{{Back}}</div>
+{{/Back}}
+http://example.com/search?q=myword
+{{Expression}}
+<a href="http://example.com/search?q={{Expression}}">check in 
+dictionary</a>
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 91/273
+
+=== PAGE 92 ===
+HTML Stripping
+Like templates, ﬁelds are stored in HTML. In the dictionary link example
+above, if the expression contained the word “myword” without any
+formatting, then the HTML would be the same: “myword”. But when you
+include formatting in your ﬁelds, extra HTML is included. If “myword” was
+bolded for example, the actual HTML would be “<b>myword</b>”.
+This can present a problem for things like dictionary links. In the above
+example, the dictionary link would end up being:
+The extra characters in the link would likely confuse the dictionary site,
+and you’re likely not to get any matches.
+To solve this, Anki provides the ability to strip formatting from ﬁelds when
+they are replaced. If you preﬁx a ﬁeld name with text:, Anki will not
+include any formatting. So a dictionary link that worked even with
+formatted text would be:
+Right To Left Text
+If you’re using a language that reads from right to left, you’ll need to
+adjust the template like so:
+<a href="http://example.com/search?q=<b>myword</b>">check in 
+dictionary</a>
+<a href="http://example.com/search?q={{text:Expression}}">check 
+in dictionary</a>
+<div dir=rtl>{{FieldThatHasRTLTextInIt}}</div>
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 92/273
+
+=== PAGE 93 ===
+Ruby Characters
+Some languages commonly use annotations above the text to display the
+pronunciation of characters. These annotations are known as ruby
+characters. In Japanese, these are known as furigana.
+In Anki, you can display ruby characters by using the following syntax:
+Suppose the text above is written in MyField. By default, if you simply use
+{{Myfield}}, the ﬁeld will be displayed as is. To properly position the
+ruby characters above the text, use the furigana ﬁlter in the templates
+like so:
+Here are some examples:
+Raw Text Rendered Text
+Text[Ruby] Text
+ Ruby
+日本語 [ にほんご ] 日本語
+ に ほ ん ご
+世 [ よ ] の  中 [ なか ] 世の中
+ よ なか
+世 [ よ ] の中 [ なか ] 世の中 (incorrect!)
+ よ な か
+Notice how the third example has a space before the 中  character. This is
+necessary to specify that the ruby text applies only to that character. If
+there was no space, the ruby text will be misplaced above the の
+character, as shown in the fourth example.
+Additional Ruby Character Filters
+In addition to the furigana ﬁlter, you can also only show certain parts of
+the ruby text, with the kana and kanji ﬁlters. The kana ﬁlter will only
+Text[Ruby]
+{{furigana:MyField}}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 93/273
+
+=== PAGE 94 ===
+show the ruby text, while the kanji ﬁlter removes the ruby text entirely.
+Raw Text Field Filter Rendered Text
+日本語 [ にほんご ] {{furigana:MyField}}日本語
+ に ほ ん ご
+日本語 [ にほんご ] {{kana:MyField}} にほんご
+日本語 [ にほんご ] {{kanji:MyField}} 日本語
+These names are, again, borrowed from Japanese. The term kana
+represents the phonetic system used to describe how words are
+pronounced, whereas the term kanji represents its Chinese characters.
+Media & LaTeX
+Anki does not scan templates for media references, because it is slow to
+do so. This has implications for including media on the template.
+Static Sounds/Images
+If you wish to include images or sounds on your cards that are the same
+for every card (e.g. a company logo at the top of each card):
+1. Rename the ﬁle so it starts with an underscore, e.g “_logo.jpg”. The
+underscore tells Anki that the ﬁle is used by the template and it
+should be exported when sharing the deck.
+2. Add a reference to the media on your front or back template, like:
+<img src="_logo.jpg">
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 94/273
+
+=== PAGE 95 ===
+Field References
+Media references to ﬁelds are not supported. They may or may not
+display during review, and will not work when checking for unused media,
+importing/exporting, and so on. Examples that won’t work:
+Instead, you should include the media references in the ﬁeld. Please see
+the importing section for more information.
+Checking Your Answer
+You can watch a video about this feature on YouTube.
+The easiest way to check your answer is to click “Basic” at the top left of
+the card adding screen, and select “Basic (type in the answer)”.
+If you have downloaded a shared deck and would like to type in the
+answer with it, you can modify its card template. If it has a template like:
+To type in the foreign word and check if you are correct, you need to edit
+your front template so that it looks like this:
+<img src="{{Expression}}.jpg">
+[sound:{{Word}}]
+[latex]{{Field 1}}[/latex]
+{{Native Word}}
+{{FrontSide}}
+<hr id=answer>
+{{Foreign Word}}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 95/273
+
+=== PAGE 96 ===
+Here, we have added type: in front of the ﬁeld we want to compare.
+Since FrontSide is on the back of the card, the type answer box will
+appear on the back as well.
+When reviewing, Anki will display a text box where you can type in the
+answer, and upon hitting Enter or showing the answer, Anki will show
+you which parts you got right and which parts you got wrong. The text
+box’s font size will be the size you conﬁgured for that ﬁeld (via the “Fields”
+button when editing).
+Note that the type answer boxes don’t appear in the preview dialog or in
+AnkiWeb.
+This feature does not change how the cards are answered, so it’s still up
+to you to decide how well you remembered or not.
+Only one typing comparison can be used on a card. If you add the above
+text multiple times, it will not work. It also only supports a single line, so it
+is not useful for comparing against a ﬁeld that is comprised of multiple
+lines.
+Anki uses a monospaced font for the answer comparison so that the
+“provided” and “correct” sections line up. If you wish to override the font
+for the answer comparison, you can put the following at the bottom of
+your styling section:
+Which will aﬀect the following HTML for the answer comparison:
+Advanced users can override the default type-answer colors with the css
+classes “typeGood”, “typeBad” and “typeMissed”. AnkiMobile supports
+{{Native Word}}
+{{type:Foreign Word}}
+code#typeans { font-family: "myfontname"; }
+<code id=typeans>...</code>
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 96/273
+
+=== PAGE 97 ===
+“typeGood” and “typeBad”, but not “typeMissed”.
+If you wish to override the size of the typing box and don’t want to change
+the font in the Fields dialog, you can override the default inline style using
+!important, like so:
+It is also possible to type in the answer for cloze deletion cards. To do this,
+add {{type:cloze:Text}} to both the front and back template, so the
+back looks something like this:
+If there are multiple sections elided, you can separate the answers in the
+text box with a comma.
+Ignoring Diacritics
+If you don’t want Anki to compare accents on characters in your typed
+input with the correct answer, you can do so by using type:nc in your
+ﬁelds.
+This makes sure a diﬀerence in accents isn’t marked as incorrect by Anki.
+For example, ﺑﻄﯿﺦwould be treated the same as ﺑ ﻄ ِﯿﺦor elite would
+be treated same as élite.
+#typeans { font-size: 50px !important; }
+{{cloze:Text}}
+{{type:cloze:Text}}
+{{Extra}}
+{{type:nc:Front}}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 97/273
+
+=== PAGE 98 ===
+Card Generation
+Reverse Cards
+Card Generation & Deletion
+Selective Card Generation
+Conditional Replacement
+Blank Back Sides
+Adding Empty Notes
+Cloze Templates
+Reverse Cards
+You can watch a video about reversing cards on YouTube.
+If you want to create cards that go in both directions (e.g., both
+“ookii” → “big” and “big” → “ookii”), you have several options. The simplest is
+to select the “Basic (and reversed card)” built-in note type. This will
+generate two cards, one in each direction.
+If you want to generate reverse cards for only some of your material
+(perhaps you only want to take the time to study reverses for the most
+important material, or some of your cards don’t make sense reversed),
+you can select the “Basic (optional reversed card)” note type. This note
+type generates a forward-only card when you ﬁll in only the ﬁrst two
+ﬁelds; if you additionally enter something in the “Add Reverse” ﬁeld (like a
+“y”), Anki will generate a reverse card as well. The contents of this ﬁeld will
+never be displayed on a card.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 98/273
+
+=== PAGE 99 ===
+Card Generation & Deletion
+Anki will not create cards with empty front sides. Thus if “My Field” was
+empty, and one card’s front template included only that ﬁeld, the card
+would not be created.
+When you edit a previously added note, Anki will automatically create
+extra cards if they were previously blank but no longer are. If your edits
+have made some cards blank when they previously were not, however,
+Anki will not delete them immediately, as that could lead to accidental
+data loss. To remove the empty cards, go to Tools →  Empty Cards in the
+main window. You will be shown a list of empty cards and be given the
+option to delete them.
+Because of the way that card generation works, it is not possible to
+manually delete individual cards, as they would just end up being
+recreated the next time the note was edited. Instead, you should make
+the relevant conditional replacement ﬁelds empty and then use the
+Empty Cards option.
+Anki does not consider special ﬁelds or non-ﬁeld text for the purposes of
+card generation. Thus if your front template looked like the following, no
+card would be generated if Country was empty:
+Selective Card Generation
+Sometimes you may want to generate extra cards for only some of your
+material, such as testing your ability to recall the most important words of
+a set. You can accomplish this by adding an extra ﬁeld to your note, and
+adding some text into it (such as “1”) on the notes you want the extra
+card. Then in the card template, you can make the card’s creation depend
+Where is {{Country}} on the map?
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 99/273
+
+=== PAGE 100 ===
+on that ﬁeld being non-empty. For more information on this, please see
+the conditional replacement section below.
+Conditional Replacement
+It is possible to include certain text, ﬁelds, or HTML on your cards only if a
+ﬁeld is empty or not empty. An example:
+A real life example is only showing a label if the ﬁeld is not empty:
+Or say you want to display a speciﬁc ﬁeld in blue on the front of your card
+if there are extra notes on the back (perhaps the fact that there are notes
+serves as a reminder that you should spend more time thinking about the
+answer). You can style the ﬁeld as follows:
+This text is always shown.
+{{#FieldName}}
+    This text is only shown if FieldName has text in it
+{{/FieldName}}
+{{^FieldName}}
+    This text is only shown if FieldName is empty
+{{/FieldName}}
+{{#Tags}}
+    Tags: {{Tags}}
+{{/Tags}}
+{{#Notes}}
+    <span style="color:blue;">
+{{/Notes}}
+{{FieldToFormat}}
+{{#Notes}}
+    </span>
+{{/Notes}}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 100/273
+
+=== PAGE 101 ===
+You can also use conditional replacement to control which cards are
+generated. This works since Anki will not generate cards which would
+have a blank front side. For example, consider a card with two ﬁelds on
+the front:
+Normally a card would be generated if either the expression or notes ﬁeld
+had text in it. If you only wanted a card generated if expression was not
+empty, then you could change the template to this:
+And if you wanted to require both ﬁelds, you could use two conditional
+replacements:
+Keep in mind that this only works when you place the conditional
+replacement code on the front of the card; if you do this on the back, you
+will simply end up with cards with a blank back side. Similarly, since this
+works by checking if the front ﬁeld would be empty, it is important to
+make sure you wrap the “entire” front side in the conditional
+replacement; for instance, the following would not work as expected:
+{{Expression}}
+{{Notes}}
+{{#Expression}}
+    {{Expression}}
+    {{Notes}}
+{{/Expression}}
+{{#Expression}}
+    {{#Notes}}
+        {{Expression}}
+        {{Notes}}
+    {{/Notes}}
+{{/Expression}}
+{{#Expression}}
+    {{Expression}}
+{{/Expression}}
+{{Notes}}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 101/273
+
+=== PAGE 102 ===
+Blank Back Sides
+Card generation only looks at the front side of the card. For example, if
+you have a front template:
+and a back template:
+Then a card will be generated if Field 1 is non-empty. If Field 2 is empty,
+the card will still be generated, and you will get a blank back side.
+If you wish to avoid a blank back side, you will need to place a required
+ﬁeld on the front template as a conditional, like so:
+This will ensure the card is generated only if both Field 2 and Field 1 are
+non-empty.
+Adding Empty Notes
+When you add a new note in Anki, if the card templates and note ﬁelds
+combine to produce no cards, a blank card will be created using the ﬁrst
+template. This allows you to add material even if it’s incomplete, and
+modify it or the template later to make it valid. If you don’t wish to keep
+an empty note, you can remove it with the Empty Cards function.
+{{Field 1}}
+{{Field 2}}
+{{#Field 2}}
+    {{Field 1}}
+{{/Field 2}}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 102/273
+
+=== PAGE 103 ===
+Cloze Templates
+Please see the cloze deletion section for background info.
+The cloze note type functions diﬀerently from regular note types. Instead
+of a customizable number of card types, it has a single type which is
+shared by all cloze deletions on a note.
+As mentioned in the card generation section above, generation of regular
+cards depends on one or more ﬁelds on the question being non-empty.
+Cloze deletion note types are generated diﬀerently:
+Anki looks on the front template for one or more cloze replacements,
+like {{cloze:FieldName}}.
+It then looks in the FieldName ﬁeld for all cloze references, like
+{{c1::text}}.
+For each separate number, a card will be generated.
+Because card generation functions diﬀerently for cloze deletion cards,
+{{cloze:… }} tags can not be used with a regular note type - they will only
+function properly when used with a cloze note type.
+Conditional generation provides a special ﬁeld so you can check which
+card you are rendering. If you wanted to display the “hint1” ﬁeld on the
+ﬁrst cloze, and “hint2” ﬁeld on the second cloze for example, you could
+use the following template:
+{{cloze:Text}}
+{{#c1}}
+    {{Hint1}}
+{{/c1}}
+{{#c2}}
+    {{Hint2}}
+{{/c2}}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 103/273
+
+=== PAGE 104 ===
+Styling & HTML
+Card Styling
+Image Resizing
+Field Styling
+Audio Replay Buttons
+Text Direction
+Other HTML
+Browser Appearance
+Platform-Speciﬁc CSS
+Installing Fonts
+Add Font to Media Folder
+Update Template to Use That Font
+Night Mode
+Fading and Scrolling
+Javascript
+Card Styling
+You can watch a video about styling cards on YouTube. The video shows
+Anki 2.0’s interface, but the concepts are largely the same.
+The styling section of the Cards screen can be accessed by clicking the
+“Styling” button next to the “Back Template” button. In that section, you
+can change the background color of the card, the default font, the text
+alignment, and so on.
+The standard options available to you are:
+font-family
+The name of the font to use on the card. If your font has spaces in it like
+“MS Unicode”, then you need to surround the font name in double
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 104/273
+
+=== PAGE 105 ===
+quotes, like font-family: "MS Unicode";. It is also possible to use
+multiple fonts on one card; for information on that, please see below.
+font-size
+The size of the font in pixels. When changing it, make sure you leave px at
+the end.
+text-align
+Whether the text should be aligned in the center, left, or right.
+color
+The color of the text. Simple color names like “blue”, “lightyellow”, and so
+on will work, or you can use HTML color codes to select arbitrary colors.
+Please see this webpage for more information.
+background-color
+The color of the card background.
+Any CSS can be placed in the styling section – advanced users may wish to
+do things like add a background image or gradient, for example. If you’re
+wondering how to get some particular formatting, please search the web
+for information about how to do it in CSS, as there is a great deal of
+documentation available.
+The styling is shared between all cards, which means that when you make
+an adjustment it will aﬀect all cards for that note type. It is also possible
+to specify card-speciﬁc styling, however. The following example will use a
+yellow background on all cards except the ﬁrst one:
+.card {
+  background-color: yellow;
+}
+.card1 {
+  background-color: blue;
+}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 105/273
+
+=== PAGE 106 ===
+Image Resizing
+Anki shrinks images to ﬁt the screen by default. You can change this by
+adding the following to the bottom of your styling section (outside of the
+default .card { ... }):
+AnkiDroid sometimes has trouble scaling images to ﬁt the screen. Setting
+maximum image dimensions using css should ﬁx this, but seems to be
+ignored as of AnkiDroid 2.9. A ﬁx is to append !important to each style
+directive, for example:
+If you try to change the style for images and ﬁnd that the star that
+appears on marked cards is aﬀected (for instance, it becomes way too
+large), you can target it with the following:
+You can explore the styling of cards interactively by using Chrome:
+https://addon-docs.ankiweb.net/porting2.0.html#webview-changes
+Anki 2.1.50+ supports image resizing within the editor natively.
+img {
+  max-width: none;
+  max-height: none;
+}
+img {
+  max-width: 300px !important;
+  max-height: 300px !important;
+}
+img#star {
+  ...;
+}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 106/273
+
+=== PAGE 107 ===
+Field Styling
+The default styling applies to the whole card. You can also make certain
+ﬁelds or part of the card use a diﬀerent font, color, and so on. This is
+particularly important when studying foreign languages, as Anki will
+sometimes be unable to correctly display characters unless an
+appropriate font has been chosen.
+Say you have an “Expression” ﬁeld, and you want to give it the macOS Thai
+font “Ayuthaya”. Imagine your template already reads:
+What we need to do is wrap the text we want to style in some HTML. We
+will put the following in front of the text:
+And the following behind it:
+By wrapping the text like the above, we tell Anki to style the wrapped text
+with a custom style called “mystyle1”, which we will create later.
+Thus if we wanted the entire “What is … ?” expression to use the Thai font,
+we would use:
+And if we wanted only the expression ﬁeld itself to use the Thai font, we’d
+use:
+What is {{Expression}}?
+{{Notes}}
+<div class=mystyle1>
+</div>
+<div class=mystyle1>What is {{Expression}}?</div>
+{{Notes}}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 107/273
+
+=== PAGE 108 ===
+After we’ve edited the template, we now need to move to the Styling
+section between the templates. Before editing it, it should look something
+like:
+Add your new style to the bottom, so it looks like:
+You can include any styling you want in the style. If you wanted to
+increase the font size too, you’d change the mystyle1 section to look like:
+It’s also possible to bundle custom fonts with your deck, so you don’t
+need to install them on your computer or mobile device. Please see the
+What is <div class=mystyle1>{{Expression}}</div>?
+{{Notes}}
+.card {
+  font-family: arial;
+  font-size: 20px;
+  text-align: center;
+  color: black;
+  background-color: white;
+}
+.card {
+  font-family: arial;
+  font-size: 20px;
+  text-align: center;
+  color: black;
+  background-color: white;
+}
+.mystyle1 {
+  font-family: ayuthaya;
+}
+.mystyle1 {
+  font-family: ayuthaya;
+  font-size: 30px;
+}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 108/273
+
+=== PAGE 109 ===
+installing fonts section for more info.
+Audio Replay Buttons
+When audio or text to speech is included on your cards, Anki will show
+buttons you can click on to replay the audio.
+If you prefer not to see the buttons, you can hide them in the preferences
+screen.
+You can customize their appearance in your card styling, for example, to
+make them smaller and colored, you could use the following:
+Text Direction
+If you use a language that is written right-to-left, such as Arabic or
+Hebrew, you can add the CSS direction property to the .card section for
+correct display during review:
+.replay-button svg {
+  width: 20px;
+  height: 20px;
+}
+.replay-button svg circle {
+  fill: blue;
+}
+.replay-button svg path {
+  stroke: white;
+  fill: green;
+}
+.card {
+  direction: rtl;
+}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 109/273
+
+=== PAGE 110 ===
+This will change the direction of the entire card. You can change the
+direction of only certain ﬁelds by wrapping their references in some
+HTML:
+To change the direction of ﬁelds in the editor, please see the editing
+section.
+Other HTML
+Your templates can contain arbitrary HTML, which means that all the
+layout possibilities used on internet web pages can also be used on your
+cards. Things like tables, lists, images, links to external pages and so on
+are all supported. With tables for example, you could change the layout
+so that the front and back of a card appear on the left and right instead of
+the top and bottom.
+Covering all of HTML’s features is outside the scope of this manual, but
+there are plenty of good introductory guides to HTML available on the
+web if you’d like to learn more.
+Browser Appearance
+If your card templates are complex, it may be diﬃcult to read the
+question and answer columns (called “Front” and “Back”) in the card list.
+The “browser appearance” option allows you to deﬁne a custom template
+to be used only in the browser, so you can include only the important
+ﬁelds and change the order if you desire. The syntax is the same as in
+standard card templates.
+When using this option, if the text in the question column is repeated at
+the beginning of the answer column, Anki will display the text only in the
+<div dir="rtl">{{Front}}</div>
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 110/273
+
+=== PAGE 111 ===
+question column. For example, if the question column text is “People in
+Ladakh speak”, and the answer is “People in Ladakh speak Ladakhi”, the
+answer column will only display “Ladakhi”, omitting the rest.
+Platform-Speciﬁc CSS
+Anki deﬁnes some special CSS classes that allow you to deﬁne diﬀerent
+styling for diﬀerent platforms. The example below shows how to vary the
+font depending on where you’re reviewing:
+And in the template:
+/* Windows */
+.win .example {
+  font-family: "Example1";
+}
+/* macOS */
+.mac .example {
+  font-family: "Example2";
+}
+/* Linux desktops */
+.linux:not(.android) .example {
+  font-family: "Example3";
+}
+/* both Linux desktops, and Android devices */
+.linux .example {
+  font-family: "Example4";
+}
+/* both Android and iOS */
+.mobile .example {
+  font-family: "Example5";
+}
+/* iOS */
+.iphone .example,
+.ipad .example {
+  font-family: "Example6";
+}
+/* Android */
+.android .example {
+  font-family: "Example7";
+}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 111/273
+
+=== PAGE 112 ===
+You can also use properties like .gecko, .opera, and .ie to select particular
+browsers when using AnkiWeb. Please see
+http://rafael.adm.br/css_browser_selector/ for a full list of options.
+Installing Fonts
+You can install fonts directly to Anki. This is useful if you’re using Anki on a
+work or school computer where you don’t have permission to install new
+fonts, or if you’re using Anki on a mobile device.
+Anki supports the most widely used font formats, such as TrueType (.ttf),
+OpenType (.otf), Web Open Font Format (.woﬀ) and others.
+Add Font to Media Folder
+Once you have downloaded a supported font, such as “Arial.ttf”, you have
+to add it to the media folder.
+1. Rename the ﬁle, adding an underscore at the start, so it becomes like
+“_arial.ttf”. Adding an underscore will tell Anki that this ﬁle will be
+used on a template, and should not be deleted when checking for
+unused media.
+2. In your computer’s ﬁle browser, go to your Anki application data
+folder (see File Locations for details), and then into your proﬁle folder
+(e.g., “User 1”).
+3. Inside the folder, you should see a folder called collection.media.
+Drag the renamed ﬁle to that folder.
+<div class="example">{{Field}}</div>
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 112/273
+
+=== PAGE 113 ===
+Update Template to Use That Font
+After the font has been added to the media folder, you need to update
+the template.
+1. Click Add at the top of the main screen, and then select the note type
+you want to change with the top left button.
+2. Click Cards.
+3. In the styling section, add the following text to the bottom (after the
+last “}” character), replacing “_arial.ttf” with the name of the ﬁle you
+copied into your media folder:
+Only change the “arial” part, not the “myfont” part.
+After that, you can either change the font for the entire card, or for
+individual ﬁelds. To change the font for the entire card, simply locate the
+font-family: line in the .card section and change the font to “myfont”. To
+change the font for only certain ﬁelds, please see the Field Styling
+instructions above.
+Please make sure the ﬁlenames match exactly. If the ﬁle is called arial.TTF
+and you write arial.ttf in your card templates, it will not work.
+Night Mode
+You can customize the way templates appear when night mode is
+enabled in the preferences screen.
+If you wanted a lighter grey background, you could use something like:
+@font-face {
+  font-family: myfont;
+  src: url("_arial.ttf");
+}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 113/273
+
+=== PAGE 114 ===
+If you have a “myclass” style, the following would show the text in yellow
+when night mode is enabled:
+Fading and Scrolling
+Anki will automatically scroll to the answer by default. It looks for an
+HTML element with id=answer, and scrolls to that. You can place the id on
+a diﬀerent element to adjust the scrolling position, or remove the
+id=answer to turn oﬀ scrolling.
+The question side of a card fades in by default. If you wish to adjust this
+delay, you can place the following at the top of your front card template:
+100 (milliseconds) is the default; set to 0 to disable fading.
+Javascript
+As Anki cards are treated like web pages, it is possible to embed some
+Javascript on your cards via the card template. For a good reference
+please read this post in the forums.
+.card.nightMode {
+  background-color: #555;
+}
+.nightMode .myclass {
+  color: yellow;
+}
+<script>
+  qFade = 100;
+  if (typeof anki !== "undefined") anki.qFade = qFade;
+</script>
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 114/273
+
+=== PAGE 115 ===
+Because Javascript is an advanced feature and so many things can go
+wrong, Javascript functionality is provided without any support or
+warranty. We can not provide any assistance with writing Javascript, and
+can not guarantee any code you have written will continue to work
+without modiﬁcation in future Anki updates. If you are not comfortable
+addressing any issues you encounter on your own, then please avoid
+using Javascript.
+Each Anki client may implement card display diﬀerently, so you will need
+to test the behaviour across platforms. A number of clients are
+implemented by keeping a long running webpage and dynamically
+updating parts of it as cards are reviewed, so your Javascript will need to
+update sections of the document using things like
+document.getElementById() rather than doing things like
+document.write().
+Functions like window.alert may not be available. Anki will write javascript
+errors to the terminal, so you’ll need to view the console to see them. To
+debug issues with JavaScript, you can use Chrome’s inspector.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 115/273
+
+=== PAGE 116 ===
+Checks and Errors
+Basics
+Speciﬁc Issues
+Template Syntax Error
+Identical Front Sides
+Front of Card is Blank
+No Cloze Filter on Cloze Note Type
+Single empty cards
+All cloze cards empty
+When you save changes to a note type or export a deck, Anki 2.1.45+
+checks for some common errors. These errors will cause issues later on
+when anyone studies the aﬀected cards, so Anki won’t let you proceed
+before you have ﬁxed them.
+Basics
+Please see Key Concepts before reading further.
+Most of the errors below will require you to modify your note type/card
+template. To do so:
+Open the Browse screen, and look at the items on the left.
+Locate the note type mentioned in error message. You can use the
+search bar at the top left if necessary.
+Click on the note type, to show its cards/notes on the right.
+Click the Cards… button at the top of the editing area to open the
+templates screen.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 116/273
+
+=== PAGE 117 ===
+Speciﬁc Issues
+Template Syntax Error
+This kind of error indicates an incorrect usage of the ﬁeld replacement
+syntax.
+You can correct mistakes on the template by opening the card templates
+screen:
+On the computer version, edit a problem card, and then click on the
+Cards… button
+On AnkiMobile, while viewing a problem card in the study screen, tap
+the cog/gear, then Card Template.
+When you correct a mistake, it will update all cards of that type - you do
+not need to make the same change for every card that uses the template.
+What needs changing will depend on the message you are getting.
+Found ‘{{Field}}’, but there is no ﬁeld called ‘Field’
+This indicates your template includes the name of a ﬁeld that doesn’t
+exist. To ﬁx the problem, locate the {{Field}} inside the card template,
+and remove it.
+Missing }} in {{Field
+This message is shown when {{ is found in the template without a
+matching }}. For example, if you have
+then this needs to be changed to
+{{Field
+{{Field}}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 117/273
+
+=== PAGE 118 ===
+Missing {{/Field}}
+This means Anki found {{#Field}} or {{^Field}} in your card
+template, without a matching {{/Field}}. Removing {{#Field}} or
+{{^Field}} from the template will ﬁx the error.
+Found {{/One}}, but expected {{/Two}}
+Conditional replacements need to be closed in the same order they are
+opened. For example, the following template is incorrect:
+To ﬁx the problem, the template should be changed like so:
+Found {{/Field}}, but missing ‘{{#Field}}’ or ‘{{^Field}}’
+Closing tags must be matched by opening tags. For example, the
+following is invalid, because there is no {{#Two}} or {{^Two}} at the
+start:
+It can be ﬁxed by removing the closing tag:
+{{#One}}
+  {{#Two}}
+    {{Three}}
+  {{/One}}
+{{/Two}}
+{{#One}}
+  {{#Two}}
+    {{Three}}
+  {{/Two}}
+{{/One}}
+  {{Field}}
+{{/Two}}
+{{Field}}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 118/273
+
+=== PAGE 119 ===
+Identical Front Sides
+You have Anki conﬁgured to create two identical questions for each input.
+This can happen if you add a new card type without making any
+adjustments to it. Identical cards double your workload, and make Anki’s
+scheduling less eﬀective.
+To ﬁx this, open the templates screen, and select one of the duplicates at
+the top. Then use the button on the top right to remove the selected card
+type. This will delete all the duplicate cards/notes that were using the card
+type as well.
+Front of Card is Blank
+Anki displays cards by combining the ﬁelds you’ve entered with a
+template that says which ﬁelds should appear on the front and back of
+your cards. If you receive a message that a card has a blank front, it
+means either none of the ﬁelds included on your front template have any
+text in them, or you have ﬁelds that have text, but none are included on
+the front template. You can ﬁx this problem by editing the card on the
+computer version, clicking on Cards…, and checking to make sure at least
+one ﬁeld with some text on it is included on the front template. You can
+add extra ﬁelds with the Add Field button.
+If you are using the Cloze note type, please make sure you’ve included
+one or more cloze deletions in the Text ﬁeld, e.g. {{c1::some cloze-deleted
+text}}.
+If you’re using the type-in-the-answer functionality, please make sure
+you’ve included another ﬁeld on the front side as well.
+No Cloze Filter on Cloze Note Type
+A Cloze note type’s front and back templates should have a cloze ﬁlter. If
+one is missing, you will need to add it back so that Anki can create cloze
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 119/273
+
+=== PAGE 120 ===
+cards correctly.
+Single empty cards
+When making clozes, each cloze number is turned into a separate card.
+For example, the following will create three cards:
+If you later edit the text, and either remove or change a cloze number, the
+previously created card may become blank. For example:
+and
+are both changes that would make card 3 blank. When you view card 3,
+you’ll see a message indicating that the card is blank, and can be cleaned
+up with the Empty Cards function. You can access that function via the
+Tools menu of the computer version’s main window, and use it to remove
+blank cards. Please check the reported empty cards ﬁrst, and if in doubt,
+create a backup with the File>Export menu item before proceeding.
+All cloze cards empty
+If you accidentally modify your card template, it may prevent any cloze
+deletions from appearing. If that has happened, please edit one such
+problem card, and note down the name of the ﬁrst ﬁeld - it is usually
+called “Text”. Then, please:
+Click on the Cards… button
+Replace the front text with
+{{c1::This}} is a {{c2::sample}} {{c3::sentence}}.
+{{c1::This}} is a {{c2::sample}}
+{{c1::This}} is a {{c2::sample}} {{c1::sentence}}.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 120/273
+
+=== PAGE 121 ===
+Replace the back text with the same.
+If your ﬁeld was called something other than Text, replace Text with the
+name of the ﬁeld.
+{{cloze:Text}}
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 121/273
+
+=== PAGE 122 ===
+Preferences
+Appearance
+General
+User Interface
+Distractions
+Review
+Scheduler
+Review
+Editing
+Editing
+Browsing
+Syncing
+Synchronisation
+AnkiWeb Account
+Self-hosted Sync Server
+Backups
+The preferences are available from the Tools menu on Windows/Linux, or
+the Anki menu on a Mac.
+Appearance
+General
+Language
+Change your display language. You can help to improve translations here
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 122/273
+
+=== PAGE 123 ===
+User Interface
+Theme
+Dark (night) mode will make Anki’s interface dark, and will cause cards to
+be shown as white text on a black background. Some card templates may
+need to be modiﬁed to work properly with this option enabled - please
+see night mode styling for more information.
+From 2.1.50+ there is an option to switch to day or night mode
+automatically.
+User interface size
+If you ﬁnd that the interface elements are too small for you, you can try to
+increase this setting.
+Reset Window Sizes
+This will reset all window sizes and locations to the default settings.
+Video driver
+Anki’s libraries need a video driver to draw content on the screen. Due to
+diﬀerent hardware and software conﬁgurations, the driver that works
+best on your machine may vary. Software tends to be slower, but will
+work on some systems where the other options do not.
+Note: If you’re on Windows, please check this page as well.
+Distractions
+These options allow you to remove some unnecessary elements from the
+screen during reviews. You can:
+Hide the top and bottom bar during reviews.
+Enable the “minimalist” mode, making the interface more
+compact/less fancy.
+Reduce motion, to disable some transitions/animations.
+Switching between native styling and the Anki theme (only on
+Mac/Linux).
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 123/273
+
+=== PAGE 124 ===
+Review
+Scheduler
+Next day starts at
+Controls when Anki should start showing the next day’s cards. The default
+setting of 4AM ensures that if you’re studying around midnight, you won’t
+have two days’ worth of cards shown to you in one session. If you stay up
+very late or wake up very early, you may want to adjust this to a time
+you’re usually sleeping. Note that the start of the next day is relative to
+your current time zone. Also note that any cards that cross a day
+boundary will appear at the start of the day they are scheduled for, just
+like review cards do.
+Learn ahead limit
+Tells Anki how to behave when there is nothing left to study in the current
+deck but cards in learning. The default setting of 20 minutes tells Anki
+that cards should be shown early if they have a delay of less than 20
+minutes and there’s nothing else to do. If you set this to 0, Anki will always
+wait the full delay, showing the congratulations screen until the remaining
+cards are ready to be reviewed.
+Timebox time limit
+Timeboxing is a technique to help you focus by dividing a longer activity
+(such as a 30 minute study session) into smaller blocks. If you set the
+timebox time limit to a non-zero number of minutes, Anki will periodically
+show you how many cards you’ve managed to study during the
+prescribed time limit.
+Review
+Show play buttons on cards with audio
+Whether a clickable (re)play button will be shown in the study screen for
+cards with audio.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 124/273
+
+=== PAGE 125 ===
+Interrupt current audio when answering
+Whether a currently playing audio ﬁle should be stopped when answering
+a card.
+Show remaining card count
+Disable this option to hide the card count at the bottom of the screen.
+Show next review time above answer buttons
+Useful to know how far in the future your cards are being pushed.
+Spacebar (or enter) also answers card
+Deﬁnes whether a press on Space or Enter answers cards.
+Editing
+Editing
+Paste clipboard images as PNG
+By default Anki pastes images on the clipboard as JPG ﬁles, to save disk
+space. You can use the option to paste as PNG images instead. PNG
+images support transparent backgrounds and are lossless, but they
+usually result in much larger ﬁle sizes.
+Paste without Shift strips formatting
+By default, formatting like bold and colors are kept when pasting, unless
+the Shift key is held down. This option reverses the behaviour.
+Default deck
+Controls how note types and decks interact. The default option When
+adding, default to current deck means that Anki saves the last-used
+note type for each deck and selects it again the next time you choose the
+deck (and, in addition, will start with the current deck selected when
+choosing Add from anywhere). The other option, Change deck
+depending on note type, saves the last-used deck for each note type
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 125/273
+
+=== PAGE 126 ===
+(and opens the add window to the last-used note type when you choose
+Add). This may be more convenient if you always use a single note type
+for each deck.
+The last used deck/note type is updated when you add a card. If you
+change the deck and close the add window without adding a card, it won’t
+be saved.
+Browsing
+Default search text
+Allows you to customize the starting search text in the browser (eg, to
+start with “deck:current”).
+Ignore accents in search (slower)
+When enabled, simple text searches automatically ignore accents.
+Syncing
+This tab contains options related to syncing with AnkiWeb.
+Synchronisation
+Synchronize audio and images too
+When enabled, media will also be synced with AnkiWeb.
+Automatically sync on proﬁle open/close
+Disable this if you don’t want an automatic sync with AnkiWeb when
+opening / closing a proﬁle.
+Periodically sync media
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 126/273
+
+=== PAGE 127 ===
+On next sync, force changes in one direction
+When this option is enabled, the next sync will ask you whether you wish
+to upload or download. This is useful if you have made some changes
+accidentally, and wish to overwrite them with an older version that is on
+AnkiWeb.
+AnkiWeb Account
+When logged in, clicking on Log Out will log you out.
+Self-hosted Sync Server
+For info on the custom sync server option, see this section.
+Backups
+Please see this section of the manual.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 127/273
+
+=== PAGE 128 ===
+Deck Options
+Presets
+Subdecks
+Daily Limits
+New Cards/Day
+Maximum Reviews/Day
+Per-Deck Daily Limits
+New Cards Ignore Review Limit
+Limits Start From Top
+New Cards
+Learning Steps
+Day Boundaries
+Graduating Interval
+Easy Interval
+Insertion Order
+Lapses
+Relearning Steps
+Minimum Interval
+Leeches
+Display Order
+New Card Gather Order
+New Card Sort Order
+New/Review Order
+Interday Learning/Review Order
+Review Sort Order
+Burying
+Audio
+Timers
+Internal Timer
+On-screen Timer
+Auto Advance
+Easy Days
+FSRS
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 128/273
+
+=== PAGE 129 ===
+A Short Guide
+Desired Retention
+FSRS Parameters
+Reschedule Cards on Change
+Compute Minimum Recommended Retention
+The Simulator
+Learning and Relearning Steps
+Add-On Compatibility
+More
+Advanced
+Maximum Interval
+Historical Retention
+Ignore Cards Reviewed Before
+Starting Ease
+Easy Bonus
+Interval Modiﬁer
+Hard Interval
+New Interval
+Custom Scheduling
+Deck options primarily control the way Anki schedules cards. It is
+recommended that you spend a few weeks with the defaults to get a feel
+for how Anki works before you start adjusting the options. Please make
+sure you understand the options before changing them, as mistakes can
+reduce Anki’s eﬀectiveness.
+On your computer, do any of the following to open deck options:
+Click the gear icon on the Decks screen.
+Select a deck on the Decks screen, and then click Options at the
+bottom of the screen.
+Click More > Options while in review mode.
+Press O while in review mode.
+Here are some community posts about deck options that have been
+contributed in the past:
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 129/273
+
+=== PAGE 130 ===
+Deck Options Explained
+Deck Options in a Mental Map
+Presets
+Anki allows you to share options between diﬀerent decks, to make it
+easier to update options in many decks at once. To do this, options are
+grouped into presets. If you change an option in a preset, the change is
+applied to all decks that use the same preset. All newly created decks use
+the “Default” preset.
+To change the options in one deck but not other decks, click the arrow
+icon in the top right of the Deck Options window. You can do the
+following:
+Save: Save all modiﬁcations you’ve made in deck options.
+Add Preset: Add a new preset for this deck, with the default options.
+Clone: Clone your current preset, which is useful if you want to
+modify some of the options but keep the rest as they are.
+Rename: Change the name of the current preset.
+Delete: Delete the current preset. This will make your next sync a
+one-way sync.
+Save to All Subdecks: Like Save, but also assigns the selected preset
+to all subdecks of the currently selected deck.
+Deck options are not retroactive. For example, if you change an option
+that controls the delay after failing a card, cards that you failed before
+changing this option will still have the old delay, not the new one.
+Subdecks
+If your deck has subdecks, and you wish one or more of them to have
+diﬀerent settings from the parent deck, you can assign those subdecks to
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 130/273
+
+=== PAGE 131 ===
+separate presets. When Anki shows a card, it will check which subdeck the
+card is in, and use the options for that deck. There are two exceptions:
+The New cards/day and Maximum reviews/day limits of a subdeck
+aﬀect the number of cards that can be gathered from that subdeck.
+But the total number of cards you see during your study session is
+controlled by the limits of the deck you select to study.
+The display order options are taken from the deck you select to
+study, not the deck of the current card.
+For example, let’s say you have this collection:
+Preset 1 and Preset 2 are identical, with two exceptions:
+Preset 1:
+Learning steps: 1m 10m
+New/review order: Mix with reviews
+Preset 2:
+Learning steps: 20m 2h
+New/review order: Show after reviews
+If you choose to study Subdeck B:
+Learning steps for all new cards will be 20m 2h (Preset 2 applies).
+All new cards will be shown after reviews (Preset 2 applies).
+If you choose to study Deck A:
+Learning steps for new cards in Deck A will be 1m 10m (Preset 1
+applies).
+Learning steps for new cards in Subdeck B will be 20m 2h (Preset 2
+applies).
+All new cards will be mixed with reviews (Preset 1 applies).
+- Deck A (Preset 1)
+  - Deck A::Subdeck B (Preset 2)
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 131/273
+
+=== PAGE 132 ===
+Daily Limits
+New Cards/Day
+This option controls how many new cards can be introduced each day
+you open the program. If you study fewer than the limit, or miss a day,
+the next day the counts will be back to their original setting: you won’t be
+given more cards than your limit allows.
+When studying a deck that has subdecks inside it, the limits set on each
+subdeck control the maximum number of cards drawn from that
+particular deck. The selected deck’s limits control the total number of
+cards that will be shown.
+For earlier versions, see this FAQ page.
+Studying new cards will temporarily increase the number of reviews you
+need to do a day, as newly-learned material needs to be repeated a
+number of times before the delay between repetitions can increase
+appreciably. If you are consistently learning 20 new cards a day, you can
+expect your daily reviews to be roughly about 200 cards/day. You can
+decrease the reviews required by introducing fewer new cards each day
+until your review burden decreases. More than one Anki user has
+excitedly studied hundreds of new cards over their ﬁrst few days of using
+the program, and then has become overwhelmed by the reviews
+required.
+Maximum Reviews/Day
+Allows you to set an upper limit on the number of review cards to show
+each day. When this limit is reached, Anki will not show any more review
+cards for the day, even if there are more waiting. If you study consistently,
+this setting can help to smooth out occasional peaks in due card counts,
+and can save you from a heart attack when returning to Anki after taking
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 132/273
+
+=== PAGE 133 ===
+a week oﬀ. When reviews have been hidden due to this option, a message
+will appear in the congratulations screen, suggesting you consider
+increasing the limit if you have time.
+When studying a deck that has subdecks inside it, the review limit
+behaves similarly to the new card limit.
+Anki includes any learning cards that have crossed the day boundary
+(interday learning cards) in the review count, so those learning cards will
+be subject to the review limit.
+Per-Deck Daily Limits
+It is possible to use the same preset for diﬀerent decks, with customized
+limits for each of them. This eliminates the need to create cloned presets
+just for that purpose, and makes it easier to set custom limits on
+subdecks.
+Anki provides three options for daily limits:
+Preset: applies to all the decks using a preset.
+This deck: speciﬁc to a particular deck.
+Today only: speciﬁc to a particular deck, and temporary.
+New Cards Ignore Review Limit
+By default, the review limit also applies to new cards, and no new cards
+will be shown when the review limit has been reached. If this option is
+enabled, new cards will be shown regardless of the review limit.
+If you have a backlog of overdue review cards, it is recommended that
+you stop introducing new cards until you catch up with that backlog.
+Continuing to introduce new cards when you’re already behind can make
+the backlog worse.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 133/273
+
+=== PAGE 134 ===
+Limits Start From Top
+By default, the daily limits of a higher-level deck do not apply if you select
+one of its subdecks. A parent deck can have a new card limit of 10
+cards/day and its subdecks can have a new card limit of 20 cards/day. The
+limits set on the parent deck do not aﬀect the number of new cards you
+can study from its subdeck.
+When this option is enabled, the limits set on higher-level decks also
+apply to their subdecks when a subdeck is selected. In the previous
+example, you will be able to study only 10 new cards from the subdecks
+instead of 20 new cards.
+This option can be useful if you wish to study individual subdecks, while
+enforcing a total limit on cards in all the subdecks.
+New Cards
+The options here only aﬀect new cards and learning cards. Once a card
+has graduated (that is, gone through all the learning steps), the options in
+this section no longer apply to the card.
+Learning Steps
+Controls the number of learning repetitions, and the delay between them.
+One or more delays, separated by spaces must be entered. Each time you
+click Good during review, the card moves to the next step. Each time you
+click Again, the card goes back to the ﬁrst step.
+For example, let’s say that your learning steps are 1m 10m 1d.
+When you click Again, the card goes through the ﬁrst step, and is
+shown again 1 minute later.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 134/273
+
+=== PAGE 135 ===
+When you click Good on a new card or after the 1 minute step, it
+moves to the next step, and is shown again in 10 minutes.
+When you click Good on a card after the 10 minute step, it is delayed
+until the next day.
+When you click Good on the card the next day, it graduates and
+becomes a review card. The card is shown again after the delay
+conﬁgured by the graduating interval.
+The Hard button works diﬀerently depending on which step you’re on.
+When you’re on the ﬁrst step, the Hard button shows a delay of 6m.
+The 6m delay is the average of ﬁrst two steps: 1m and 10m.
+Exception: When there’s only one learning step, the Hard button
+shows a delay 1.5 times that step. This delay is at most 1 day
+longer than the learning step.
+When you’re on any other step, the Hard button repeats that step.
+If there’s nothing else to study, Anki will show learning cards up to 20
+minutes early by default. To turn this oﬀ or change the amount of time to
+look ahead, see Preferences.
+Day Boundaries
+Anki treats small steps and steps that cross a day boundary diﬀerently.
+With small steps, the cards are shown as soon as the delay has passed, in
+preference to review cards and new cards. This is done so that you can
+answer the card as closely to your requested delay as possible. In
+contrast, if the step crosses a day boundary, the delay is automatically
+converted to days. For example, if the next day starts after 5 hours and
+the delay is 6 hours, Anki converts the delay to 1 day.
+Graduating Interval
+The number of days to wait before showing a card again, after the Good
+button is used on the ﬁnal learning step. This means that it is the ﬁrst
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 135/273
+
+=== PAGE 136 ===
+interval after the learning card graduates. Please see the example from
+earlier in this section.
+Easy Interval
+The number of days to wait before showing a card again, after the Easy
+button is used on it.
+The Easy button turns learning cards into a review cards regardless of
+which step you’re on, and assigns them the delay you have conﬁgured in
+this option. Easy interval should always be at least as long as the
+graduating interval, and typically a few days longer.
+Insertion Order
+Controls whether Anki should add new cards into the deck randomly, or
+sequentially. When you change this option, Anki will re-sort the decks in
+the current preset.
+On recent Anki versions, you should leave this option set to Sequential,
+and adjust the display order instead.
+Lapses
+When you click Again on a review card, it is called a lapse. The options
+listed here aﬀect such lapsed cards.
+Relearning Steps
+The same as learning steps, but for lapsed cards. When you fail a review
+card (press Again), the card goes through relearning steps, before it
+becomes a review card again.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 136/273
+
+=== PAGE 137 ===
+If you leave the steps blank, the card will skip relearning, and will be
+assigned a new interval of 1 day by default.
+Minimum Interval
+Speciﬁes a minimum number of days a card should wait after it ﬁnishes
+relearning. The default is one day, meaning once relearning is ﬁnished, it
+will be shown again the next day.
+Leeches
+Control the way Anki handles leeches. For details, see the leeches section.
+Display Order
+The options in this section are taken from the deck you select to study,
+not the deck of the currently displayed card.
+Some further information about display order is available in the studying
+section.
+New Card Gather Order
+Controls how Anki gathers new cards from a deck. The options are:
+Deck: Gathers cards from each subdeck in order, starting from the
+top. Cards from each subdeck are gathered in ascending position. If
+the daily limit of the selected deck is reached, gathering may stop
+before all subdecks have been checked. This order is fastest in large
+collections, and allows you to prioritize subdecks that are closer to
+the top.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 137/273
+
+=== PAGE 138 ===
+Decks/subdecks are always ordered alphabetically, so you can give
+them a numeric preﬁx like 001 to control the order they appear in.
+You can also use _ and ~ as a preﬁx to place items at the top or
+bottom.
+Although position order depends initially on the insertion order
+option, you can manually reposition cards in diﬀerent ways.
+Deck, then random notes: Gathers cards from each subdeck in
+order, starting from the top. Cards from each subdeck are gathered
+from randomly selected notes.
+Ascending position: Gathers cards by ascending position (due #),
+which is typically the oldest-added ﬁrst.
+Descending position: Gathers cards by descending position (due #),
+which is typically the latest-added ﬁrst.
+Random notes: Gathers cards from randomly selected notes.
+Random cards: Gathers cards in a random order.
+New Card Sort Order
+Controls how the new cards are sorted after they have been gathered.
+The options are:
+Card type, then order gathered: Shows cards in order of card type
+number. Cards of each card type number are shown in the order they
+were gathered. If you have sibling burying disabled, this ensures all
+front → back cards are seen before any back → front cards. This order
+is useful if you don’t want sibling cards to appear too close to each
+other.
+Order gathered: Shows cards exactly as they were gathered. If
+sibling burying is disabled, this typically results in all sibling cards
+appearing one after the other.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 138/273
+
+=== PAGE 139 ===
+Card type, then random: Shows cards in order of card type number,
+but shuﬄes the cards of each card type number. This order is useful
+if you don’t want sibling cards to appear too close to each other, but
+still want the cards to appear in a random order.
+Random note, then card type: Picks notes at random, then shows
+all of their siblings in order.
+Random: Fully shuﬄes the gathered cards.
+New/Review Order
+Whether new cards should be mixed in with review cards, shown before
+them, or shown after them.
+Interday Learning/Review Order
+Whether (re)learning cards that cross a day boundary should be mixed in
+with review cards, shown before them, or shown after them. Because
+learning cards tend to be harder than review cards, some users prefer to
+see them at the end (getting the easy stuﬀ done ﬁrst), or at the start
+(allowing more time to review forgotten ones).
+Review Sort Order
+Controls how the review cards are sorted. The options are:
+Due date, then random: The default order prioritizes cards that
+have been waiting longer, and it’s the recommended order when you
+are up to date, or when you only have a small backlog. If you have
+taken an extended break or have fallen behind in your reviews, you
+may want to consider changing the sort order temporarily.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 139/273
+
+=== PAGE 140 ===
+Due date, then deck: This also prioritizes cards that have been
+waiting longer, and then shows review cards for each subdeck in
+turn.
+Deck, then due date: Shows review cards for each subdeck in turn.
+This order is generally not recommended, as having material appear
+consistently in the same order makes it easier to guess the answer
+based on context, and leads to weaker memories.
+Ascending intervals: Shows cards with shorter intervals ﬁrst.
+Descending intervals: Shows cards with longer intervals ﬁrst.
+Ascending ease: Shows more diﬃcult cards ﬁrst.
+Descending ease: Shows less diﬃcult cards ﬁrst.
+Relative overdueness: Shows cards that you’re more likely to have
+forgotten ﬁrst. This is generally recommended if you have a large
+backlog that may take some time to get through, and you want to
+reduce the chances of forgetting more cards.
+When using the SM-2 algorithm, overdueness is determined by
+comparing how overdue cards are, and how long their interval is. For
+example, a card with a current interval of 5 days that is overdue by 2
+days, will display before a card with a current interval of 10 days that
+is overdue by 3 days.
+When FSRS is enabled, this sort order is removed; the FSRS
+equivalent is Ascending retrievability, which is calculated based on
+each card’s retrievability (probability of recall) and the desired
+retention in the preset.
+2026/4/10 09:30 Anki Manual
+https://docs.ankiweb.net/print.html 140/273
